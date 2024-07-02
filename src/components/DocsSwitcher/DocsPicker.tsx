@@ -30,8 +30,8 @@ function DocsPicker({ pathname }: { pathname: string }) {
               .filter((item) => !item.hideFromDropdown)
               .map((item) => (
                 <li className={styles.item} key={item.label}>
-                  <a className={clsx(styles.link, "subproduct-link")} href={item.href}>
-                    <img className={clsx(styles.icon, "subproduct-icon")} src={item.icon}></img>
+                  <a className={clsx(styles.link)} href={item.href}>
+                    <img className={clsx(styles.icon)} src={item.icon}></img>
                     {item.label}
                   </a>
                 </li>

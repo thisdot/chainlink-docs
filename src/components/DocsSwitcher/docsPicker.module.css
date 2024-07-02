@@ -51,7 +51,7 @@
 }
 
 .container:hover {
-  background: #e9f0ff;
+  border-color: var(--blue-300);
 }
 
 .container:hover .caret span {

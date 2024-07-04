@@ -9,6 +9,7 @@ type Props = {
   setNavMenuOpen: (navMenuOpen: boolean) => void
   productsNav: ProductsNav
   subProductsNav?: SubProductsNav
+  showMegaMenu: () => void
 }
 
 export const ProductNavigation = (props: Props) => (

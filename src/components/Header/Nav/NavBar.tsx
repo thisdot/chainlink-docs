@@ -19,11 +19,19 @@ export type NavBarProps = {
   onHideChange?: (hidden: boolean) => void
   productsNav: ProductsNav
   subProductsNav: SubProductsNav
+  showMegaMenu: () => void
 }
 
 export const navBarHeight = 64
 
-export const NavBar = ({ path, searchTrigger, onHideChange, productsNav, subProductsNav }: NavBarProps) => {
+export const NavBar = ({
+  path,
+  searchTrigger,
+  onHideChange,
+  productsNav,
+  subProductsNav,
+  showMegaMenu,
+}: NavBarProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const navRef = useRef<HTMLElement | null>(null)
@@ -100,6 +108,7 @@ export const NavBar = ({ path, searchTrigger, onHideChange, productsNav, subProd
                 setNavMenuOpen={setIsMenuOpen}
                 productsNav={productsNav}
                 subProductsNav={subProductsNav}
+                showMegaMenu={showMegaMenu}
               />
             </div>
             <div className={styles.rightSection}>

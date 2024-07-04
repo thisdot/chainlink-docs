@@ -1,14 +1,10 @@
 import * as NavigationMenu from "@radix-ui/react-navigation-menu"
 import React from "react"
 import { ProductsNav, SubProductsNav } from "../../config"
-import { Divider } from "../../Divider"
 import { isMatchedPath } from "../../isMatchedPath"
 import { clsx } from "../../utils"
 import { extendRadixComponent } from "../extendRadixComponent"
 import styles from "./productNavigation.module.css"
-import { SubProductContent } from "./SubProductContent"
-import { Trigger } from "./Trigger"
-import externalArrow from "../../../../../assets/icons/external-arrow.svg"
 import { CaretIcon } from "../CaretIcon"
 
 type Props = {
@@ -16,17 +12,14 @@ type Props = {
   setNavMenuOpen: (navMenuOpen: boolean) => void
   productsNav: ProductsNav
   subProductsNav?: SubProductsNav
+  showMegaMenu: () => void
 }
 
 const Root = extendRadixComponent(NavigationMenu.Root)
 const List = extendRadixComponent(NavigationMenu.List)
-const Indicator = extendRadixComponent(NavigationMenu.Indicator)
 const Item = extendRadixComponent(NavigationMenu.Item)
-const Viewport = extendRadixComponent(NavigationMenu.Viewport)
-const RadixTrigger = extendRadixComponent(NavigationMenu.Trigger)
-const RadixContent = extendRadixComponent(NavigationMenu.Content)
 
-export const ProductNavigation = ({ path, setNavMenuOpen, subProductsNav }: Props) => {
+export const ProductNavigation = ({ path, setNavMenuOpen, subProductsNav, showMegaMenu }: Props) => {
   const productMenuRef = React.useRef<HTMLButtonElement>(null)
   const productMenuDataset = productMenuRef.current?.dataset ?? {}
   const productMenuOpen = React.useMemo(() => productMenuDataset.state === "open", [productMenuDataset.state])
@@ -46,7 +39,7 @@ export const ProductNavigation = ({ path, setNavMenuOpen, subProductsNav }: Prop
       <Root className={clsx(styles.root, styles.alignLeft)}>
         <List className={styles.list}>
           <Item>
-            <RadixTrigger>
+            {/* <RadixTrigger>
               <Trigger label="Resources" className={styles.trigger} />
             </RadixTrigger>
 
@@ -61,7 +54,12 @@ export const ProductNavigation = ({ path, setNavMenuOpen, subProductsNav }: Prop
                 <h2>Featured</h2>
                 <img src="/images/quick-start.png" alt="" className={styles.featuredImage} />
               </div>
-            </NavigationMenu.Content>
+            </NavigationMenu.Content> */}
+          </Item>
+          <Item>
+            <span className={styles.navLink} onClick={showMegaMenu}>
+              Resources <CaretIcon aria-hidden />
+            </span>
           </Item>
           <Item>
             <NavigationMenu.Link className={styles.navLink} href="https://dev.chain.link" target="_blank">
@@ -85,6 +83,7 @@ export const ProductNavigation = ({ path, setNavMenuOpen, subProductsNav }: Prop
           </Item>
         </List>
       </Root>
+      {/* <MegaMenu /> */}
     </>
   )
 }

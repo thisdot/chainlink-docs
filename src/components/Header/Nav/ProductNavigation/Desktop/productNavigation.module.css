@@ -17,6 +17,11 @@
   height: 100%;
   position: relative;
   transition: all 200ms ease-in-out;
+  user-select: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: var(--space-1x);
 }
 
 .navLink:hover {
@@ -168,9 +173,9 @@
   background-color: white;
   border-radius: var(--border-radius-secondary);
   box-shadow: 0px 4px 25px 0px rgba(0, 0, 0, 0.15);
-  width: 800px;
-  top: 120%;
-  left: 10%;
+  top: 60px;
+  left: 20px;
+  right: 20px;
   transform: translateX(-50%);
 }
 

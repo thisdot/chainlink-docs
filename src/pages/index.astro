@@ -18,8 +18,8 @@ const formattedContentTitle = `${CONFIG.PAGE.titleFallback} | ${CONFIG.SITE.titl
       </div>
     </div>
     <div class="recommended">
-      <h4>Recommded reading</h4>
-      <h3>We think you'd love to explore</h3>
+      <h4>Recommended reading</h4>
+      <h2>We think you'd love to explore</h2>
       <h5>Popular searches</h5>
       <div>
         <a href="/resources/link-token-contracts"> LINK token contract</a>
@@ -27,9 +27,6 @@ const formattedContentTitle = `${CONFIG.PAGE.titleFallback} | ${CONFIG.SITE.titl
         <a href="/resources/create-a-chainlinked-project">NPM packages</a>
         <a href="/architecture-overview/architecture-overview">Architecture</a>
         <a href="/ccip">CCIP contracts</a>
-        <!-- Todo: link to the new docs and other topic -->
-        <a href="#">New docs</a>
-        <a href="#">Other topic</a>
         <a href="/ccip/api-reference/errors">Function errors</a>
         <a href="/getting-started/conceptual-overview">Getting started</a>
       </div>
@@ -128,14 +125,14 @@ const formattedContentTitle = `${CONFIG.PAGE.titleFallback} | ${CONFIG.SITE.titl
     justify-content: center;
     align-items: center;
     padding: var(--space-4x) var(--space-5x);
-    box-shadow: 0px var(--space-5x) var(--space-8x) calc(-1 * var(--space-5x)) rgba(12, 22, 44, 0.24);
+    box-shadow: 0px var(--space-3x) var(--space-8x) calc(-1 * var(--space-3x)) #0c162c1f;
     border-radius: var(--space-1x);
     color: var(--blue-800);
     transition: all 0.2s ease-in-out;
   }
 
   .recommended a:hover {
-    box-shadow: 0px var(--space-4x) var(--space-8x) calc(-1 * var(--space-4x)) rgba(12, 22, 44, 0.4);
+    box-shadow: 0px var(--space-3x) var(--space-8x) calc(-1 * var(--space-3x)) #0c162c2f;
     color: var(--blue-700);
   }
 

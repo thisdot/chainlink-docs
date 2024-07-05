@@ -2,9 +2,9 @@
   z-index: 9999;
   position: fixed;
   top: 60px;
-  bottom: 0%;
-  left: 20px;
-  right: 20px;
+  bottom: 0;
+  left: 0;
+  right: 0;
   display: none;
   justify-content: center;
 }
@@ -19,19 +19,6 @@
   grid-template-columns: 3fr 1fr;
   overflow: hidden;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.wrapper::before {
-  content: "";
-  position: absolute;
-  top: -4px;
-  left: 29%;
-  transform: translateX(-50%) rotate(45deg);
-  width: 20px;
-  height: 20px;
-  z-index: -1;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  background-color: white;
 }
 
 .wrapper h2 {
@@ -141,17 +128,5 @@
 @media screen and (min-width: 768px) {
   .megaMenuContainer {
     display: flex;
-  }
-}
-
-@media screen and (min-width: 1280px) {
-  .wrapper::before {
-    left: 31%;
-  }
-}
-
-@media screen and (min-width: 1565px) {
-  .wrapper::before {
-    left: 35%;
   }
 }

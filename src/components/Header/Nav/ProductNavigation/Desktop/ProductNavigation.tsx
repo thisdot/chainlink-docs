@@ -14,13 +14,21 @@ type Props = {
   subProductsNav?: SubProductsNav
   showMegaMenu: () => void
   isMegamenuOpen: boolean
+  exitMegamenu: () => void
 }
 
 const Root = extendRadixComponent(NavigationMenu.Root)
 const List = extendRadixComponent(NavigationMenu.List)
 const Item = extendRadixComponent(NavigationMenu.Item)
 
-export const ProductNavigation = ({ path, setNavMenuOpen, subProductsNav, showMegaMenu, isMegamenuOpen }: Props) => {
+export const ProductNavigation = ({
+  path,
+  setNavMenuOpen,
+  subProductsNav,
+  showMegaMenu,
+  isMegamenuOpen,
+  exitMegamenu,
+}: Props) => {
   const productMenuRef = React.useRef<HTMLButtonElement>(null)
   const productMenuDataset = productMenuRef.current?.dataset ?? {}
   const productMenuOpen = React.useMemo(() => productMenuDataset.state === "open", [productMenuDataset.state])
@@ -45,11 +53,13 @@ export const ProductNavigation = ({ path, setNavMenuOpen, subProductsNav, showMe
                 [styles.active]: isMegamenuOpen,
               })}
               onMouseEnter={showMegaMenu}
+              role="button"
+              aria-expanded={isMegamenuOpen}
             >
               Resources <CaretIcon aria-hidden />
             </span>
           </Item>
-          <Item>
+          <Item onMouseEnter={exitMegamenu}>
             <NavigationMenu.Link className={styles.navLink} href="https://dev.chain.link" target="_blank">
               Docs
             </NavigationMenu.Link>

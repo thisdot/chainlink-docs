@@ -72,6 +72,7 @@ export const NavBar = ({ path, showSearch = true }: { path: string; showSearch?:
         onHideChange={onHideChange}
         isMegamenuOpen={showMegaMenu}
         showMegaMenu={() => setShowMegaMenu(true)}
+        exitMegamenu={() => setShowMegaMenu(false)}
       />
       {showMegaMenu && <MegaMenu cancel={() => setShowMegaMenu(false)} />}
     </span>

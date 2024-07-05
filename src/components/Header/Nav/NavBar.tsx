@@ -22,6 +22,7 @@ export type NavBarProps = {
   subProductsNav: SubProductsNav
   showMegaMenu: () => void
   isMegamenuOpen: boolean
+  exitMegamenu: () => void
 }
 
 export const navBarHeight = 64
@@ -36,6 +37,7 @@ export const NavBar = ({
   subProductsNav,
   showMegaMenu,
   isMegamenuOpen,
+  exitMegamenu,
 }: NavBarProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -95,7 +97,7 @@ export const NavBar = ({
       <header className={styles.header} ref={navRef}>
         <div className={clsx(styles.navBar, shouldHideHeader && styles.headerHidden)}>
           <div className={styles.container}>
-            <div className={styles.logoSection}>
+            <div className={styles.logoSection} onMouseEnter={exitMegamenu}>
               <a rel="noreferrer noopener" className={clsx("home-logo", styles.logo)} href="/">
                 <img
                   alt="Documentation Home"
@@ -115,9 +117,10 @@ export const NavBar = ({
                 subProductsNav={subProductsNav}
                 showMegaMenu={showMegaMenu}
                 isMegamenuOpen={isMegamenuOpen}
+                exitMegamenu={exitMegamenu}
               />
             </div>
-            <div className={styles.rightSection}>
+            <div className={styles.rightSection} onMouseEnter={exitMegamenu}>
               {searchTrigger && <div className={styles.searchTrigger}>{searchTrigger}</div>}
               <div id="weglot" className={styles.weglotContainer} />
               <div className={styles.quickLinksWrapper}>

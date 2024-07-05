@@ -11,6 +11,7 @@ type Props = {
   subProductsNav?: SubProductsNav
   showMegaMenu: () => void
   isMegamenuOpen: boolean
+  exitMegamenu: () => void
 }
 
 export const ProductNavigation = (props: Props) => (

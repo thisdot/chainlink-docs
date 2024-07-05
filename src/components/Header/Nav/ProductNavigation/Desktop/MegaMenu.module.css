@@ -1,11 +1,11 @@
-:global(.megaMenuContainer) {
+.megaMenuContainer {
   z-index: 9999;
   position: fixed;
   top: 60px;
   bottom: 0%;
   left: 20px;
   right: 20px;
-  display: flex;
+  display: none;
   justify-content: center;
 }
 
@@ -25,7 +25,7 @@
   content: "";
   position: absolute;
   top: -4px;
-  left: 35%;
+  left: 29%;
   transform: translateX(-50%) rotate(45deg);
   width: 20px;
   height: 20px;
@@ -68,6 +68,11 @@
   gap: var(--space-16x);
 }
 
+.resourcesMenuContentRow {
+  display: flex;
+  flex-direction: column;
+}
+
 .verticalDivider {
   border-left: 1px solid var(--gray-300);
   margin: 0 var(--space-3x);
@@ -107,4 +112,46 @@
 .divider {
   border-bottom: 1px solid var(--gray-200);
   margin: var(--space-8x) auto;
+}
+
+.bottomLinks {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3x);
+}
+
+.bottomLink {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2x);
+  font-weight: var(--font-weight-medium);
+  color: var(--gray-800);
+  font-size: 15px;
+}
+
+.bottomLink a {
+  color: var(--gray-800);
+}
+
+.bottomLink a:hover {
+  color: var(--blue-500);
+}
+
+@media screen and (min-width: 768px) {
+  .megaMenuContainer {
+    display: flex;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .wrapper::before {
+    left: 31%;
+  }
+}
+
+@media screen and (min-width: 1565px) {
+  .wrapper::before {
+    left: 35%;
+  }
 }

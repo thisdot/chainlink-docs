@@ -25,6 +25,16 @@ const megaMenuSections = [
         ],
       },
     ],
+    bottomLinks: [
+      {
+        label: "View all resources",
+        href: "/cross-chain",
+      },
+      {
+        label: "Learn about Chainlink",
+        href: "#",
+      },
+    ],
   },
   {
     title: "Data Feeds",
@@ -123,14 +133,14 @@ const megaMenuSections = [
 
 function MegaMenu({ cancel }: MegaMenuProps) {
   return (
-    <div className="megaMenuContainer">
+    <div className={styles.megaMenuContainer}>
       <div className={styles.wrapper} onMouseLeave={cancel}>
         <div className={styles.resourcesMenuContentMain}>
           {megaMenuSections.map((section) => (
             <div className={styles.resourcesMenuContentRow} key={section.title}>
               <h2>{section.title}</h2>
-              {section.items.map((item) => (
-                <Fragment key={item.name}>
+              {section.items.map((item, index) => (
+                <Fragment key={index}>
                   <div className={styles.megaMenuLink}>
                     <img src={item.image.src} alt={item.title} />
                     <h3>{item.title}</h3>
@@ -146,6 +156,18 @@ function MegaMenu({ cancel }: MegaMenuProps) {
                   </div>
                 </Fragment>
               ))}
+              {section.bottomLinks && (
+                <div className={styles.bottomLinks}>
+                  {section.bottomLinks.map((link, index) => (
+                    <div className={styles.bottomLink} key={index}>
+                      <a href={link.href} target="_blank" rel="noopener noreferrer">
+                        {link.label}
+                      </a>
+                      <img src="/images/tabler_arrow-up.svg" alt="" />
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           ))}
         </div>

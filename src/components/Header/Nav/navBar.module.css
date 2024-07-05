@@ -130,7 +130,7 @@
 }
 
 .quickLinksButton {
-  display: inline;
+  display: none;
   background: none;
   border: var(--border-width-primary) solid transparent;
   cursor: pointer;
@@ -251,6 +251,12 @@
 
 .closeButton:hover {
   color: var(--blue-600);
+}
+
+@media screen and (min-width: 768px) {
+  .quickLinksButton {
+    display: inline;
+  }
 }
 
 @media screen and (min-width: 768px) {

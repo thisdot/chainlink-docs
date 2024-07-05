@@ -7,7 +7,8 @@ import { useScrollPosition } from "./useScrollPosition"
 import { ProductNavigation } from "./ProductNavigation/ProductNavigation"
 import { useHideHeader } from "./useHideHeader"
 import ProductChainTable from "../../QuickLinks/sections/ProductChainTable"
-import SearchIcon from "../../QuickLinks/assets/search-icon.svg"
+import QuickLinksIcon from "../../QuickLinks/assets/quick-links-icon.svg"
+import { Search } from "../aiSearch/Search"
 
 declare const Weglot: any
 
@@ -24,6 +25,8 @@ export type NavBarProps = {
 }
 
 export const navBarHeight = 64
+
+const SearchButton = <Search variant="default" />
 
 export const NavBar = ({
   path,
@@ -119,8 +122,9 @@ export const NavBar = ({
               <div id="weglot" className={styles.weglotContainer} />
               <div className={styles.quickLinksWrapper}>
                 <button className={styles.quickLinksButton} onClick={toggleModal}>
-                  <img src={SearchIcon.src} className={styles.quickLinksIcon} alt="Search" />
+                  <img src={QuickLinksIcon.src} className={styles.quickLinksIcon} alt="Search" />
                 </button>
+                <Search variant="mobile" />
                 <span className={styles.quickLinksTooltip}>
                   <img
                     src="https://smartcontract.imgix.net/icons/info.svg?auto=compress%2Cformat"

@@ -13,13 +13,14 @@ type Props = {
   productsNav: ProductsNav
   subProductsNav?: SubProductsNav
   showMegaMenu: () => void
+  isMegamenuOpen: boolean
 }
 
 const Root = extendRadixComponent(NavigationMenu.Root)
 const List = extendRadixComponent(NavigationMenu.List)
 const Item = extendRadixComponent(NavigationMenu.Item)
 
-export const ProductNavigation = ({ path, setNavMenuOpen, subProductsNav, showMegaMenu }: Props) => {
+export const ProductNavigation = ({ path, setNavMenuOpen, subProductsNav, showMegaMenu, isMegamenuOpen }: Props) => {
   const productMenuRef = React.useRef<HTMLButtonElement>(null)
   const productMenuDataset = productMenuRef.current?.dataset ?? {}
   const productMenuOpen = React.useMemo(() => productMenuDataset.state === "open", [productMenuDataset.state])
@@ -39,25 +40,12 @@ export const ProductNavigation = ({ path, setNavMenuOpen, subProductsNav, showMe
       <Root className={clsx(styles.root, styles.alignLeft)}>
         <List className={styles.list}>
           <Item>
-            {/* <RadixTrigger>
-              <Trigger label="Resources" className={styles.trigger} />
-            </RadixTrigger>
-
-            <NavigationMenu.Content className={styles.resourcesMenuContent}>
-              <div className={styles.resourcesMenuContentMain}>
-                <div className={styles.resourcesMenuContentRow}>Row</div>
-                <div className={styles.resourcesMenuContentRow}>Row</div>
-                <div className={styles.resourcesMenuContentRow}>Row</div>
-                <div className={styles.resourcesMenuContentRow}>Row</div>
-              </div>
-              <div className={styles.resourcesMenuContentFeatured}>
-                <h2>Featured</h2>
-                <img src="/images/quick-start.png" alt="" className={styles.featuredImage} />
-              </div>
-            </NavigationMenu.Content> */}
-          </Item>
-          <Item>
-            <span className={styles.navLink} onClick={showMegaMenu}>
+            <span
+              className={clsx(styles.navLink, {
+                [styles.active]: isMegamenuOpen,
+              })}
+              onMouseEnter={showMegaMenu}
+            >
               Resources <CaretIcon aria-hidden />
             </span>
           </Item>

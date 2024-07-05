@@ -10,6 +10,7 @@ type Props = {
   productsNav: ProductsNav
   subProductsNav?: SubProductsNav
   showMegaMenu: () => void
+  isMegamenuOpen: boolean
 }
 
 export const ProductNavigation = (props: Props) => (

@@ -20,6 +20,7 @@ export type NavBarProps = {
   productsNav: ProductsNav
   subProductsNav: SubProductsNav
   showMegaMenu: () => void
+  isMegamenuOpen: boolean
 }
 
 export const navBarHeight = 64
@@ -31,6 +32,7 @@ export const NavBar = ({
   productsNav,
   subProductsNav,
   showMegaMenu,
+  isMegamenuOpen,
 }: NavBarProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -109,6 +111,7 @@ export const NavBar = ({
                 productsNav={productsNav}
                 subProductsNav={subProductsNav}
                 showMegaMenu={showMegaMenu}
+                isMegamenuOpen={isMegamenuOpen}
               />
             </div>
             <div className={styles.rightSection}>

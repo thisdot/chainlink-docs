@@ -1,5 +1,5 @@
 import { evmProducts } from "~/features/landing/data"
-import styles from "./MegaMenu.module.css"
+import styles from "./megaMenu.module.css"
 import resourcesLogo from "../../../../../assets/product-logos/data-resources-logo.svg"
 import { Fragment } from "react/jsx-runtime"
 
@@ -123,8 +123,8 @@ const megaMenuSections = [
 
 function MegaMenu({ cancel }: MegaMenuProps) {
   return (
-    <div className={styles.container} onClick={cancel}>
-      <div className={styles.wrapper}>
+    <div className="megaMenuContainer">
+      <div className={styles.wrapper} onMouseLeave={cancel}>
         <div className={styles.resourcesMenuContentMain}>
           {megaMenuSections.map((section) => (
             <div className={styles.resourcesMenuContentRow} key={section.title}>

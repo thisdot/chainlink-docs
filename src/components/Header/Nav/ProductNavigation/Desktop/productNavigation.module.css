@@ -45,6 +45,23 @@
   opacity: 1;
 }
 
+.active {
+  color: var(--blue-800);
+}
+
+.active::before {
+  position: absolute;
+  content: "";
+  width: var(--space-4x);
+  height: var(--space-4x);
+  background-color: var(--blue-500);
+  top: calc(-1 * var(--space-8x));
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  opacity: 1;
+  transition: all 200ms ease-in-out;
+}
+
 @media screen and (min-width: 768px) {
   .root {
     display: flex;
@@ -212,17 +229,6 @@
 .featuredImage {
   width: 260px !important;
 }
-
-/* .resourcesMenuContentRow {
-  position: absolute;
-  background-color: white;
-  border-radius: var(--border-radius-secondary);
-  box-shadow: 0px 4px 25px 0px rgba(0, 0, 0, 0.15);
-  padding: var(--space-16x);
-  top: 120%;
-  left: 10%;
-  transform: translateX(-50%);
-} */
 
 .trigger span {
   position: relative;

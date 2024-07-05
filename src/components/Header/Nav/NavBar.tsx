@@ -7,7 +7,7 @@ import { useScrollPosition } from "./useScrollPosition"
 import { ProductNavigation } from "./ProductNavigation/ProductNavigation"
 import { useHideHeader } from "./useHideHeader"
 import ProductChainTable from "../../QuickLinks/sections/ProductChainTable"
-import QuickLinksIcon from "../../QuickLinks/assets/quick-links-icon.svg"
+import SearchIcon from "../../QuickLinks/assets/search-icon.svg"
 
 declare const Weglot: any
 
@@ -119,7 +119,7 @@ export const NavBar = ({
               <div id="weglot" className={styles.weglotContainer} />
               <div className={styles.quickLinksWrapper}>
                 <button className={styles.quickLinksButton} onClick={toggleModal}>
-                  <img src={QuickLinksIcon.src} className={styles.quickLinksIcon} alt="Quick Links" />
+                  <img src={SearchIcon.src} className={styles.quickLinksIcon} alt="Search" />
                 </button>
                 <span className={styles.quickLinksTooltip}>
                   <img

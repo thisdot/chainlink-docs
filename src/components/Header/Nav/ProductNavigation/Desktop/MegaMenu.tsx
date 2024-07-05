@@ -7,7 +7,7 @@ interface MegaMenuProps {
   cancel: () => void
 }
 
-const megaMenuSections = [
+export const megaMenuSections = [
   {
     title: "Cross Chain",
     items: [

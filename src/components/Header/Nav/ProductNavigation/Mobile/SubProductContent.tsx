@@ -50,10 +50,19 @@ export const SubProductContent = ({ subProducts, onSubproductClick, currentPath 
 
   return (
     <>
-      <button key="back" className={styles.back} onClick={onSubproductClick}>
-        <BackArrowIcon />
-        Back
-      </button>
+      <div className={styles.header}>
+        <img
+          alt="Documentation Home"
+          title="Documentation Home"
+          style={{ display: "flex" }}
+          src="/chainlink-docs.svg"
+          height={30}
+        />
+        <button key="back" className={styles.back} onClick={onSubproductClick}>
+          <BackArrowIcon />
+          Back
+        </button>
+      </div>
       {subProducts.items.map(({ label, pages }) => (
         <div key={label}>
           <h3 className={styles.section}>{label}</h3>

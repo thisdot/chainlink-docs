@@ -3,10 +3,6 @@ import { Fragment } from "react/jsx-runtime"
 import { megaMenuSections } from "../Desktop/MegaMenu"
 import { useState } from "react"
 
-interface MegaMenuProps {
-  cancel: () => void
-}
-
 function MegaMenu() {
   return (
     <div className={styles.wrapper}>

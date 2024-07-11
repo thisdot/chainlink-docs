@@ -2,6 +2,7 @@ import { evmProducts } from "~/features/landing/data"
 import styles from "./megaMenu.module.css"
 import resourcesLogo from "../../../../../assets/product-logos/data-resources-logo.svg"
 import { Fragment } from "react/jsx-runtime"
+import { useEffect } from "react"
 
 interface MegaMenuProps {
   cancel: () => void
@@ -132,6 +133,18 @@ export const megaMenuSections = [
 ]
 
 function MegaMenu({ cancel }: MegaMenuProps) {
+  useEffect(() => {
+    const onESC = (ev: KeyboardEvent) => {
+      if (ev.key === "Escape") {
+        cancel()
+      }
+    }
+    window.addEventListener("keyup", onESC, false)
+    return () => {
+      window.addEventListener("keyup", onESC, false)
+    }
+  }, [])
+
   return (
     <div className={styles.megaMenuContainer}>
       <div className={styles.wrapper} onMouseLeave={cancel}>

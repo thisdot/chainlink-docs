@@ -309,6 +309,10 @@
   .modalContentWrapper {
     width: 80%;
   }
+
+  .rightSection {
+    display: none;
+  }
 }
 
 /* For fixing the layout shifts caused by the search widget */

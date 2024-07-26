@@ -31,7 +31,7 @@ export const HeaderBanner: React.FC<{ bannerContent?: BannerContent }> = ({ bann
   const [isDismissed, setIsDismissed] = useState(true) // Change to false to show banner later to prevent flasing on page load for users who have already dismissed it
   useEffect(() => {
     const isDismissedLocalStorage = localStorage.getItem("headerBannerDismissed")
-    if (!isDismissedLocalStorage) {
+    if (!isDismissedLocalStorage || isDismissedLocalStorage !== bannerContent?.description) {
       setIsDismissed(false)
     }
   }, [isDismissed])
@@ -52,7 +52,7 @@ export const HeaderBanner: React.FC<{ bannerContent?: BannerContent }> = ({ bann
       <button
         className={headerbannerCustom.dismiss}
         onClick={() => {
-          localStorage.setItem("headerBannerDismissed", "true")
+          localStorage.setItem("headerBannerDismissed", bannerContent.description)
           setIsDismissed(true)
         }}
       >

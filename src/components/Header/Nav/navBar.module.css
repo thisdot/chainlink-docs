@@ -310,7 +310,11 @@
     width: 80%;
   }
 
-  .rightSection {
+  .button {
+    display: none;
+  }
+
+  .quickLinksWrapper {
     display: none;
   }
 }

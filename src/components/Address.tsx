@@ -1,4 +1,3 @@
-/** @jsxImportSource preact */
 import { clsx } from "../lib" // Ensure that the `clsx` function is correctly imported or implemented.
 
 export type Props = {
@@ -36,7 +35,7 @@ const AddressComponent = ({
 
   return (
     <span className={`addressContainer ${urlClass || ""}`} id={urlId}>
-      <a title={address} className="addressLink" href={contractUrl}>
+      <a title={address} className="addressLink" href={contractUrl} target="_blank" rel="noopener noreferrer">
         {endLength && address ? address.slice(0, endLength + 2) + "..." + address.slice(-endLength) : address}
       </a>
       <button

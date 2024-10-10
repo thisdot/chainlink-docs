@@ -1,4 +1,5 @@
-import { Address } from "~/components"
+import { Environment, LaneConfig } from "~/config/data/ccip"
+import Address from "../Address/Address"
 import Breadcrumb from "../Breadcrumb/Breadcrumb"
 import Search from "../Search/Search"
 import "./ChainHero.css"
@@ -9,26 +10,50 @@ interface ChainHeroProps {
     totalLanes: number
     totalTokens: number
     logo: string
+    chain: string
   }[]
   tokens: {
     name: string
     totalNetworks: number
     logo: string
   }[]
-  network: {
+  lanes: {
+    sourceNetwork: {
+      name: string
+      logo: string
+      key: string
+    }
+    destinationNetwork: {
+      name: string
+      logo: string
+      key: string
+      explorerUrl: string
+    }
+    lane: LaneConfig
+  }[]
+  network?: {
     name: string
     logo: string
     totalLanes: number
     totalTokens: number
     chain: string
+    tokenAdminRegistry?: string
+    registryModule?: string
+    router?: {
+      name: string
+      address: string
+    }
+    routerExplorerUrl: string
+    chainSelector: string
   }
-  token: {
+  token?: {
     name: string
     logo: string
   }
+  environment: Environment
 }
 
-function ChainHero({ chains, tokens, network, token }: ChainHeroProps) {
+function ChainHero({ chains, tokens, network, token, environment, lanes }: ChainHeroProps) {
   return (
     <section className="ccip-hero">
       <img src="/assets/ccip.png" alt="" className="ccip-hero__grid" />
@@ -38,51 +63,60 @@ function ChainHero({ chains, tokens, network, token }: ChainHeroProps) {
           <Breadcrumb
             items={[
               {
-                name: "Networks & Tokens",
-                url: "/ccip",
+                name: "CCIP Directory",
+                url: `/ccip/supported-networks/${environment}`,
               },
               {
                 name: "Current",
-                url: `/ccip/${network.chain}`,
+                url: network
+                  ? `/ccip/supported-networks/${environment}/chain/${network.chain}`
+                  : `/ccip/supported-networks/${environment}/token/${token?.name}`,
               },
             ]}
           />
           <div className="ccip-hero__chainSearch">
-            <Search chains={chains} tokens={tokens} small />
+            <Search chains={chains} tokens={tokens} small environment={environment} lanes={lanes} />
           </div>
         </div>
 
         <h1 className="ccip-hero__heading">
-          <img src={network.logo} alt="" />
-          {network.name}
+          <img src={network?.logo || token?.logo} alt="" className={token?.logo ? "ccip-hero__token-logo" : ""} />
+          {network?.name || token?.name}
         </h1>
-        <div className="ccip-hero__details">
-          <div className="ccip-hero__details__item">
-            <div className="ccip-hero__details__label">Router</div>
-            <div className="ccip-hero__details__value">
-              <Address
-                endLength={4}
-                contractUrl="https://etherscan.io/address/0x7a250d5630b4cf539739df2c5dacb4c659f2488d"
-              />
+        {network && (
+          <div className="ccip-hero__details">
+            <div className="ccip-hero__details__item">
+              <div className="ccip-hero__details__label">Router</div>
+              <div className="ccip-hero__details__value">
+                <Address endLength={4} contractUrl={network.routerExplorerUrl} />
+              </div>
+            </div>
+            <div className="ccip-hero__details__item">
+              <div className="ccip-hero__details__label">Chain selector</div>
+              <div className="ccip-hero__details__value">{network.chainSelector || "n/a"}</div>
+            </div>
+            <div className="ccip-hero__details__item">
+              <div className="ccip-hero__details__label">RMN</div>
+              <div className="ccip-hero__details__value">n/a</div>
+            </div>
+            <div className="ccip-hero__details__item">
+              <div className="ccip-hero__details__label">Token admin registry</div>
+              <div className="ccip-hero__details__value">
+                {network.tokenAdminRegistry ? (
+                  <Address endLength={4} contractUrl={network.tokenAdminRegistry} />
+                ) : (
+                  "n/a"
+                )}
+              </div>
+            </div>
+            <div className="ccip-hero__details__item">
+              <div className="ccip-hero__details__label">Registry module owner</div>
+              <div className="ccip-hero__details__value">
+                {network.registryModule ? <Address endLength={4} contractUrl={network.registryModule} /> : "n/a"}
+              </div>
             </div>
           </div>
-          <div className="ccip-hero__details__item">
-            <div className="ccip-hero__details__label">Chain selector</div>
-            <div className="ccip-hero__details__value">6433500567565415381</div>
-          </div>
-          <div className="ccip-hero__details__item">
-            <div className="ccip-hero__details__label">RMN</div>
-            <div className="ccip-hero__details__value">n/a</div>
-          </div>
-          <div className="ccip-hero__details__item">
-            <div className="ccip-hero__details__label">Token admin registry</div>
-            <div className="ccip-hero__details__value">n/a</div>
-          </div>
-          <div className="ccip-hero__details__item">
-            <div className="ccip-hero__details__label">Registry module owner</div>
-            <div className="ccip-hero__details__value">n/a</div>
-          </div>
-        </div>
+        )}
       </div>
     </section>
   )

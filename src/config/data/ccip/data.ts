@@ -9,6 +9,7 @@ import {
   determineTokenMechanism,
   TokenMechanism,
   NetworkFees,
+  LaneConfig,
 } from "."
 
 // For mainnet
@@ -31,7 +32,14 @@ import ratelimiterCCIPSendErrors from "@config/data/ccip/errors/ratelimiter.json
 import priceregistryCCIPSendErrors from "@config/data/ccip/errors/priceregistry.json"
 
 import { SupportedChain } from "@config/types"
-import { directoryToSupportedChain, getChainIcon, getTitle, supportedChainToChainInRdd } from "@features/utils"
+import {
+  directoryToSupportedChain,
+  getChainIcon,
+  getExplorer,
+  getExplorerAddressUrl,
+  getTitle,
+  supportedChainToChainInRdd,
+} from "@features/utils"
 
 export const getAllEnvironments = () => [Environment.Mainnet, Environment.Testnet]
 export const getAllVersions = () => [Version.V1_2_0]
@@ -148,6 +156,18 @@ export const getAllSupportedTokens = (params: { environment: Environment; versio
     return []
   }
   return tokens
+}
+
+export const getTokenData = (params: { tokenSymbol: string; environment: Environment; version: Version }) => {
+  const { tokensReferenceData } = loadReferenceData(params)
+  const tokenConfig = tokensReferenceData[params.tokenSymbol]
+
+  if (tokenConfig) {
+    return tokenConfig // Assuming the token configuration has a 'name' property
+  } else {
+    console.warn(`No token data found for ${params.tokenSymbol}`)
+    return {}
+  }
 }
 
 export const getTokenMechanism = (params: {
@@ -306,7 +326,7 @@ export const getLnMParams = ({ supportedChain, version }: { supportedChain: Supp
   }
 }
 
-export const getTokensOfChain = ({ chain, filter }: { chain: string; filter: "mainnet" | "testnet" }) => {
+export const getTokensOfChain = ({ chain, filter }: { chain: string; filter: Environment }) => {
   let tokensTestData
   switch (filter) {
     case "mainnet":
@@ -331,7 +351,7 @@ export const getTokensOfChain = ({ chain, filter }: { chain: string; filter: "ma
   return tokensResult
 }
 
-export const getAllNetworks = ({ filter = "mainnet" }: { filter?: "mainnet" | "testnet" }) => {
+export const getAllNetworks = ({ filter }: { filter: Environment }) => {
   const chains = getAllChains({
     mainnetVersion: Version.V1_2_0,
     testnetVersion: Version.V1_2_0,
@@ -343,6 +363,15 @@ export const getAllNetworks = ({ filter = "mainnet" }: { filter?: "mainnet" | "t
     totalLanes: number
     totalTokens: number
     chain: string
+    chainSelector: string
+    tokenAdminRegistry?: string
+    explorerUrl: string
+    registryModule?: string
+    router?: {
+      address: string
+      version: string
+    }
+    routerExplorerUrl: string
   }[] = []
 
   for (const chain of chains) {
@@ -353,16 +382,228 @@ export const getAllNetworks = ({ filter = "mainnet" }: { filter?: "mainnet" | "t
         continue
       }
     }
+    const lanes = Environment.Mainnet === filter ? lanesMainnetv120 : lanesTestnetv120
+    const chains = Environment.Mainnet === filter ? chainsMainnetv120 : chainsTestnetv120
     const logo = getChainIcon(directory)
     const token = getTokensOfChain({ chain, filter })
+    const explorerUrl = getExplorer(directory)
+    const router = chains[chain].router
+    if (!explorerUrl) throw Error(`Explorer url not found for ${directory}`)
+    const routerExplorerUrl = getExplorerAddressUrl(explorerUrl)(router.address)
     allChains.push({
       name: title?.replace(" mainnet", "").replace(" testnet", "") || "",
       logo: logo || "",
-      totalLanes: 0,
+      totalLanes: Object.keys(lanes[chain]).length,
       totalTokens: token.length,
       chain,
+      explorerUrl,
+      tokenAdminRegistry: chains[chain]?.tokenAdminRegistry?.address,
+      registryModule: chains[chain]?.registryModule?.address,
+      router,
+      routerExplorerUrl,
+      chainSelector: chains[chain].chainSelector,
     })
   }
 
   return allChains
+}
+
+export const getNetwork = ({ chain, filter }: { chain: string; filter: Environment }) => {
+  const chains = getAllNetworks({ filter })
+
+  for (const network of chains) {
+    if (network.chain === chain) {
+      let chainsReferenceData: ChainsConfig
+      switch (filter) {
+        case "mainnet":
+          chainsReferenceData = chainsMainnetv120 as unknown as ChainsConfig
+          break
+        case "testnet":
+          chainsReferenceData = chainsTestnetv120 as unknown as ChainsConfig
+          break
+        default:
+          throw new Error(`Invalid testnet version: ${filter}`)
+      }
+
+      const chainDetails = chainsReferenceData[chain]
+      return {
+        name: network.name,
+        logo: network.logo,
+        explorerUrl: network.explorerUrl,
+        ...chainDetails,
+      }
+    }
+  }
+
+  return undefined
+}
+
+export const getChainsOfToken = ({ token, filter }: { token: string; filter: "mainnet" | "testnet" }) => {
+  let tokensTestData
+  switch (filter) {
+    case "mainnet":
+      tokensTestData = tokensMainnetv120
+      break
+    case "testnet":
+      tokensTestData = tokensTestnetv120
+      break
+    default:
+      throw new Error(`Invalid testnet version: ${filter}`)
+  }
+
+  const chainsResult: string[] = []
+
+  for (const chain in tokensTestData[token]) {
+    chainsResult.push(chain)
+  }
+
+  return chainsResult
+}
+
+export const getAllNetworkLanes = ({
+  chain,
+  environment,
+  version,
+}: {
+  chain: string
+  environment: Environment
+  version: Version
+}) => {
+  const { lanesReferenceData } = loadReferenceData({
+    environment,
+    version,
+  })
+
+  const allLanes = lanesReferenceData[chain]
+
+  const lanesData: {
+    name: string
+    logo: string
+    key: string
+    directory: SupportedChain
+    onRamp: {
+      address: string
+      version: string
+    }
+    offRamp: {
+      address: string
+      version: string
+    }
+  }[] = Object.keys(allLanes).map((lane) => {
+    const laneData = allLanes[lane]
+
+    const directory = directoryToSupportedChain(lane || "")
+    const title = getTitle(directory)
+    const networkLogo = getChainIcon(directory)
+    return {
+      name: title || "",
+      logo: networkLogo || "",
+      onRamp: laneData.onRamp,
+      offRamp: laneData.offRamp,
+      key: lane,
+      directory,
+    }
+  })
+  return lanesData
+}
+
+export function getAllTokenLanes({
+  token,
+  environment,
+  version,
+}: {
+  token: string
+  environment: Environment
+  version: Version
+}) {
+  const { lanesReferenceData } = loadReferenceData({
+    environment,
+    version,
+  })
+
+  const allDestinationLanes: {
+    [sourceChain: string]: SupportedTokenConfig
+  } = {}
+
+  Object.keys(lanesReferenceData).forEach((sourceChain) => {
+    Object.keys(lanesReferenceData[sourceChain]).forEach((destinationLane) => {
+      if (
+        lanesReferenceData[sourceChain][destinationLane] &&
+        lanesReferenceData[sourceChain][destinationLane].supportedTokens &&
+        lanesReferenceData[sourceChain][destinationLane].supportedTokens[token]
+      ) {
+        allDestinationLanes[sourceChain] = lanesReferenceData[sourceChain][destinationLane].supportedTokens[token]
+      }
+    })
+  })
+
+  return allDestinationLanes
+}
+
+export function getLane({
+  sourceChain,
+  destinationChain,
+  environment,
+  version,
+}: {
+  sourceChain: SupportedChain
+  destinationChain: SupportedChain
+  environment: Environment
+  version: Version
+}) {
+  const { lanesReferenceData } = loadReferenceData({
+    environment,
+    version,
+  })
+
+  return lanesReferenceData[sourceChain][destinationChain]
+}
+
+export function getSearchLanes({ environment }: { environment: Environment }) {
+  const lanes = environment === Environment.Mainnet ? lanesMainnetv120 : lanesTestnetv120
+  const allLanes: {
+    sourceNetwork: {
+      name: string
+      logo: string
+      key: string
+    }
+    destinationNetwork: {
+      name: string
+      logo: string
+      key: string
+      explorerUrl: string
+    }
+    lane: LaneConfig
+  }[] = []
+
+  for (const sourceChain in lanes) {
+    const sourceChainDirectory = directoryToSupportedChain(sourceChain)
+    const sourceChainTitle = getTitle(sourceChainDirectory)
+    const sourceChainLogo = getChainIcon(sourceChainDirectory)
+
+    for (const destinationChain in lanes[sourceChain]) {
+      const destinationChainDirectory = directoryToSupportedChain(destinationChain)
+      const destinationChainTitle = getTitle(destinationChainDirectory)
+      const destinationChainLogo = getChainIcon(destinationChainDirectory)
+
+      const lane = lanes[sourceChain][destinationChain]
+      const explorerUrl = getExplorer(destinationChainDirectory) || ""
+      allLanes.push({
+        sourceNetwork: {
+          name: sourceChainTitle || "",
+          logo: sourceChainLogo || "",
+          key: sourceChain,
+        },
+        destinationNetwork: {
+          name: destinationChainTitle || "",
+          logo: destinationChainLogo || "",
+          key: destinationChain,
+          explorerUrl,
+        },
+        lane,
+      })
+    }
+  }
+
+  return allLanes
 }

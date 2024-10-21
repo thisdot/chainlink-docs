@@ -71,6 +71,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+  }
+
+  .drawer__close:hover button {
+    background-color: var(--blue-700);
   }
 
   .drawer__close label {

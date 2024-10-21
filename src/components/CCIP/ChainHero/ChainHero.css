@@ -72,6 +72,7 @@
   display: grid;
   gap: var(--space-4x);
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  margin-top: var(--space-10x);
 }
 
 .ccip-chain-hero__feeTokens {

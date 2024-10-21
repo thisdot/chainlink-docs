@@ -28,14 +28,16 @@ const supportedTokens = getAllSupportedTokens({
 
 const tokens = Object.keys(supportedTokens).sort((a, b) => a.localeCompare(b, undefined, { sensitivity: "base" }))
 
-const allTokens = tokens.map((token) => {
-  const logo = getTokenIconUrl(token) || ""
-  return {
-    name: token,
-    logo,
-    totalNetworks: getChainsOfToken({ token, filter: environment }).length,
-  }
-})
+const allTokens = tokens
+  .map((token) => {
+    const logo = getTokenIconUrl(token) || ""
+    return {
+      name: token,
+      logo,
+      totalNetworks: getChainsOfToken({ token, filter: environment }).length,
+    }
+  })
+  .sort((a, b) => a.name.localeCompare(b.name))
 
 const data = getTokenData({
   environment: environment,
@@ -72,25 +74,27 @@ const searchLanes = getSearchLanes({ environment })
       <Table
         client:only="react"
         environment={environment}
-        networks={Object.keys(data).map((key) => {
-          const directory = directoryToSupportedChain(key || "")
-          const title = getTitle(directory) || ""
-          const networkLogo = getChainIcon(directory) || ""
-          const explorerUrl = getExplorer(directory)
-          return {
-            name: title,
-            token: data[key].name || "",
-            key: key,
-            logo: networkLogo,
-            symbol: token,
-            tokenLogo: logo || "",
-            decimals: data[key].decimals || 0,
-            tokenAddress: data[key].tokenAddress || "",
-            tokenPoolType: data[key].poolType || "",
-            tokenPoolAddress: data[key].poolAddress || "",
-            explorerUrl: explorerUrl || "",
-          }
-        })}
+        networks={Object.keys(data)
+          .map((key) => {
+            const directory = directoryToSupportedChain(key || "")
+            const title = getTitle(directory) || ""
+            const networkLogo = getChainIcon(directory) || ""
+            const explorerUrl = getExplorer(directory)
+            return {
+              name: title,
+              token: data[key].name || "",
+              key: key,
+              logo: networkLogo,
+              symbol: token,
+              tokenLogo: logo || "",
+              decimals: data[key].decimals || 0,
+              tokenAddress: data[key].tokenAddress || "",
+              tokenPoolType: data[key].poolType || "",
+              tokenPoolAddress: data[key].poolAddress || "",
+              explorerUrl: explorerUrl || "",
+            }
+          })
+          .sort((a, b) => a.name.localeCompare(b.name))}
         lanes={lanes}
         token={{
           name: data[Object.keys(data)[0]]?.name || "",

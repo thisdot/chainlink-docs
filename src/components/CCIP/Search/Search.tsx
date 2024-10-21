@@ -177,10 +177,8 @@ function Search({ chains, tokens, small, environment, lanes }: SearchProps) {
                         {!small && (
                           <span>
                             {lane?.lane?.supportedTokens ? Object.keys(lane.lane.supportedTokens).length : 0}{" "}
-                            {lane?.lane?.supportedTokens
-                              ? Object.keys(lane.lane.supportedTokens).length > 1
-                                ? "tokens"
-                                : "token"
+                            {lane.lane.supportedTokens && Object.keys(lane.lane.supportedTokens).length > 1
+                              ? "tokens"
                               : "token"}
                           </span>
                         )}

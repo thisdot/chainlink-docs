@@ -28,16 +28,14 @@ const supportedTokens = getAllSupportedTokens({
 
 const tokens = Object.keys(supportedTokens).sort((a, b) => a.localeCompare(b, undefined, { sensitivity: "base" }))
 
-const allTokens = tokens
-  .map((token) => {
-    const logo = getTokenIconUrl(token) || ""
-    return {
-      name: token,
-      logo,
-      totalNetworks: getChainsOfToken({ token, filter: environment }).length,
-    }
-  })
-  .sort((a, b) => a.name.localeCompare(b.name))
+const allTokens = tokens.map((token) => {
+  const logo = getTokenIconUrl(token) || ""
+  return {
+    name: token,
+    logo,
+    totalNetworks: getChainsOfToken({ token, filter: environment }).length,
+  }
+})
 
 const data = getTokenData({
   environment: environment,

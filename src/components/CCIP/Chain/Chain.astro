@@ -80,8 +80,8 @@ const searchLanes = getSearchLanes({ environment })
     --gutter: var(--space-6x);
     --doc-padding: 2rem;
     margin: var(--space-8x) auto;
-    display: grid;
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
     gap: var(--gutter);
     padding: var(--doc-padding);
   }
@@ -110,13 +110,13 @@ const searchLanes = getSearchLanes({ environment })
   .networks__grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: var(--space-8x);
+    gap: var(--space-1x);
   }
 
   .tokens__grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-8x);
+    grid-template-columns: 33% 33% 33%;
+    gap: var(--space-1x);
   }
 
   @media (min-width: 50em) {
@@ -127,7 +127,7 @@ const searchLanes = getSearchLanes({ environment })
 
   @media (min-width: 992px) {
     .layout {
-      grid-template-columns: 1fr 1fr;
+      flex-direction: row;
       gap: var(--space-24x);
     }
 

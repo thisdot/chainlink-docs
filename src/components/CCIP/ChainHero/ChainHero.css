@@ -54,9 +54,10 @@
 
 .ccip-chain-hero__top {
   display: flex;
+  flex-direction: column-reverse;
   justify-content: space-between;
-  align-items: center;
-  gap: var(--space-16x);
+  align-items: start;
+  gap: var(--space-8x);
 }
 
 .ccip-chain-hero__chainSearch {
@@ -66,7 +67,7 @@
 .ccip-chain-hero__details {
   display: grid;
   gap: var(--space-4x);
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr;
 }
 
 .ccip-chain-hero__details__label {
@@ -82,12 +83,14 @@
 
 .ccip-chain-hero__feeTokens__list {
   display: flex;
-  align-items: center;
-  gap: var(--space-20x);
+  align-items: start;
+  flex-direction: column;
+  gap: var(--space-4x);
 }
 
 .ccip-chain-hero__feeTokens__item {
   display: flex;
+
   align-items: center;
   gap: var(--space-2x);
   color: var(--gray-900);
@@ -137,6 +140,22 @@
 }
 
 @media (min-width: 992px) {
+  .ccip-chain-hero__top {
+    flex-direction: row;
+    gap: var(--space-16x);
+    align-items: center;
+  }
+
+  .ccip-chain-hero__details {
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  }
+
+  .ccip-chain-hero__feeTokens__list {
+    align-items: center;
+    flex-direction: row;
+    gap: var(--space-20x);
+  }
+
   .ccip-chain-hero__content {
     grid-template-columns: 1fr 1fr;
     padding-left: var(--space-10x);

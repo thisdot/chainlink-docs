@@ -8,6 +8,15 @@
   border: none;
 }
 
+.ccip-table__wrapper {
+  overflow-x: auto;
+}
+
+.ccip-table th,
+.ccip-table td {
+  width: 200px;
+}
+
 .ccip-table__drawer-container {
   padding: var(--space-6x);
 }
@@ -156,5 +165,10 @@
 
   .ccip-table__drawer-container {
     padding: var(--space-10x);
+  }
+
+  .ccip-table th,
+  .ccip-table td {
+    width: auto;
   }
 }

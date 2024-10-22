@@ -3,12 +3,6 @@
   border-bottom: 1px solid var(--gray-200);
 }
 
-.ccip-chain-hero__grid {
-  width: 100vw;
-  z-index: 4;
-  position: relative;
-}
-
 .ccip-chain-hero__heading {
   color: var(--gray-900);
   display: flex;
@@ -86,7 +80,7 @@
   font-size: 14px;
   line-height: 22px;
   padding-bottom: var(--space-4x);
-  color: #6c7585;
+  color: var(--gray-500);
 }
 
 .ccip-chain-hero__feeTokens__list {

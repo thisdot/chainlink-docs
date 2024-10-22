@@ -82,7 +82,7 @@ function ChainHero({ chains, tokens, network, token, environment, lanes }: Chain
       version: Version.V1_2_0,
       tokenSymbol: feeToken,
     })
-    const explorerUrl = network.routerExplorerUrl
+    const explorerUrl = network.explorerUrl
     const address = getExplorerAddressUrl(explorerUrl)(token[network.chain].tokenAddress)
 
     return {
@@ -108,8 +108,6 @@ function ChainHero({ chains, tokens, network, token, environment, lanes }: Chain
 
   return (
     <section className="ccip-chain-hero">
-      <img src="/assets/ccip.png" alt="" className="ccip-chain-hero__grid" />
-
       <div className="ccip-chain-hero__content">
         <div className="ccip-chain-hero__top">
           <Breadcrumb
@@ -287,7 +285,7 @@ function ChainHero({ chains, tokens, network, token, environment, lanes }: Chain
                     }}
                     className="ccip-chain-hero__feeTokens__item__logo"
                   />
-                  <div>{nativeCurrency.name} </div>
+                  <div>{nativeCurrency.symbol} </div>
                   <span className="ccip-chain-hero__feeTokens__native-gas-token">(native gas token)</span>
                 </div>
               )}

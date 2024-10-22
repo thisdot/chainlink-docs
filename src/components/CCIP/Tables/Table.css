@@ -27,13 +27,14 @@
   text-align: start;
   background-color: transparent;
   padding: 0;
-  color: #6c7585;
+  color: var(--gray-500);
   padding-bottom: var(--space-4x);
+  align-content: baseline;
 }
 
 .ccip-table tbody td {
   text-align: start;
-  color: #141921;
+  color: var(--gray-900);
   padding: var(--space-4x) 0;
 }
 
@@ -45,24 +46,24 @@
 }
 
 .ccip-table tbody td .ccip-table__logo {
-  width: 40px;
-  height: 40px;
-  margin-right: 16px;
+  width: var(--space-8x);
+  height: var(--space-8x);
+  margin-right: var(--space-4x);
 }
 
 .ccip-table__status {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 8px 16px;
+  gap: var(--space-2x);
+  padding: var(--space-2x) var(--space-4x);
   background: #ddf8e6;
-  border-radius: 24px;
+  border-radius: var(--space-6x);
   border: 1px solid var(--Page-Border-Border, #e4e8ed);
   background: var(--Page-Background-Muted, #f5f7fa);
-  color: var(--Page-Foreground-Alt, #141921);
+  color: var(--Page-Foreground-Alt, --gray-900);
 }
 .ccip-table__status svg {
-  stroke: var(--Page-Foreground-Alt, #141921);
+  stroke: var(--Page-Foreground-Alt, --gray-900);
 }
 
 .ccip-table__status-operational {
@@ -101,8 +102,8 @@
   top: 70%;
   left: 70%;
   transform: translate(-50%, -50%);
-  width: 20px;
-  height: 20px;
+  width: var(--space-4x);
+  height: var(--space-4x);
   border-radius: 50%;
   background-color: #fff;
 }
@@ -112,8 +113,8 @@
   font-weight: 500;
   font-size: 22px;
   line-height: 28px;
-  padding: 8px;
-  color: #141921;
+  padding: var(--space-2x);
+  color: var(--gray-900);
   margin-bottom: 0px;
 }
 
@@ -121,7 +122,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 16px;
+  gap: var(--space-4x);
   margin-bottom: var(--space-6x);
   border-bottom: 1px solid var(--gray-200);
   padding-bottom: var(--space-4x);

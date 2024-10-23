@@ -15,7 +15,7 @@ function TokenCard({ name, logo, link, onClick }: TokenCardProps) {
         <div className="token-card__container">
           {/* We cannot use the normal Image/onError syntax as a fallback as the element is server rendered 
           and the onerror does not seem to work correctly. Using Picutre will also not work. */}
-          <object data={logo} type="image/png" width="32px" height="32px">
+          <object data={logo} type="image/png">
             <img src={fallbackTokenIconUrl} alt="" />
           </object>
           <h3>{name}</h3>
@@ -27,13 +27,9 @@ function TokenCard({ name, logo, link, onClick }: TokenCardProps) {
   if (onClick) {
     return (
       <div className="token-card__container" onClick={onClick} role="button">
-        <img
-          src={logo}
-          alt=""
-          onError={(event) => {
-            ;(event.target as HTMLImageElement).setAttribute("src", fallbackTokenIconUrl)
-          }}
-        />
+        <object data={logo} type="image/png">
+          <img src={fallbackTokenIconUrl} alt="" />
+        </object>
         <h3>{name}</h3>
       </div>
     )
@@ -41,13 +37,9 @@ function TokenCard({ name, logo, link, onClick }: TokenCardProps) {
 
   return (
     <div className="token-card__container">
-      <img
-        src={logo}
-        alt=""
-        onError={(event) => {
-          ;(event.target as HTMLImageElement).setAttribute("src", fallbackTokenIconUrl)
-        }}
-      />
+      <object data={logo} type="image/png">
+        <img src={fallbackTokenIconUrl} alt="" />
+      </object>
       <h3>{name}</h3>
     </div>
   )

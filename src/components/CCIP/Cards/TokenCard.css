@@ -20,8 +20,8 @@
 
 .token-card__container object,
 .token-card__container object img {
-  width: var(--space-8x);
-  height: var(--space-8x);
+  width: var(--space-10x);
+  height: var(--space-10x);
   border-radius: 50%;
 }
 

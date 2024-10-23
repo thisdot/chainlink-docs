@@ -42,7 +42,6 @@ const searchLanes = getSearchLanes({ environment })
 ---
 
 <CcipLayout frontmatter={entry.data} {headings} environment={environment}>
-  <Drawer client:only="react" />
   <Hero chains={networks} tokens={allTokens} environment={environment} client:load lanes={searchLanes} />
   <section class="layout">
     <div>

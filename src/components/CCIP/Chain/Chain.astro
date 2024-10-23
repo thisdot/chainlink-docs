@@ -54,14 +54,14 @@ const searchLanes = getSearchLanes({ environment })
     network={network}
     environment={environment}
     lanes={searchLanes}
-    client:only="react"
+    client:load
   />
   <section class="layout">
     <div>
       <Table
         environment={environment}
         lanes={lanes}
-        client:only="react"
+        client:load
         explorerUrl={network.explorerUrl}
         sourceNetwork={{
           name: network.name,

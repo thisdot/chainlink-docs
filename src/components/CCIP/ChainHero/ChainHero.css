@@ -36,7 +36,7 @@
 }
 
 .ccip-chain-hero__content {
-  --gutter: var(--space-10x);
+  --gutter: var(--space-6x);
   --doc-padding: 2rem;
   gap: var(--gutter);
   padding-left: var(--space-4x);
@@ -57,11 +57,11 @@
   flex-direction: column-reverse;
   justify-content: space-between;
   align-items: start;
-  gap: var(--space-8x);
+  gap: var(--space-6x);
 }
 
 .ccip-chain-hero__chainSearch {
-  width: 358px;
+  width: 100%;
 }
 
 .ccip-chain-hero__details {
@@ -146,6 +146,10 @@
     align-items: center;
   }
 
+  .ccip-chain-hero__chainSearch {
+    width: 358px;
+  }
+
   .ccip-chain-hero__details {
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   }
@@ -157,6 +161,7 @@
   }
 
   .ccip-chain-hero__content {
+    --gutter: var(--space-10x);
     grid-template-columns: 1fr 1fr;
     padding-left: var(--space-10x);
     padding-right: var(--space-10x);

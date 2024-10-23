@@ -14,6 +14,7 @@ import NetworkCard from "~/components/CCIP/Cards/NetworkCard"
 import TokenCard from "~/components/CCIP/Cards/TokenCard"
 import { getTokenIconUrl } from "~/features/utils"
 import Drawer from "../Drawer/Drawer"
+import NetworkGrid from "./NetworkGrid"
 export type Props = {
   environment: Environment
 }
@@ -49,20 +50,7 @@ const searchLanes = getSearchLanes({ environment })
       <div class="ccip-heading">
         <h2>Networks {environment} <span>({networks.length})</span></h2>
       </div>
-      <div class="networks__grid">
-        {
-          networks.map((chain) => (
-            <a href={`/ccip/supported-networks/${environment}/chain/${chain.chain}`}>
-              <NetworkCard
-                name={chain.name}
-                totalLanes={chain.totalLanes}
-                totalTokens={chain.totalTokens}
-                logo={chain.logo}
-              />
-            </a>
-          ))
-        }
-      </div>
+      <NetworkGrid networks={networks} environment={environment} client:load />
     </div>
     <div>
       <div class="ccip-heading">
@@ -118,12 +106,6 @@ const searchLanes = getSearchLanes({ environment })
     letter-spacing: 0.5px;
   }
 
-  .networks__grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--space-8x);
-  }
-
   .tokens__grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -141,12 +123,6 @@ const searchLanes = getSearchLanes({ environment })
       grid-template-columns: 1fr 1fr;
       gap: var(--space-24x);
     }
-
-    .networks__grid {
-      grid-template-columns: 1fr 1fr;
-      gap: var(--space-6x);
-    }
-
     .tokens__grid {
       grid-template-columns: 1fr 1fr 1fr 1fr;
       gap: var(--space-4x);

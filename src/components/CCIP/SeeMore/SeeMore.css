@@ -1,0 +1,22 @@
+.seeMore {
+  /* Title */
+
+  width: 600px;
+  height: 22px;
+
+  /* Body/Body S */
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  /* identical to box height, or 157% */
+
+  color: #2e7bff;
+
+  /* Inside auto layout */
+  flex: none;
+  order: 1;
+  align-self: stretch;
+  flex-grow: 0;
+}

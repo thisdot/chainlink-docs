@@ -48,7 +48,14 @@ const searchLanes = getSearchLanes({ environment })
 
 <CcipLayout frontmatter={entry.data} {headings} environment={environment}>
   <Drawer client:only="react" />
-  <ChainHero chains={networks} tokens={allTokens} network={network} environment={environment} lanes={searchLanes} />
+  <ChainHero
+    chains={networks}
+    tokens={allTokens}
+    network={network}
+    environment={environment}
+    lanes={searchLanes}
+    client:only="react"
+  />
   <section class="layout">
     <div>
       <Table
@@ -78,7 +85,7 @@ const searchLanes = getSearchLanes({ environment })
 <style scoped="false">
   .layout {
     --gutter: var(--space-6x);
-    --doc-padding: 2rem;
+    --doc-padding: var(--space-6x);
     margin: var(--space-8x) auto;
     display: flex;
     flex-direction: column;

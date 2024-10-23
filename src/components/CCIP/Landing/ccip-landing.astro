@@ -88,7 +88,7 @@ const searchLanes = getSearchLanes({ environment })
 <style>
   .layout {
     --gutter: var(--space-6x);
-    --doc-padding: 2rem;
+    --doc-padding: var(--space-6x);
     margin: var(--space-8x) auto;
     display: flex;
     flex-direction: column;
@@ -137,7 +137,7 @@ const searchLanes = getSearchLanes({ environment })
 
   @media (min-width: 992px) {
     .layout {
-      --doc-padding: 2rem;
+      --doc-padding: var(--space-6x);
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: var(--space-24x);

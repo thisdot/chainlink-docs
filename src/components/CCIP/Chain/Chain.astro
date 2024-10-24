@@ -128,6 +128,9 @@ const searchLanes = getSearchLanes({ environment })
   @media (min-width: 992px) {
     .layout {
       display: grid;
+      --doc-padding: var(--space-10x);
+      padding-top: var(--doc-padding);
+      padding-bottom: var(--doc-padding);
       grid-template-columns: 1fr 1fr;
       gap: var(--space-24x);
     }

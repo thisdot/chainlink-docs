@@ -10,10 +10,7 @@ import {
   getSearchLanes,
   Version,
 } from "~/config/data/ccip"
-import NetworkCard from "~/components/CCIP/Cards/NetworkCard"
-import TokenCard from "~/components/CCIP/Cards/TokenCard"
 import { getTokenIconUrl } from "~/features/utils"
-import Drawer from "../Drawer/Drawer"
 import NetworkGrid from "./NetworkGrid"
 import TokenGrid from "../TokenGrid/TokenGrid"
 export type Props = {
@@ -65,7 +62,7 @@ const searchLanes = getSearchLanes({ environment })
 
 <style>
   .layout {
-    --gutter: var(--space-6x);
+    --gutter: var(--space-10x);
     --doc-padding: var(--space-6x);
     margin: var(--space-8x) auto;
     display: flex;
@@ -104,8 +101,10 @@ const searchLanes = getSearchLanes({ environment })
 
   @media (min-width: 992px) {
     .layout {
-      --doc-padding: var(--space-6x);
+      --doc-padding: var(--space-10x);
       display: grid;
+      padding-top: var(--doc-padding);
+      padding-bottom: var(--doc-padding);
       grid-template-columns: 1fr 1fr;
       gap: var(--space-24x);
     }

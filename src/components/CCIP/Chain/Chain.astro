@@ -14,6 +14,7 @@ import Table from "~/components/CCIP/Tables/ChainTable"
 import { getTokenIconUrl } from "~/features/utils"
 import Drawer from "../Drawer/Drawer"
 import ChainTokenGrid from "./ChainTokenGrid"
+import TokenGrid from "../TokenGrid/TokenGrid"
 
 // TODO: Add type for network
 const { environment, network } = Astro.props as { environment: Environment; network: any }
@@ -75,9 +76,8 @@ const searchLanes = getSearchLanes({ environment })
         <h2>Tokens <span>({allTokens.length})</span></h2>
         <a class="button secondary" href="/ccip/concepts/cross-chain-tokens">List my token</a>
       </div>
-      <div class="tokens__grid">
-        <ChainTokenGrid tokens={allTokens} network={network} client:only="react" environment={environment} />
-      </div>
+
+      <ChainTokenGrid tokens={allTokens} network={network} client:only="react" environment={environment} />
     </div>
   </section>
 </CcipLayout>
@@ -119,12 +119,6 @@ const searchLanes = getSearchLanes({ environment })
     gap: var(--space-2x);
   }
 
-  .tokens__grid {
-    display: grid;
-    grid-template-columns: 32% 32% 32%;
-    gap: var(--space-2x);
-  }
-
   @media (min-width: 50em) {
     .layout {
       max-width: min(calc(1440px - 2 * var(--space-16x)), calc(100% - 2 * var(--space-16x)));
@@ -143,12 +137,6 @@ const searchLanes = getSearchLanes({ environment })
       grid-template-columns: 1fr 1fr;
       gap: var(--space-6x);
       min-height: 420px;
-    }
-
-    .tokens__grid {
-      min-height: 420px;
-      grid-template-columns: 1fr 1fr 1fr 1fr;
-      gap: var(--space-4x);
     }
 
     .ccip-heading {

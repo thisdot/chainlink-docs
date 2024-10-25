@@ -18,10 +18,6 @@
   width: 200px;
 }
 
-.ccip-table .ccip-table__status-column {
-  width: 140px;
-}
-
 .ccip-table__drawer-container {
   padding: var(--space-6x);
 }
@@ -182,5 +178,9 @@
   .ccip-table th,
   .ccip-table td {
     width: auto;
+  }
+
+  .ccip-table .ccip-table__status-column {
+    width: 140px;
   }
 }

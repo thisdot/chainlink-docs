@@ -162,7 +162,7 @@
   padding-top: var(--space-6x);
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 70em) {
   .ccip-table__drawer-heading {
     padding: var(--space-6x) var(--space-10x);
   }

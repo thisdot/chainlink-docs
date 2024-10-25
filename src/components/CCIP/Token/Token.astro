@@ -52,11 +52,18 @@ const lanes = getAllTokenLanes({
 const searchLanes = getSearchLanes({ environment })
 ---
 
-<CcipLayout frontmatter={entry.data} {headings} environment={environment}>
+<CcipLayout
+  frontmatter={{
+    title: `CCIP Supported Tokens - ${token}`,
+    section: "ccip",
+  }}
+  {headings}
+  environment={environment}
+>
   <ChainHero
     chains={networks}
     tokens={allTokens}
-    client:only="react"
+    client:load
     lanes={searchLanes}
     token={{
       name: data[Object.keys(data)[0]]?.name || "",
@@ -70,27 +77,29 @@ const searchLanes = getSearchLanes({ environment })
   <section class="layout">
     <div>
       <Table
-        client:only="react"
+        client:load
         environment={environment}
-        networks={Object.keys(data).map((key) => {
-          const directory = directoryToSupportedChain(key || "")
-          const title = getTitle(directory) || ""
-          const networkLogo = getChainIcon(directory) || ""
-          const explorerUrl = getExplorer(directory)
-          return {
-            name: title,
-            token: data[key].name || "",
-            key: key,
-            logo: networkLogo,
-            symbol: token,
-            tokenLogo: logo || "",
-            decimals: data[key].decimals || 0,
-            tokenAddress: data[key].tokenAddress || "",
-            tokenPoolType: data[key].poolType || "",
-            tokenPoolAddress: data[key].poolAddress || "",
-            explorerUrl: explorerUrl || "",
-          }
-        })}
+        networks={Object.keys(data)
+          .map((key) => {
+            const directory = directoryToSupportedChain(key || "")
+            const title = getTitle(directory) || ""
+            const networkLogo = getChainIcon(directory) || ""
+            const explorerUrl = getExplorer(directory)
+            return {
+              name: title,
+              token: data[key].name || "",
+              key: key,
+              logo: networkLogo,
+              symbol: token,
+              tokenLogo: logo || "",
+              decimals: data[key].decimals || 0,
+              tokenAddress: data[key].tokenAddress || "",
+              tokenPoolType: data[key].poolType || "",
+              tokenPoolAddress: data[key].poolAddress || "",
+              explorerUrl: explorerUrl || "",
+            }
+          })
+          .sort((a, b) => a.name.localeCompare(b.name))}
         lanes={lanes}
         token={{
           name: data[Object.keys(data)[0]]?.name || "",
@@ -104,13 +113,8 @@ const searchLanes = getSearchLanes({ environment })
 
 <style scoped="false">
   .layout {
-    --gutter: var(--space-6x);
-    --doc-padding: 2rem;
-    /* margin-bottom: 0; */
+    --doc-padding: var(--space-6x);
     margin: var(--space-8x) auto;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--gutter);
     padding: var(--doc-padding);
   }
 
@@ -143,7 +147,8 @@ const searchLanes = getSearchLanes({ environment })
 
   @media (min-width: 50em) {
     .layout {
-      max-width: 1440px;
+      max-width: min(calc(1440px - 2 * var(--space-16x)), calc(100% - 2 * var(--space-16x)));
+      padding: 0;
     }
   }
 </style>

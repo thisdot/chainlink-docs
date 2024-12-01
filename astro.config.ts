@@ -13,6 +13,12 @@ import yaml from "@rollup/plugin-yaml"
 // https://astro.build/config
 export default defineConfig({
   site: "https://docs.chain.link",
+  redirects: {
+    "/ccip/directory": "/ccip/directory/mainnet",
+    "/ccip/supported-networks": "/ccip/directory/mainnet",
+    "/getting-started": "/getting-started/conceptual-overview",
+    "/resources": "/resources/link-token-contracts",
+  },
   integrations: [
     preact({
       include: ["**/preact/*"],

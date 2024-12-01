@@ -35,6 +35,9 @@ export const productChainLinks: ProductChainLinks = {
       mode: "/ccip/supported-networks/v1_2_0/mainnet#mode-mainnet",
       metis: "/ccip/supported-networks/v1_2_0/mainnet#metis-mainnet",
       zksync: "/ccip/supported-networks/v1_2_0/mainnet#zksync-mainnet",
+      linea: "/ccip/supported-networks/v1_2_0/mainnet#linea-mainnet",
+      scroll: "/ccip/supported-networks/v1_2_0/mainnet#scroll-mainnet",
+      soneium: "/ccip/supported-networks/v1_2_0/testnet#soneium-minato-ethereum-sepolia",
     },
   },
   "Data Feeds": {
@@ -82,6 +85,7 @@ export const productChainLinks: ProductChainLinks = {
       ethereum: "/chainlink-functions/supported-networks#ethereum",
       optimism: "/chainlink-functions/supported-networks#optimism",
       polygon: "/chainlink-functions/supported-networks#polygon",
+      soneium: "/chainlink-functions/supported-networks#soneium",
     },
   },
   Automation: {
@@ -109,6 +113,8 @@ export const productChainLinks: ProductChainLinks = {
       ethereum: "/vrf/v2-5/supported-networks#ethereum-mainnet",
       fantom: "/vrf/v2/subscription/supported-networks#fantom-mainnet",
       polygon: "/vrf/v2-5/supported-networks#polygon-mainnet",
+      base: "/vrf/v2-5/supported-networks#base-mainnet",
+      soneium: "/vrf/v2-5/supported-networks#soneium-minato-testnet",
     },
   },
   linkTokenContracts: {

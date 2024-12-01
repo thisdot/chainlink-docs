@@ -31,6 +31,7 @@ export const chainToProvider: Record<SupportedChain, () => providers.Provider> =
   CELO_MAINNET: () => new providers.JsonRpcProvider("https://alfajores-forno.celo-testnet.org"),
   CELO_ALFAJORES: () => new providers.JsonRpcProvider("https://forno.celo.org"),
   LINEA_MAINNET: () => new providers.JsonRpcProvider("https://rpc.linea.build"),
+  LINEA_SEPOLIA: () => new providers.JsonRpcProvider("https://linea-sepolia-rpc.publicnode.com"),
   POLYGON_ZKEVM_MAINNET: () => new providers.JsonRpcProvider("https://zkevm-rpc.com"),
   POLYGON_ZKEVM_TESTNET: () => new providers.JsonRpcProvider("https://rpc.public.zkevm-test.net"),
   ZKSYNC_MAINNET: () => new providers.JsonRpcProvider("https://mainnet.era.zksync.io"),
@@ -43,6 +44,7 @@ export const chainToProvider: Record<SupportedChain, () => providers.Provider> =
   MODE_SEPOLIA: () => new providers.JsonRpcProvider("https://sepolia.mode.network"),
   BLAST_MAINNET: () => new providers.JsonRpcProvider("https://rpc.blast.io"),
   BLAST_SEPOLIA: () => new providers.JsonRpcProvider("https://sepolia.blast.io"),
+  SONEIUM_MINATO: () => new providers.JsonRpcProvider("	https://rpc.minato.soneium.org/"),
 }
 
 export const getRpcUrlForChain = (chain: SupportedChain): string => {

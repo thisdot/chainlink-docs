@@ -68,8 +68,7 @@ export const getTokenIconUrl = (token: string) => {
   return `https://d2f70xi62kby8n.cloudfront.net/tokens/${token.toLowerCase()}.webp?auto=compress%2Cformat`
 }
 
-export const fallbackTokenIconUrl =
-  "https://d2f70xi62kby8n.cloudfront.net/ccip-ui/ccip-hexagon-bg.svg?auto=compress%2Cformat"
+export const fallbackTokenIconUrl = "/assets/icons/generic-token.svg"
 
 export const getChainId = (supportedChain: SupportedChain) => {
   const technology = chainToTechnology[supportedChain]
@@ -170,6 +169,16 @@ export const directoryToSupportedChain = (chainInRdd: string): SupportedChain =>
       return "ZKSYNC_MAINNET"
     case "ethereum-testnet-sepolia-zksync-1":
       return "ZKSYNC_SEPOLIA"
+    case "ethereum-mainnet-linea-1":
+      return "LINEA_MAINNET"
+    case "ethereum-testnet-sepolia-linea-1":
+      return "LINEA_SEPOLIA"
+    case "ethereum-mainnet-scroll-1":
+      return "SCROLL_MAINNET"
+    case "ethereum-testnet-sepolia-scroll-1":
+      return "SCROLL_SEPOLIA"
+    case "ethereum-testnet-sepolia-soneium-1":
+      return "SONEIUM_MINATO"
     default:
       throw Error(`Chain not found ${chainInRdd}`)
   }
@@ -237,6 +246,16 @@ export const supportedChainToChainInRdd = (supportedChain: SupportedChain): stri
       return "ethereum-mainnet-zksync-1"
     case "ZKSYNC_SEPOLIA":
       return "ethereum-testnet-sepolia-zksync-1"
+    case "LINEA_MAINNET":
+      return "ethereum-mainnet-linea-1"
+    case "LINEA_SEPOLIA":
+      return "ethereum-testnet-sepolia-linea-1"
+    case "SCROLL_MAINNET":
+      return "ethereum-mainnet-scroll-1"
+    case "SCROLL_SEPOLIA":
+      return "ethereum-testnet-sepolia-scroll-1"
+    case "SONEIUM_MINATO":
+      return "ethereum-testnet-sepolia-soneium-1"
     default:
       throw Error(`Chain not found ${supportedChain}`)
   }

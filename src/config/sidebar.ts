@@ -227,7 +227,7 @@ export const SIDEBAR: Partial<Record<Sections, SectionEntry[]>> = {
           highlightAsCurrent: ["data-streams/getting-started-hardhat"],
         },
         {
-          title: "Data Streams Feed IDs",
+          title: "Data Streams Feeds",
           url: "data-streams/stream-ids",
         },
         {
@@ -589,7 +589,7 @@ export const SIDEBAR: Partial<Record<Sections, SectionEntry[]>> = {
           url: "chainlink-functions/getting-started",
         },
         {
-          title: "Supported Networks",
+          title: "CCIP Directory",
           url: "chainlink-functions/supported-networks",
         },
         {
@@ -939,16 +939,16 @@ export const SIDEBAR: Partial<Record<Sections, SectionEntry[]>> = {
           url: "ccip/getting-started",
         },
         {
-          title: "Supported Networks",
-          url: "ccip/supported-networks",
+          title: "CCIP Directory",
+          url: "ccip/directory",
           children: [
             {
               title: "Mainnet",
-              url: "ccip/supported-networks/v1_2_0/mainnet",
+              url: "ccip/directory/mainnet",
             },
             {
               title: "Testnet",
-              url: "ccip/supported-networks/v1_2_0/testnet",
+              url: "ccip/directory/testnet",
             },
           ],
         },
@@ -959,6 +959,10 @@ export const SIDEBAR: Partial<Record<Sections, SectionEntry[]>> = {
         {
           title: "Service Responsibility",
           url: "ccip/service-responsibility",
+        },
+        {
+          title: "Execution Latency",
+          url: "ccip/concepts/ccip-execution-latency",
         },
         {
           title: "Billing",
@@ -1039,10 +1043,6 @@ export const SIDEBAR: Partial<Record<Sections, SectionEntry[]>> = {
         {
           title: "Architecture",
           url: "ccip/architecture",
-        },
-        {
-          title: "Understanding CCIP Execution Latency",
-          url: "ccip/concepts/ccip-execution-latency",
         },
         {
           title: "Manual execution",

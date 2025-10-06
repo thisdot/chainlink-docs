@@ -3,7 +3,7 @@
   width: 100%;
   height: calc(100vh - var(--space-16x)); /* Subtract header height */
   position: sticky;
-  top: var(--space-16x); /* Header height */
+  top: var(--space-6x); /* Header height */
   overflow: hidden; /* Prevent nav overflow */
 }
 

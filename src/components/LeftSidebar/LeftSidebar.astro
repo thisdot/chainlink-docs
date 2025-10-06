@@ -74,7 +74,7 @@ function removeSlashes(url: string): string {
 const sidebarSections = getSidebarSections(section)
 ---
 
-<nav aria-labelledby="grid-left" class={styles.nav}>
+<nav aria-labelledby="grid-left" class={styles.nav} data-sticky>
   <ul class={styles.navGroups} data-sticky>
     {
       sidebarSections.map((group) => (

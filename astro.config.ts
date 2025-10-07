@@ -13,7 +13,7 @@ import yaml from "@rollup/plugin-yaml"
 import { ccipRedirects } from "./src/config/redirects/ccip"
 import trailingSlashMiddleware from "./src/integrations/trailing-slash-middleware"
 import redirectsJson from "./src/features/redirects/redirects.json"
-import tailwindcss from "@tailwindcss/vite"
+import tailwind from "@astrojs/tailwind"
 
 config() // Load .env file
 // Prepare set of redirect source URLs to exclude from sitemap
@@ -40,6 +40,7 @@ export default defineConfig({
     ...ccipRedirects,
   },
   integrations: [
+    tailwind(),
     trailingSlashMiddleware(),
     preact({
       include: ["**/preact/*"],
@@ -109,7 +110,7 @@ export default defineConfig({
   output: "static",
   adapter: vercel(),
   vite: {
-    plugins: [yaml(), tailwindcss()],
+    plugins: [yaml()],
     build: {
       target: "esnext", // Use latest ES features, no transpilation for modern browsers
       // Optimize CSS delivery

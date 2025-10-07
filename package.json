@@ -79,6 +79,7 @@
     "@solana/wallet-adapter-react-ui": "^0.9.39",
     "@solana/wallet-adapter-wallets": "^0.19.37",
     "@supabase/supabase-js": "^2.58.0",
+    "@tailwindcss/vite": "^4.1.14",
     "astro": "^5.14.1",
     "bignumber.js": "^9.3.1",
     "bs58": "^6.0.0",
@@ -101,6 +102,7 @@
     "remark-directive": "^3.0.1",
     "swagger-ui-dist": "^5.29.0",
     "swagger-ui-react": "^5.29.0",
+    "tailwindcss": "^4.1.14",
     "tweetnacl": "^1.0.3",
     "uuid": "^11.1.0"
   },

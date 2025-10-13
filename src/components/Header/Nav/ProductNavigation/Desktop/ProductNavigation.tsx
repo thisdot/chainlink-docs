@@ -42,7 +42,7 @@ export const ProductNavigation = ({ setNavMenuOpen, showMegaMenu, isMegamenuOpen
     <>
       <Root className={clsx(styles.root, styles.alignLeft)}>
         <List className={styles.list}>
-          <Item>
+          <Item onMouseEnter={exitMegamenu}>
             <a
               className={clsx(styles.navLink, {
                 [styles.megaMenu]: isMegamenuOpen,
@@ -51,17 +51,12 @@ export const ProductNavigation = ({ setNavMenuOpen, showMegaMenu, isMegamenuOpen
               role="button"
               aria-expanded={isMegamenuOpen}
               aria-controls="mega-menu"
-              aria-label="Resources menu"
+              aria-label="Docs menu"
               tabIndex={0}
               onKeyDown={handleKeyDown}
             >
-              Resources <CaretIcon aria-hidden />
+              Docs <CaretIcon aria-hidden />
             </a>
-          </Item>
-          <Item onMouseEnter={exitMegamenu}>
-            <NavigationMenu.Link className={clsx(styles.navLink, styles.active)} href="/">
-              Docs
-            </NavigationMenu.Link>
           </Item>
           <Item>
             <NavigationMenu.Link className={styles.navLink} href="https://dev.chain.link/demos">
@@ -84,7 +79,7 @@ export const ProductNavigation = ({ setNavMenuOpen, showMegaMenu, isMegamenuOpen
             </NavigationMenu.Link>
           </Item>
         </List>
-        {isMegamenuOpen && <MegaMenu id="mega-menu" cancel={exitMegamenu} />}
+        {!isMegamenuOpen && <MegaMenu id="mega-menu" cancel={exitMegamenu} />}
       </Root>
     </>
   )

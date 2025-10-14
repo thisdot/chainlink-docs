@@ -1,0 +1,17 @@
+---
+import styles from "./cards.module.css"
+import { ILink } from "./types"
+
+interface Props {
+  link: ILink
+}
+
+const { link } = Astro.props
+---
+
+<a href={link.href} class={styles.link}>
+  <img src={link.icon.src} alt="" />
+
+  <span>{link.label}</span>
+  <img src="/assets/icons/Arrow Right.svg" alt="arrow right" />
+</a>

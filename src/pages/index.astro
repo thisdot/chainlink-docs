@@ -5,8 +5,119 @@ import HeroCTA from "../features/landing/sections/HeroCTA.astro"
 import BaseLayout from "~/layouts/BaseLayout.astro"
 
 import * as CONFIG from "../config"
+import CardsWrapper from "~/components/Cards/CardsWrapper.astro"
+
+import tokenIcon from "../assets/icons/token-icon.svg"
+import remixIcon from "../assets/icons/remix-logo.svg"
 
 const formattedContentTitle = `${CONFIG.PAGE.titleFallback} | ${CONFIG.SITE.title}`
+
+const sample = [
+  {
+    title: "Deploy/enable a token across multiple chains",
+    description:
+      "Create a new Cross-Chain-Token or enable an established one that can be launched on 50+ chains, providing unparalleled interoperability and reach.",
+    links: [
+      {
+        icon: tokenIcon,
+        href: "https://example.com",
+        label: "View Token Manager",
+      },
+      {
+        icon: remixIcon,
+        href: "https://example.com",
+        label: "Open in Remix",
+      },
+    ],
+  },
+  {
+    title: "Bridge a token",
+    description:
+      "Securely transfer tokens - including ETH, USDC, LINK - and messages between different blockchain networks.",
+    links: [
+      {
+        icon: tokenIcon,
+        href: "https://example.com",
+        label: "View Token Manager",
+      },
+      {
+        icon: remixIcon,
+        href: "https://example.com",
+        label: "Open in Remix",
+      },
+    ],
+  },
+  {
+    title: "Send a token with data",
+    description:
+      "Build token transfers that do more than move value, letting you embed business logic directly into your cross-chain workflows.",
+    links: [
+      {
+        icon: remixIcon,
+        href: "https://example.com",
+        label: "Open in Remix",
+      },
+    ],
+  },
+  {
+    title: "Deploy/enable a token across multiple chains",
+    description:
+      "Create a new Cross-Chain-Token or enable an established one that can be launched on 50+ chains, providing unparalleled interoperability and reach.",
+    links: [
+      {
+        icon: tokenIcon,
+        href: "https://example.com",
+        label: "View Token Manager",
+      },
+      {
+        icon: remixIcon,
+        href: "https://example.com",
+        label: "Open in Remix",
+      },
+    ],
+  },
+  {
+    title: "Bridge a token",
+    description:
+      "Securely transfer tokens - including ETH, USDC, LINK - and messages between different blockchain networks.",
+    links: [
+      {
+        icon: tokenIcon,
+        href: "https://example.com",
+        label: "View Token Manager",
+      },
+      {
+        icon: remixIcon,
+        href: "https://example.com",
+        label: "Open in Remix",
+      },
+    ],
+  },
+  {
+    title: "Send a token with data",
+    description:
+      "Build token transfers that do more than move value, letting you embed business logic directly into your cross-chain workflows.",
+    links: [
+      {
+        icon: remixIcon,
+        href: "https://example.com",
+        label: "Open in Remix",
+      },
+    ],
+  },
+  {
+    title: "Send a token with data",
+    description:
+      "Build token transfers that do more than move value, letting you embed business logic directly into your cross-chain workflows.",
+    links: [
+      {
+        icon: remixIcon,
+        href: "https://example.com",
+        label: "Open in Remix",
+      },
+    ],
+  },
+]
 ---
 
 <BaseLayout title={formattedContentTitle}>
@@ -15,6 +126,8 @@ const formattedContentTitle = `${CONFIG.PAGE.titleFallback} | ${CONFIG.SITE.titl
       <div class="hero">
         <h1>Chainlink Developer Docs</h1>
         <h2>What are you building?</h2>
+        <CardsWrapper links={sample} />
+
         <ProductTabs />
       </div>
     </div>

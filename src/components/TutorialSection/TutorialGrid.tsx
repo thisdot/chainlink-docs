@@ -1,5 +1,5 @@
+import { TutorialCard, TutorialLink } from "./TutorialCard.tsx"
 import styles from "./TutorialSection.module.css"
-import { TutorialCard, TutorialLink } from "./TutorialCard"
 
 interface TutorialGridProps {
   links: TutorialLink[]

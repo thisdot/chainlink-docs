@@ -1,47 +1,50 @@
 .card {
   display: flex;
-  flex-direction: column;
   background: var(--color-background);
-  border: 1px solid var(--color-border);
-  border-radius: 12px;
-  padding: 1.5rem;
-  text-decoration: none;
-  color: inherit;
-  transition: all 0.2s ease;
-  cursor: pointer;
+  padding: var(--space-6x);
+  align-items: start;
+  gap: var(--space-6x);
+
+  &:hover .cardFooter {
+    opacity: 1;
+  }
+}
+
+.card:first-child {
+  border: 1px solid var(--border);
+}
+
+.card:nth-child(-n + 3) {
+  border-top: 1px solid var(--border);
+}
+
+.card:not(:first-child) {
+  border-bottom: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+}
+.card:nth-child(3n + 1) {
+  border-left: 1px solid var(--border);
 }
 
 .card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  border-color: var(--color-accent);
+  background-color: var(--muted);
 }
 
-.cardHeader {
+.cardFooter {
+  opacity: 0;
+  /* enforcing a width */
+  min-width: 16px;
+  max-width: 16px;
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 1rem;
-  margin-bottom: 0.75rem;
+  align-items: end;
+  height: 100%;
 }
 
 .cardTitle {
-  font-size: 1.125rem;
-  font-weight: 600;
-  color: var(--color-text-primary);
-  margin: 0;
-  line-height: 1.4;
-}
-
-.typeBadge {
-  background: var(--color-accent);
-  color: white;
-  padding: 0.25rem 0.75rem;
-  border-radius: 6px;
-  font-size: 0.75rem;
-  font-weight: 500;
-  white-space: nowrap;
-  flex-shrink: 0;
+  font-size: 16px;
+  font-weight: 525;
+  color: var(--foreground);
+  margin-bottom: var(--space-2x);
 }
 
 .cardDescription {

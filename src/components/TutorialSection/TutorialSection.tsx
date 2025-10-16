@@ -19,10 +19,10 @@ export const TutorialSection = ({ tabs }: TutorialSectionProps) => {
     <Tabs defaultValue={tabs[0].name}>
       <header className={styles.tutorialHeader}>
         <Typography variant="h2">Tutorials</Typography>
-        <TabsList>
+        <TabsList className={styles.tabsList}>
           {tabs.map((tab) => (
-            <TabsTrigger key={tab.name} value={tab.name}>
-              {tab.name}
+            <TabsTrigger key={tab.name} value={tab.name} className={styles.tabsTrigger}>
+              <Typography variant="body-s">{tab.name}</Typography>
             </TabsTrigger>
           ))}
         </TabsList>

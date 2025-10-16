@@ -150,7 +150,7 @@ const exampleTutorials = [
       </aside>
       <div id="grid-main">
         <PageContent {titleHeading}>
-          <TutorialSection client:load tabs={exampleTutorials} defaultTab="EVM" />
+          <TutorialSection client:visible tabs={exampleTutorials} />
           <slot />
         </PageContent>
       </div>

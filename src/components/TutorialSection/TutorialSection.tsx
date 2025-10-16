@@ -5,13 +5,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger, Typography } from "@chainlink
 
 export interface Tab {
   name: string
-  description?: string
   links: TutorialLink[]
 }
 
 interface TutorialSectionProps {
   tabs: Tab[]
-  defaultTab?: string
 }
 
 export const TutorialSection = ({ tabs }: TutorialSectionProps) => {

@@ -1,5 +1,5 @@
 ---
-import { Typography } from "@chainlink/blocks"
+import { Button, buttonVariants, Typography } from "@chainlink/blocks"
 import styles from "./LayoutHero.module.css"
 
 interface Props {
@@ -19,11 +19,17 @@ const { title, description, buttons = [], image } = Astro.props as Props
   <div class={styles.heroContentWrapper}>
     <div class={styles.heroContent}>
       <h2 class={styles.heroTitle}>{title}</h2>
-      <Typography variant="body-s">{description}</Typography>
+      <Typography variant="body-s" color="muted">{description}</Typography>
       <div class={styles.heroButtons}>
         {
           buttons.map((button, index) => (
-            <a href={button.link} class={`${styles.button} ${index === 0 ? styles.primary : styles.secondary}`}>
+            <a
+              href={button.link}
+              class={buttonVariants({
+                variant: index === 0 ? "primary" : "tertiary",
+                size: "sm",
+              })}
+            >
               {button.label}
             </a>
           ))

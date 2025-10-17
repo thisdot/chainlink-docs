@@ -1,4 +1,5 @@
 ---
+import { Typography } from "@chainlink/blocks"
 import CardLink from "./CardLink.astro"
 import styles from "./cards.module.css"
 import { ICard } from "./types"
@@ -9,7 +10,7 @@ const { title, description, links } = Astro.props
 ---
 
 <div class={styles.card}>
-  <h6>{title}</h6>
+  <Typography variant="h6">{title}</Typography>
   <p>{description}</p>
   <div class={styles.links}>
     {links && links.map((l) => <CardLink link={l} />)}

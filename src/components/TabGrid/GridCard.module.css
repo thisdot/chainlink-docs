@@ -10,22 +10,6 @@
   }
 }
 
-.card:first-child {
-  border: 1px solid var(--border);
-}
-
-.card:nth-child(-n + 3) {
-  border-top: 1px solid var(--border);
-}
-
-.card:not(:first-child) {
-  border-bottom: 1px solid var(--border);
-  border-right: 1px solid var(--border);
-}
-.card:nth-child(3n + 1) {
-  border-left: 1px solid var(--border);
-}
-
 .card:hover {
   background-color: var(--muted);
 }
@@ -33,11 +17,13 @@
 .cardFooter {
   opacity: 0;
   /* enforcing a width */
+  margin-top: auto;
   min-width: 16px;
-  max-width: 16px;
-  display: flex;
-  align-items: end;
-  height: 100%;
+}
+
+.cardFooter img {
+  width: 10px;
+  height: 10px;
 }
 
 .cardTitle {

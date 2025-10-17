@@ -1,22 +1,24 @@
-import styles from "./TutorialSection.module.css"
-import { TutorialLink } from "./TutorialCard.tsx"
-import { TutorialGrid } from "./TutorialGrid.tsx"
+import styles from "./TabGrid.module.css"
+import { GridItem } from "./GridCard.tsx"
+import { ItemGrid } from "./ItemGrid.tsx"
 import { Tabs, TabsContent, TabsList, TabsTrigger, Typography } from "@chainlink/blocks"
 
 export interface Tab {
   name: string
-  links: TutorialLink[]
+  links: GridItem[]
 }
 
-interface TutorialSectionProps {
+interface TabGridProps {
   tabs: Tab[]
+  header: string
+  columns?: number
 }
 
-export const TutorialSection = ({ tabs }: TutorialSectionProps) => {
+export const TabGrid = ({ tabs, header, columns }: TabGridProps) => {
   return (
     <Tabs defaultValue={tabs[0].name}>
       <header className={styles.tutorialHeader}>
-        <Typography variant="h2">Tutorials</Typography>
+        <Typography variant="h2">{header}</Typography>
         <TabsList className={styles.tabsList}>
           {tabs.map((tab) => (
             <TabsTrigger key={tab.name} value={tab.name} className={styles.tabsTrigger}>
@@ -29,7 +31,7 @@ export const TutorialSection = ({ tabs }: TutorialSectionProps) => {
       {tabs.map((tab) => (
         <TabsContent key={tab.name} value={tab.name}>
           <div className={styles.tutorialSection}>
-            <TutorialGrid links={tab.links} />
+            <ItemGrid links={tab.links} columns={columns} />
           </div>
         </TabsContent>
       ))}

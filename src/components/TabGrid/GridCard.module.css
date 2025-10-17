@@ -16,8 +16,8 @@
 
 .cardFooter {
   opacity: 0;
-  /* enforcing a width */
   margin-top: auto;
+  /* enforcing a width */
   min-width: 16px;
 }
 
@@ -38,18 +38,4 @@
   font-size: 0.9375rem;
   line-height: 1.6;
   margin: 0;
-}
-
-@media (max-width: 768px) {
-  .card {
-    padding: 1.25rem;
-  }
-
-  .cardTitle {
-    font-size: 1rem;
-  }
-
-  .cardDescription {
-    font-size: 0.875rem;
-  }
 }

@@ -1,5 +1,7 @@
+export type IconType = "token" | "remix"
+
 export interface ILink {
-  icon: ImageMetadata
+  icon: IconType
   href: string
   label: string
 }

@@ -1,4 +1,4 @@
-import { Typography, SvgArrowDiagonalUpperRight } from "@chainlink/blocks"
+import { Typography } from "@chainlink/blocks"
 import styles from "./GridCard.module.css"
 
 export interface GridItem {

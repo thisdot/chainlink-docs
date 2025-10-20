@@ -1,8 +1,9 @@
 .grid {
   display: grid;
+  border-left: 1px solid var(--border);
 }
 
-.tutorialHeader {
+.gridHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -27,9 +28,14 @@
   background-color: var(--pill-active);
   border-color: var(--pill-active);
 
-  & p {
+  & h3 {
     color: var(--pill-active-foreground);
   }
+}
+
+.tabTitle {
+  color: var(--pill-foreground);
+  font-weight: 400;
 }
 
 .tabsList {

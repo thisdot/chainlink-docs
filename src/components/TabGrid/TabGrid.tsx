@@ -11,18 +11,18 @@ export interface Tab {
 interface TabGridProps {
   tabs: Tab[]
   header: string
-  columns?: number
+  columns?: 1 | 2 | 3 | 4
 }
 
-export const TabGrid = ({ tabs, header, columns }: TabGridProps) => {
+export const TabGrid = ({ tabs, header, columns = 3 }: TabGridProps) => {
   return (
     <Tabs defaultValue={tabs[0].name}>
-      <header className={styles.tutorialHeader}>
+      <header className={styles.gridHeader}>
         <Typography variant="h2">{header}</Typography>
         <TabsList className={styles.tabsList}>
           {tabs.map((tab) => (
             <TabsTrigger key={tab.name} value={tab.name} className={styles.tabsTrigger}>
-              <Typography variant="body-s">{tab.name}</Typography>
+              <h3 className={styles.tabTitle}>{tab.name}</h3>
             </TabsTrigger>
           ))}
         </TabsList>
@@ -30,7 +30,7 @@ export const TabGrid = ({ tabs, header, columns }: TabGridProps) => {
 
       {tabs.map((tab) => (
         <TabsContent key={tab.name} value={tab.name}>
-          <div className={styles.tutorialSection}>
+          <div className={styles.gridContent}>
             <ItemGrid links={tab.links} columns={columns} />
           </div>
         </TabsContent>

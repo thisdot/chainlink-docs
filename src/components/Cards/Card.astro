@@ -10,7 +10,7 @@ const { title, description, links } = Astro.props
 ---
 
 <div class={styles.card}>
-  <Typography variant="h6">{title}</Typography>
+  <p class={styles.cardTitle}>{title}</p>
   <p>{description}</p>
   <div class={styles.links}>
     {links && links.map((l) => <CardLink link={l} />)}

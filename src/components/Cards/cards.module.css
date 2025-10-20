@@ -1,6 +1,8 @@
 .cardsWrapper {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  border-left: 1px solid var(--border);
+  border-top: 1px solid var(--border);
 }
 
 .cardsWrapper h6 {
@@ -16,6 +18,8 @@
 .card {
   padding: var(--space-5x) var(--space-6x);
   background: #fff;
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
 }
 
 .card:hover {
@@ -48,64 +52,14 @@
   color: var(--foreground);
 }
 
-@media screen and (min-width: 769px) {
-  .cardsWrapper {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  .card:first-child {
-    border: 1px solid rgba(22, 37, 65, 0.13);
-  }
-
-  .card:not(:first-child) {
-    border-bottom: 1px solid rgba(22, 37, 65, 0.13);
-    border-right: 1px solid rgba(22, 37, 65, 0.13);
-  }
-
-  .card:nth-child(-n + 3) {
-    border-top: 1px solid rgba(22, 37, 65, 0.13);
-  }
-
-  .card:nth-child(3n + 1) {
-    border-left: 1px solid rgba(22, 37, 65, 0.13);
-  }
-}
-
 @media screen and (max-width: 768px) {
   .cardsWrapper {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .card:first-child {
-    border: 1px solid rgba(22, 37, 65, 0.13);
-  }
-
-  .card:not(:first-child) {
-    border-bottom: 1px solid rgba(22, 37, 65, 0.13);
-    border-right: 1px solid rgba(22, 37, 65, 0.13);
-  }
-
-  .card:nth-child(-n + 2) {
-    border-top: 1px solid rgba(22, 37, 65, 0.13);
-  }
-
-  .card:nth-child(2n + 1) {
-    border-left: 1px solid rgba(22, 37, 65, 0.13);
+    grid-template-columns: repeat(2, 1fr) !important;
   }
 }
 
-@media screen and (max-width: 494px) {
+@media screen and (max-width: 425px) {
   .cardsWrapper {
-    grid-template-columns: 1fr;
-  }
-
-  .card:first-child {
-    border: 1px solid rgba(22, 37, 65, 0.13);
-  }
-
-  .card:not(:first-child) {
-    border-left: 1px solid rgba(22, 37, 65, 0.13);
-    border-right: 1px solid rgba(22, 37, 65, 0.13);
-    border-bottom: 1px solid rgba(22, 37, 65, 0.13);
+    grid-template-columns: repeat(1, 1fr) !important;
   }
 }

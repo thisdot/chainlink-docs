@@ -44,8 +44,17 @@
   border-bottom: 0;
 }
 
+/* Tablet: reduce columns to 2 for 3+ column layouts */
+@media (max-width: 1024px) {
+  [data-columns="3"],
+  [data-columns="4"] {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+/* Mobile: single column for all layouts */
 @media (max-width: 768px) {
   .grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr !important;
   }
 }

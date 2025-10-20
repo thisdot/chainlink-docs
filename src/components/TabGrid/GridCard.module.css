@@ -28,6 +28,30 @@
   border-top: 1px solid var(--border);
 }
 
+/* Tablet: adjust border-top for 2-column layouts */
+@media (max-width: 1024px) {
+  [data-columns="3"] > .card:nth-child(-n + 3),
+  [data-columns="4"] > .card:nth-child(-n + 4) {
+    border-top: none;
+  }
+
+  [data-columns="3"] > .card:nth-child(-n + 2),
+  [data-columns="4"] > .card:nth-child(-n + 2) {
+    border-top: 1px solid var(--border);
+  }
+}
+
+/* Mobile: single column - only first card has border-top */
+@media (max-width: 768px) {
+  [data-columns] > .card:nth-child(n) {
+    border-top: none;
+  }
+
+  [data-columns] > .card:nth-child(1) {
+    border-top: 1px solid var(--border);
+  }
+}
+
 .card:hover {
   background-color: var(--muted);
 }

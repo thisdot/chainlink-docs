@@ -7,7 +7,6 @@ import * as CONFIG from "~/config"
 import LeftSidebar from "~/components/LeftSidebar/LeftSidebar.astro"
 import PageContent from "~/components/PageContent/PageContent.astro"
 import { TabGrid } from "~/components/TabGrid/TabGrid"
-import LayoutHero from "~/components/LayoutHero/LayoutHero.astro"
 import ToolsUtilitiesGrid from "~/components/ToolsUtilitiesGrid/ToolsUtilitiesGrid.astro"
 
 interface Props {
@@ -193,16 +192,6 @@ const exampleTutorials = [
         <LeftSidebar currentPage={currentPage} section={frontmatter.section} />
       </aside>
       <div id="grid-main">
-        <LayoutHero
-          title="Build with CCIP"
-          description="CCIP makes it simple to move data, messages, and tokens across blockchains. Connect smart contracts on different networks as if they were one system, whether transferring stablecoins, powering cross-chain apps, or running multi-chain DeFi."
-          buttons={[
-            { label: "Get the SDK", link: "#" },
-            { label: "API Doc", link: "#" },
-          ]}
-          image="/images/ccip/ccip-hero.png"
-        />
-
         <ToolsUtilitiesGrid links={toolsAndUtilities} />
 
         <PageContent {titleHeading}>

@@ -8,6 +8,7 @@ import LeftSidebar from "~/components/LeftSidebar/LeftSidebar.astro"
 import PageContent from "~/components/PageContent/PageContent.astro"
 import { TabGrid } from "~/components/TabGrid/TabGrid"
 import LayoutHero from "~/components/LayoutHero/LayoutHero.astro"
+import ToolsUtilitiesGrid from "~/components/ToolsUtilitiesGrid/ToolsUtilitiesGrid.astro"
 
 interface Props {
   frontmatter: BaseFrontmatter
@@ -29,6 +30,63 @@ const formattedContentTitle = `${frontmatter.title} | ${CONFIG.SITE.title}`
 const currentPage = new URL(Astro.request.url).pathname
 
 const includeLinkToWalletScript = !!Astro.props.frontmatter.metadata?.linkToWallet
+
+// Tools and utilities data
+const toolsAndUtilities = [
+  {
+    image: "ccip-logo.svg",
+    imageAlt: "CCIP API icon",
+    label: "CCIP API",
+    link: "/ccip/api",
+    description: "An API for message retrieval and lane latency information.",
+  },
+  {
+    image: "js-logo.svg",
+    imageAlt: "JavaScript SDK icon",
+    label: "Javascript SDK",
+    link: "/ccip/tutorials/js-sdk",
+    description: "Integrate CCIP functionality directly into your web applications for EVM-compatible chains.",
+  },
+  {
+    image: "ts-logo.svg",
+    imageAlt: "CLI icon",
+    label: "CLI",
+    link: "/ccip/tutorials/cli",
+    description: "TypeScript command-line interface and library designed for interacting with deployed CCIP contracts.",
+  },
+  {
+    image: "hardhat-logo.svg",
+    imageAlt: "Hardhat icon",
+    label: "Hardhat Starter Kit",
+    link: "https://github.com/smartcontractkit/hardhat-starter-kit",
+    description:
+      "Ready-to-go boilerplate for basic CCIP use cases that help you get started building quickly with Hardhat.",
+  },
+  {
+    image: "foundry-logo.svg",
+    imageAlt: "Foundry icon",
+    label: "Foundry Starter Kit",
+    link: "https://github.com/smartcontractkit/foundry-starter-kit",
+    description:
+      "Ready-to-go boilerplate for basic CCIP use cases that help you get started building quickly with Foundry.",
+  },
+  {
+    image: "npm-logo.png",
+    imageAlt: "NPM icon",
+    label: "CCIP Contracts NPM",
+    link: "https://www.npmjs.com/package/@chainlink/contracts-ccip",
+    description:
+      "An npm package providing Solidity smart contract implementations to integrate CCIP into your EVM-based project.",
+  },
+  {
+    image: "direct-stacking-logo.svg",
+    imageAlt: "Direct Staking icon",
+    label: "Direct Staking",
+    link: "/staking",
+    description:
+      "Stake native tokens on supported L2 networks and receive liquid staked tokens directly on the same chain.",
+  },
+]
 
 // Example tutorial data
 const exampleTutorials = [
@@ -135,6 +193,11 @@ const exampleTutorials = [
         <LeftSidebar currentPage={currentPage} section={frontmatter.section} />
       </aside>
       <div id="grid-main">
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> 91667168 (add grid)
         <LayoutHero
           title="Build with CCIP"
           description="CCIP makes it simple to move data, messages, and tokens across blockchains. Connect smart contracts on different networks as if they were one system, whether transferring stablecoins, powering cross-chain apps, or running multi-chain DeFi."
@@ -144,6 +207,12 @@ const exampleTutorials = [
           ]}
           image="/images/ccip/ccip-hero.png"
         />
+<<<<<<< HEAD
+=======
+
+        <ToolsUtilitiesGrid links={toolsAndUtilities} />
+>>>>>>> b2ee97c7 (add grid)
+>>>>>>> 91667168 (add grid)
         <PageContent {titleHeading}>
           <TabGrid header="Tutorials" client:visible tabs={exampleTutorials} />
           <slot />

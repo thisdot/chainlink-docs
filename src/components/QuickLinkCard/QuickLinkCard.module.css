@@ -20,10 +20,19 @@
 .sidebar {
   width: 32px;
   flex-shrink: 0;
-  background-image: url("/images/info-sidebar-img.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  background: url("/images/info-sidebar-img.png") lightgray 50% / cover no-repeat;
+  position: relative;
+  filter: saturate(0.6);
+}
+
+.sidebar::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /*background-color: rgba(0, 0, 0, 0.2);*/
 }
 
 .main {

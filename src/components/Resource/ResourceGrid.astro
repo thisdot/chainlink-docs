@@ -4,7 +4,7 @@ import ResourceCard from "./ResourceCard.astro"
 import styles from "./ResourceGrid.module.css"
 
 export interface ResourceItem {
-  image?: ImageMetadata
+  image?: string | ImageMetadata
   imageAlt?: string
   label: string
   link: string

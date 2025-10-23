@@ -63,6 +63,13 @@
   height: auto;
 }
 
+@media screen and (max-width: 425px) {
+  .layoutHero {
+    height: auto;
+    padding: var(--space-8x) 0;
+  }
+}
+
 /* lesser values cause overlapping of elements */
 @media screen and (max-width: 1400px) {
   .layoutHero {

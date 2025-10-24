@@ -19,7 +19,6 @@ import QuickLinkCard from "@components/QuickLinkCard/QuickLinkCard.astro"
 import ToolsUtilitiesGrid from "@components/ToolsUtilitiesGrid/ToolsUtilitiesGrid.astro"
 import MediaSection from "@components/MediaSection/MediaSection.astro"
 import CardsWrapper from "@components/Cards/CardsWrapper.astro"
-import { ICard } from "@components/Cards/types.ts"
 import {
   SvgEyeOptic,
   SvgTransactionRepeatRecurring,
@@ -34,7 +33,7 @@ export const toolsAndUtilities = [
     image: "/images/ccip-logo.svg",
     imageAlt: "CCIP API icon",
     label: "CCIP API",
-    link: "/ccip/api",
+    link: "/ccip/api-reference",
     description: "An API for message retrieval and lane latency information.",
   },
   {
@@ -116,62 +115,62 @@ export const exampleTutorials = [
       {
         title: "Acquire Test Tokens",
         description: "Get test tokens in minutes; build and test cross-chain apps with zero friction.",
-        link: "/tutorials/acquire-test-tokens",
+        link: "/ccip/test-tokens",
       },
       {
         title: "Transfer Tokens",
         description: "Unlock seamless token transfers from contracts; learn, code, and deploy.",
-        link: "/tutorials/transfer-tokens",
+        link: "/ccip/tutorials/evm/transfer-tokens-from-contract",
       },
       {
         title: "Transfer Tokens with Data",
         description: "Go beyond basic transfers with logic-infused token movements in your EVM contracts.",
-        link: "/tutorials/transfer-tokens-data",
+        link: "/ccip/tutorials/evm/programmable-token-transfers",
       },
       {
         title: "Using the Token Manager",
         description: "Effortlessly manage CCTs by tracking, importing and organizing tokens from your dashboard.",
-        link: "/tutorials/token-manager",
+        link: "/ccip/tutorials/evm/token-manager",
       },
       {
         title: "Using the JS SDK",
         description: "Integrate CCIP in your frontend or backend effortlessly with JavaScript SDK.",
-        link: "/tutorials/js-sdk",
+        link: "/ccip/ccip-javascript-sdk",
       },
       {
         title: "Check Message Status",
         description: "Retrieve real-time status of your offchain transaction from EVM.",
-        link: "/tutorials/check-message-status",
+        link: "/ccip/tutorials/evm/offchain/get-status-offchain",
       },
       {
         title: "Transfer Tokens Between EOAs",
         description: "Send tokens offchain from an Externally Owned Account with clear steps.",
-        link: "/tutorials/transfer-tokens-eoa",
+        link: "/ccip/tutorials/evm/offchain/transfer-tokens-from-eoa",
       },
       {
         title: "Using the CLI",
         description: "Use offchain tools from CCIP to simplify your Ethereum workflows.",
-        link: "/tutorials/cli",
+        link: "/ccip/tutorials/evm/offchain/ccip-tools",
       },
       {
         title: "Deploy and Register a CCT",
         description: "Use RemixIDE to launch and configure tokens for cross-chain transfers on CCIP.",
-        link: "/tutorials/deploy-register-cct",
+        link: "/ccip/tutorials/evm/cross-chain-tokens/register-from-eoa-remix",
       },
       {
         title: "Register CCT Burn & Mint EOA",
         description: "Implement burn-mint cross-chain token logic with CCIP using Hardhat or Foundry.",
-        link: "/tutorials/register-cct-burn-mint",
+        link: "/ccip/tutorials/evm/cross-chain-tokens/register-from-eoa-burn-mint-hardhat",
       },
       {
         title: "Register CCT Lock & Mint EOA",
         description: "Implement a lock-mint token registration workflow with CCIP and Hardhat or Foundry.",
-        link: "/tutorials/register-cct-lock-mint",
+        link: "/ccip/tutorials/evm/cross-chain-tokens/register-from-eoa-lock-mint-hardhat",
       },
       {
         title: "Set Token Pool Rate Limits",
         description: "Update rate limiter settings for your cross-chain tokens using Hardhat or Foundry.",
-        link: "/tutorials/token-pool-rate-limits",
+        link: "/ccip/tutorials/evm/cross-chain-tokens/update-rate-limiters-hardhat",
       },
     ],
   },
@@ -181,12 +180,12 @@ export const exampleTutorials = [
       {
         title: "Getting Started with Solana",
         description: "Learn the basics of building on Solana blockchain.",
-        link: "/tutorials/solana-getting-started",
+        link: "/ccip/tutorials/svm",
       },
       {
         title: "Solana Token Transfers",
         description: "Transfer tokens on the Solana blockchain.",
-        link: "/tutorials/solana-transfers",
+        link: "/ccip/tutorials/svm/source/token-transfers",
       },
     ],
   },
@@ -196,7 +195,7 @@ export const exampleTutorials = [
       {
         title: "Getting Started with Aptos",
         description: "Start building on the Aptos blockchain.",
-        link: "/tutorials/aptos-getting-started",
+        link: "/ccip/tutorials/aptos",
       },
     ],
   },

@@ -7,7 +7,20 @@ import * as CONFIG from "~/config"
 import LeftSidebar from "~/components/LeftSidebar/LeftSidebar.astro"
 import PageContent from "~/components/PageContent/PageContent.astro"
 import { TabGrid } from "~/components/TabGrid/TabGrid"
+
 import ToolsUtilitiesGrid from "~/components/ToolsUtilitiesGrid/ToolsUtilitiesGrid.astro"
+import LayoutHero from "~/components/LayoutHero/LayoutHero.astro"
+import ResourceSection from "~/components/Resource/ResourceSection.astro"
+import MediaSection from "~/components/MediaSection/MediaSection.astro"
+import QuickLinkCard from "~/components/QuickLinkCard/QuickLinkCard.astro"
+import {
+  SvgBulletList,
+  SvgCrossChain,
+  SvgEyeOptic,
+  SvgStartup,
+  SvgTransactionRepeatRecurring,
+  SvgWaveSignal,
+} from "@chainlink/blocks"
 
 interface Props {
   frontmatter: BaseFrontmatter
@@ -83,6 +96,30 @@ const toolsAndUtilities = [
     link: "https://github.com/Aphyla/chainlink-csr",
     description:
       "Stake native tokens on supported L2 networks and receive liquid staked tokens directly on the same chain.",
+  },
+]
+// Example resources data
+const exampleResources = [
+  {
+    label: "Token Pool Types",
+    description:
+      "Explore the various token pool types supported by the Cross-Chain Token (CCT) standard with Chainlink Labs. Explore the various token pool types supported by the Cross-Chain Token (CCT) standard with Chainlink Labs...",
+    link: "/resources/token-pool-types",
+    type: "article",
+  },
+  {
+    label: "Token Pool Types",
+    description:
+      "Explore the various token pool types supported by the Cross-Chain Token (CCT) standard with Chainlink Labs. Explore the various token pool types supported by the Cross-Chain Token (CCT) standard with Chainlink Labs...",
+    link: "/resources/token-pool-types",
+    type: "article",
+  },
+  {
+    label: "Token Pool Types",
+    description:
+      "Explore the various token pool types supported by the Cross-Chain Token (CCT) standard with Chainlink Labs. Explore the various token pool types supported by the Cross-Chain Token (CCT) standard with Chainlink Labs...",
+    link: "/resources/token-pool-types",
+    type: "article",
   },
 ]
 
@@ -179,6 +216,40 @@ const exampleTutorials = [
     ],
   },
 ]
+
+// Quick links data
+const quickLinks = [
+  {
+    icon: SvgEyeOptic,
+    label: "View Network Configs",
+    link: "https://docs.chain.link/ccip/directory/mainnet",
+  },
+  {
+    icon: SvgTransactionRepeatRecurring,
+    label: "Check Transaction Status",
+    link: "https://ccip.chain.link/",
+  },
+  {
+    icon: SvgWaveSignal,
+    label: "View Lane Status",
+    link: "https://ccip.chain.link/status",
+  },
+  {
+    icon: SvgStartup,
+    label: "Get Testnet Tokens",
+    link: "https://tokenmanager.chain.link/",
+  },
+  {
+    icon: SvgCrossChain,
+    label: "Convert Chainlink tokens",
+    link: "https://www.transporter.io/",
+  },
+  {
+    icon: SvgBulletList,
+    label: "View the Changelog",
+    link: "https://dev.chain.link/changelog?product=CCIP",
+  },
+]
 ---
 
 <BaseLayout title={formattedContentTitle} metadata={frontmatter.metadata} pageTitle={frontmatter.title}>
@@ -191,10 +262,27 @@ const exampleTutorials = [
         <LeftSidebar currentPage={currentPage} section={frontmatter.section} />
       </aside>
       <div id="grid-main">
-        <ToolsUtilitiesGrid links={toolsAndUtilities} />
 
+        <LayoutHero
+          title="Build with CCIP"
+          description="CCIP makes it simple to move data, messages, and tokens across blockchains. Connect smart contracts on different networks as if they were one system, whether transferring stablecoins, powering cross-chain apps, or running multi-chain DeFi."
+          buttons={[
+            { label: "Get the SDK", link: "#" },
+            { label: "API Doc", link: "#" },
+          ]}
+          image="/images/ccip/ccip-hero.png"
+        />
+        <TabGrid header="Tutorials" client:visible tabs={exampleTutorials} />
+        <ResourceSection title="Resources" resources={exampleResources} />
+        <QuickLinkCard links={quickLinks} />
+        <ToolsUtilitiesGrid links={toolsAndUtilities} />
         <PageContent {titleHeading}>
           <TabGrid header="Tutorials" client:visible tabs={exampleTutorials} />
+          <MediaSection
+            heading="High-level architecture"
+            description="CCIP delivers cross-chain messages from a source chain to a destination chain by combining offchain consensus and onchain execution components."
+            image="/images/architecture.png"
+          />
           <slot />
         </PageContent>
       </div>

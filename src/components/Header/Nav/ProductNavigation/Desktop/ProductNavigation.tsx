@@ -79,7 +79,7 @@ export const ProductNavigation = ({ setNavMenuOpen, showMegaMenu, isMegamenuOpen
             </NavigationMenu.Link>
           </Item>
         </List>
-        {!isMegamenuOpen && <MegaMenu id="mega-menu" cancel={exitMegamenu} />}
+        {isMegamenuOpen && <MegaMenu id="mega-menu" cancel={exitMegamenu} />}
       </Root>
     </>
   )

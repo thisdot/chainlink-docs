@@ -175,7 +175,8 @@ export const megaMenuSections = {
 function MegaMenu() {
   return (
     <div className={styles.wrapper}>
-      <div className={styles.column}>
+      {/* Row 1: Orchestration, Interoperability, Asset Management */}
+      <div className={styles.row}>
         <div className={styles.section}>
           <header>
             <BlueSquare />
@@ -190,20 +191,6 @@ function MegaMenu() {
         <div className={styles.section}>
           <header>
             <BlueSquare />
-            <GroupTitle>{megaMenuSections.data.title}</GroupTitle>
-          </header>
-          <div className={styles.itemList}>
-            {megaMenuSections.data.items.map((link) => (
-              <GroupItem key={link.title} data={link} />
-            ))}
-          </div>
-        </div>
-      </div>
-
-      <div className={styles.column}>
-        <div className={styles.section}>
-          <header>
-            <BlueSquare />
             <GroupTitle>{megaMenuSections.interoperability.title}</GroupTitle>
           </header>
           <div className={styles.itemList}>
@@ -215,24 +202,36 @@ function MegaMenu() {
         <div className={styles.section}>
           <header>
             <BlueSquare />
-            <GroupTitle>{megaMenuSections.compute.title}</GroupTitle>
+            <GroupTitle>{megaMenuSections.assetManagement.title}</GroupTitle>
           </header>
           <div className={styles.itemList}>
-            {megaMenuSections.compute.items.map((link) => (
+            {megaMenuSections.assetManagement.items.map((link) => (
               <GroupItem key={link.title} data={link} />
             ))}
           </div>
         </div>
       </div>
 
-      <div className={styles.column}>
+      {/* Row 2: Data, Compute, More */}
+      <div className={styles.row}>
         <div className={styles.section}>
           <header>
             <BlueSquare />
-            <GroupTitle>{megaMenuSections.assetManagement.title}</GroupTitle>
+            <GroupTitle>{megaMenuSections.data.title}</GroupTitle>
           </header>
           <div className={styles.itemList}>
-            {megaMenuSections.assetManagement.items.map((link) => (
+            {megaMenuSections.data.items.map((link) => (
+              <GroupItem key={link.title} data={link} />
+            ))}
+          </div>
+        </div>
+        <div className={styles.section}>
+          <header>
+            <BlueSquare />
+            <GroupTitle>{megaMenuSections.compute.title}</GroupTitle>
+          </header>
+          <div className={styles.itemList}>
+            {megaMenuSections.compute.items.map((link) => (
               <GroupItem key={link.title} data={link} />
             ))}
           </div>

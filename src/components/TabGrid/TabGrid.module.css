@@ -1,10 +1,7 @@
-.tabGridWrapper {
-  margin: 56px 0;
-}
 .grid {
   display: grid;
   border-left: 1px solid var(--border);
-  margin: 36px 0;
+  margin-top: 36px 0;
 }
 
 .gridHeader {
@@ -70,6 +67,10 @@
 @media screen and (max-width: 425px) {
   .gridSection {
     margin-top: 0;
+  }
+
+  .gridHeader {
+    margin-bottom: var(--space-6x);
   }
 }
 

@@ -1,13 +1,9 @@
-import { evmProducts } from "~/features/landing/data/index.ts"
 import styles from "./megaMenu.module.css"
-import resourcesLogo from "../../../../../assets/product-logos/data-resources-logo.svg"
-import { Fragment } from "react/jsx-runtime"
 import { useEffect } from "react"
 import ccipLogo from "../../../../../assets/product-logos/ccip-logo.svg"
-import automatedComplianceEngineLogo from "../../../../../assets/product-logos/automated-compliance-engine.svg"
 import dataFeedsLogo from "../../../../../assets/product-logos/data-feeds-logo.svg"
 import dataStreamsLogo from "../../../../../assets/product-logos/data-streams-logo.svg"
-import dataLinkVaultLogo from "../../../../../assets/product-logos/data-link-vault.svg"
+import dataLinkLogo from "../../../../../assets/product-logos/datalink-logo.svg"
 import functionsLogo from "../../../../../assets/product-logos/functions-logo.svg"
 import automationLogo from "../../../../../assets/product-logos/automation-logo.svg"
 import vrfLogo from "../../../../../assets/product-logos/vrf-logo.svg"
@@ -16,6 +12,7 @@ import generalGlobeLogo from "../../../../../assets/product-logos/general-globe-
 import nodesLogo from "../../../../../assets/product-logos/nodes-logo.svg"
 import chainlinkLocalLogo from "../../../../../assets/product-logos/chainlink-local-2-logo.svg"
 import creLogo from "../../../../../assets/product-logos/cre-logo.svg"
+import { Typography } from "@chainlink/blocks"
 
 interface MegaMenuProps {
   cancel: () => void
@@ -26,7 +23,7 @@ const BlueSquare = () => {
   return (
     <div
       style={{
-        background: "var(--Background-Accent, #0847F7)",
+        background: "var(--brand)",
         height: "5px",
         width: "5px",
         display: "block",
@@ -42,15 +39,37 @@ interface GroupItem {
   link: string
 }
 
-const GroupItem = ({ data, styleProp }: { data: GroupItem; styleProp?: React.CSSProperties }) => {
+const GroupItem = ({ data }: { data: GroupItem }) => {
   return (
-    <a href={data.link} className={styles.groupItem} style={styleProp ?? {}}>
+    <a href={data.link} className={styles.groupItem}>
       <img src={data.icon.src} alt={data.title} className={styles.groupItemIcon} />
       <div>
-        <p className={styles.groupItemTitle}>{data.title}</p>
-        <p className={styles.groupItemDescription}>{data.description}</p>
+        <Typography
+          variant="body-semi"
+          style={{
+            fontSize: "18px",
+            fontWeight: 500,
+          }}
+        >
+          {data.title}
+        </Typography>
+        <Typography color="muted" variant="body-s">
+          {data.description}
+        </Typography>
       </div>
     </a>
+  )
+}
+
+const GroupTitle = ({ children }: { children: React.ReactNode }) => {
+  return (
+    <Typography
+      variant="code-s"
+      color="muted"
+      style={{ textTransform: "uppercase", lineHeight: "12px", letterSpacing: "0.6px" }}
+    >
+      {children}
+    </Typography>
   )
 }
 
@@ -66,26 +85,9 @@ export const megaMenuSections = {
       },
     ],
   },
-  compliance: {
-    title: "Compliance",
-    items: [
-      {
-        icon: automatedComplianceEngineLogo,
-        title: "Automated Compliance Engine",
-        description: "Enable compliance-focused digital assets",
-        link: "#",
-      },
-    ],
-  },
   data: {
     title: "Data",
     items: [
-      {
-        icon: dataFeedsLogo,
-        title: "Market and Data Feeds",
-        description: "Utilize ultra-secure onchain data for smart contracts",
-        link: "#",
-      },
       {
         icon: dataStreamsLogo,
         title: "Data Streams",
@@ -93,9 +95,26 @@ export const megaMenuSections = {
         link: "#",
       },
       {
-        icon: dataLinkVaultLogo,
-        title: "Data Link",
-        description: "Verify tokenized and wrapped assets",
+        icon: dataFeedsLogo,
+        title: "Market and Data Feeds",
+        description: "Utilize ultra-secure onchain data for smart contracts",
+        link: "#",
+      },
+      {
+        icon: dataLinkLogo,
+        title: "DataLink",
+        description: "Publish and commercialize institutional data across...",
+        link: "#",
+      },
+    ],
+  },
+  assetManagement: {
+    title: "Asset Management",
+    items: [
+      {
+        icon: dtaLogo,
+        title: "Digital Transfer Agent (DTA) Technical Standard",
+        description: "Unlock streamlined tokenized fund operations",
         link: "#",
       },
     ],
@@ -129,24 +148,13 @@ export const megaMenuSections = {
       {
         icon: creLogo,
         title: "Chainlink Runtime Environment (CRE)",
-        description: "A composable, secure, and future-proof platform",
-        link: "#",
-      },
-    ],
-  },
-  technicalStandards: {
-    title: "Technical Standards",
-    items: [
-      {
-        icon: dtaLogo,
-        title: "DTA",
-        description: "Technical standards for subscriptions and redemptions",
+        description: "The global orchestration layer",
         link: "#",
       },
     ],
   },
   other: {
-    title: "Other",
+    title: "More",
     items: [
       {
         icon: generalGlobeLogo,
@@ -186,165 +194,76 @@ function MegaMenu({ cancel, id }: MegaMenuProps) {
   return (
     <div className={styles.megaMenuContainer} id={id}>
       <div className={styles.wrapper}>
-        <div className={styles.menuSection__primary}>
-          <div className={styles.menuSection__nested}>
-            <div className={styles.menuSection__group}>
-              <div>
-                <header
-                  style={{
-                    borderLeft: "1px solid var(--Border-Grid, rgba(22, 37, 65, 0.13))",
-                    borderBottom: "1px solid var(--Border-Grid, rgba(22, 37, 65, 0.13))",
-                  }}
-                >
-                  <BlueSquare />
-                  <p>{megaMenuSections.interoperability.title}</p>
-                </header>
-
-                <div className={styles.itemList}>
-                  {megaMenuSections.interoperability.items.map((link) => (
-                    <GroupItem key={link.title} data={link} />
-                  ))}
-                </div>
-              </div>
-              <div>
-                <header
-                  style={{
-                    borderLeft: "1px solid var(--Border-Grid, rgba(22, 37, 65, 0.13))",
-                    borderBottom: "1px solid var(--Border-Grid, rgba(22, 37, 65, 0.13))",
-                    borderTop: "1px solid var(--Border-Grid, rgba(22, 37, 65, 0.13))",
-                  }}
-                >
-                  <BlueSquare />
-                  <p>{megaMenuSections.compliance.title}</p>
-                </header>
-
-                <div>
-                  {megaMenuSections.compliance.items.map((link) => (
-                    <GroupItem
-                      key={link.title}
-                      data={link}
-                      styleProp={{
-                        borderLeft: "1px solid var(--gray-200)",
-                      }}
-                    />
-                  ))}
-                </div>
-              </div>
-            </div>
-            <div
-              className={styles.menuSection__data}
-              style={{
-                borderLeft: "1px solid var(--Border-Grid, rgba(22, 37, 65, 0.13))",
-              }}
-            >
-              <header
-                style={{
-                  borderRight: "1px solid var(--Border-Grid, rgba(22, 37, 65, 0.13))",
-                  borderBottom: "1px solid var(--Border-Grid, rgba(22, 37, 65, 0.13))",
-                }}
-              >
-                <BlueSquare />
-                <p>{megaMenuSections.data.title}</p>
-              </header>
-
-              <div>
-                {megaMenuSections.data.items.map((link) => (
-                  <GroupItem
-                    key={link.title}
-                    data={link}
-                    styleProp={{
-                      borderRight: "1px solid var(--gray-200)",
-                    }}
-                  />
-                ))}
-              </div>
-            </div>
-            <div className={styles.menuSection__compute}>
-              <header
-                style={{
-                  borderBottom: "1px solid var(--Border-Grid, rgba(22, 37, 65, 0.13))",
-                }}
-              >
-                <BlueSquare />
-                <p>{megaMenuSections.compute.title}</p>
-              </header>
-
-              <div>
-                {megaMenuSections.compute.items.map((link) => (
-                  <GroupItem key={link.title} data={link} />
-                ))}
-              </div>
-            </div>
-          </div>
-          <div className={styles.menuSection__orchestration}>
-            <header
-              style={{
-                borderLeft: "1px solid var(--Border-Grid, rgba(22, 37, 65, 0.13))",
-                borderTop: "1px solid var(--Border-Grid, rgba(22, 37, 65, 0.13))",
-                borderBottom: "1px solid var(--Border-Grid, rgba(22, 37, 65, 0.13))",
-              }}
-            >
+        <div className={styles.column}>
+          <div className={styles.section}>
+            <header>
               <BlueSquare />
-              <p>{megaMenuSections.orchestration.title}</p>
+              <GroupTitle>{megaMenuSections.orchestration.title}</GroupTitle>
             </header>
-
-            <div>
+            <div className={styles.itemList}>
               {megaMenuSections.orchestration.items.map((link) => (
                 <GroupItem key={link.title} data={link} />
               ))}
             </div>
           </div>
-        </div>
-        <div
-          className={styles.menuSection__secondary}
-          style={{
-            borderLeft: "1px solid var(--Border-Grid, rgba(22, 37, 65, 0.13))",
-          }}
-        >
-          <div className={styles.menuSection__technicalStandards}>
-            <header
-              style={{
-                borderRight: "1px solid var(--Border-Grid, rgba(22, 37, 65, 0.13))",
-                borderBottom: "1px solid var(--Border-Grid, rgba(22, 37, 65, 0.13))",
-              }}
-            >
+          <div className={styles.section}>
+            <header>
               <BlueSquare />
-              <p>{megaMenuSections.technicalStandards.title}</p>
+              <GroupTitle>{megaMenuSections.data.title}</GroupTitle>
             </header>
-
-            <div>
-              {megaMenuSections.technicalStandards.items.map((link) => (
-                <GroupItem
-                  key={link.title}
-                  data={link}
-                  styleProp={{
-                    borderRight: "1px solid var(--gray-200)",
-                  }}
-                />
+            <div className={styles.itemList}>
+              {megaMenuSections.data.items.map((link) => (
+                <GroupItem key={link.title} data={link} />
               ))}
             </div>
           </div>
-          <div className={styles.menuSection__other}>
-            <header
-              style={{
-                borderRight: "1px solid var(--Border-Grid, rgba(22, 37, 65, 0.13))",
-                borderBottom: "1px solid var(--Border-Grid, rgba(22, 37, 65, 0.13))",
-                borderTop: "1px solid var(--Border-Grid, rgba(22, 37, 65, 0.13))",
-              }}
-            >
-              <BlueSquare />
-              <p>{megaMenuSections.other.title}</p>
-            </header>
+        </div>
 
-            <div>
+        <div className={styles.column}>
+          <div className={styles.section}>
+            <header>
+              <BlueSquare />
+              <GroupTitle>{megaMenuSections.interoperability.title}</GroupTitle>
+            </header>
+            <div className={styles.itemList}>
+              {megaMenuSections.interoperability.items.map((link) => (
+                <GroupItem key={link.title} data={link} />
+              ))}
+            </div>
+          </div>
+          <div className={styles.section}>
+            <header>
+              <BlueSquare />
+              <GroupTitle>{megaMenuSections.compute.title}</GroupTitle>
+            </header>
+            <div className={styles.itemList}>
+              {megaMenuSections.compute.items.map((link) => (
+                <GroupItem key={link.title} data={link} />
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className={styles.column}>
+          <div className={styles.section}>
+            <header>
+              <BlueSquare />
+              <GroupTitle>{megaMenuSections.assetManagement.title}</GroupTitle>
+            </header>
+            <div className={styles.itemList}>
+              {megaMenuSections.assetManagement.items.map((link) => (
+                <GroupItem key={link.title} data={link} />
+              ))}
+            </div>
+          </div>
+          <div className={styles.section}>
+            <header>
+              <BlueSquare />
+              <GroupTitle>{megaMenuSections.other.title}</GroupTitle>
+            </header>
+            <div className={styles.itemList}>
               {megaMenuSections.other.items.map((link) => (
-                <GroupItem
-                  key={link.title}
-                  data={link}
-                  styleProp={{
-                    borderRight: "1px solid var(--gray-200)",
-                  }}
-                />
+                <GroupItem key={link.title} data={link} />
               ))}
             </div>
           </div>

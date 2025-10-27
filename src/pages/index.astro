@@ -7,12 +7,15 @@ import BaseLayout from "~/layouts/BaseLayout.astro"
 import * as CONFIG from "../config"
 import Demos from "~/components/Demos.astro"
 import { Typography } from "@chainlink/blocks"
+import LandingHero from "~/components/LandingHero/LandingHero.astro"
 
 const formattedContentTitle = `${CONFIG.PAGE.titleFallback} | ${CONFIG.SITE.title}`
 ---
 
 <BaseLayout title={formattedContentTitle}>
   <main>
+    <LandingHero />
+    <!-- TODO: remove -->
     <div class="heroContainer">
       <div class="hero">
         <h1>Chainlink Developer Docs</h1>

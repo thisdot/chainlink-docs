@@ -9,6 +9,15 @@
   justify-content: center;
 }
 
+/* applies shadow to dropdown version of mega-menu */
+.megaMenuContainer > .wrapper {
+  box-shadow:
+    4.6px 9.3px 54px 1px rgba(152, 160, 185, 0.04),
+    2.1px 4.3px 32px -0.7px rgba(152, 160, 185, 0.31),
+    1px -1px 3px -0.3px rgba(152, 160, 185, 0.21),
+    0.3px 0.5px 0.8px 0px rgba(152, 160, 185, 0.12);
+}
+
 .wrapper {
   max-width: 1500px;
   width: 100%;
@@ -17,11 +26,7 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  /*box-shadow:
-    4.6px 9.3px 54px 1px rgba(152, 160, 185, 0.04),
-    2.1px 4.3px 32px -0.7px rgba(152, 160, 185, 0.31),
-    1px -1px 3px -0.3px rgba(152, 160, 185, 0.21),
-    0.3px 0.5px 0.8px 0px rgba(152, 160, 185, 0.12);*/
+
   border: 1px solid var(--border);
 }
 

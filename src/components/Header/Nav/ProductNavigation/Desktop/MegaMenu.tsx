@@ -172,10 +172,9 @@ export const megaMenuSections = {
   },
 }
 
-function MegaMenu() {
+function MegaMenu({ cancel }: { cancel?: () => void }) {
   return (
-    <div className={styles.wrapper}>
-      {/* Row 1: Orchestration, Interoperability, Asset Management */}
+    <div className={styles.wrapper} onMouseLeave={cancel}>
       <div className={styles.row}>
         <div className={styles.section}>
           <header>
@@ -212,7 +211,6 @@ function MegaMenu() {
         </div>
       </div>
 
-      {/* Row 2: Data, Compute, More */}
       <div className={styles.row}>
         <div className={styles.section}>
           <header>

@@ -1,0 +1,112 @@
+---
+import { Typography } from "@chainlink/blocks"
+
+const cards = [
+  {
+    title: "Digital Transfer Agent (DTA)",
+    description: "You might be interested in this end-to-end solution. It can solve your problems.",
+    image: "/images/ccip/ccip-hero-bg.png",
+    href: "/",
+  },
+  {
+    title: "Delivery vs. Payment (DvP)",
+    description: "You might be interested in this end-to-end solution. It can solve your problems.",
+    image: "/images/code-sample.png",
+    href: "/",
+  },
+]
+---
+
+<div class="technical-standards">
+  {
+    cards.map((card) => (
+      <a href={card.href} class="standard-card">
+        <div class="card-image" style={`background-image: url(${card.image})`} />
+        <div class="card-body">
+          <div class="card-text">
+            <Typography variant="h5">{card.title}</Typography>
+            <Typography variant="body-s" color="muted">
+              {card.description}
+            </Typography>
+          </div>
+          <img src="/assets/icons/upper-right-arrow.svg" class="card-arrow" />
+        </div>
+      </a>
+    ))
+  }
+</div>
+
+<style>
+  .technical-standards {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6x);
+  }
+
+  .standard-card {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--muted);
+    border-radius: var(--space-2x);
+    overflow: hidden;
+    text-decoration: none;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .standard-card:hover {
+    background-color: var(--gray-100);
+  }
+
+  .standard-card:hover .card-arrow {
+    opacity: 1;
+  }
+
+  .card-image {
+    width: 100%;
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  .card-body {
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-6x);
+    gap: var(--space-4x);
+  }
+
+  .card-text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2x);
+  }
+
+  .card-arrow {
+    height: 16px;
+    width: 16px;
+    opacity: 0;
+    align-self: flex-end;
+    transition: opacity 0.2s ease-in-out;
+  }
+
+  @media (min-width: 50em) {
+    .technical-standards {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .standard-card {
+      flex-direction: row;
+    }
+
+    .card-image {
+      width: 200px;
+      height: 100%;
+    }
+
+    .card-body {
+      flex: 1;
+      justify-content: space-between;
+    }
+  }
+</style>

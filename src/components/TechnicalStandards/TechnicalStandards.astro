@@ -62,12 +62,16 @@ const cards = [
   .card-image {
     width: 140px;
     height: 140px;
-    background-size: 170%;
+    background-size: 250%;
     background-position: left;
     background-repeat: no-repeat;
   }
   .standard-card:first-child {
     border-right: 1px solid var(--border);
+  }
+
+  .standard-card:last-child .card-image {
+    background-position: -55px;
   }
 
   .standard-card:first-child .card-image {

@@ -28,6 +28,7 @@
 .tabsTrigger[data-state="active"] {
   background-color: var(--pill-active);
   border-color: var(--pill-active);
+  border-bottom: 1px solid var(--pill-active);
 
   & h3 {
     color: var(--pill-active-foreground);

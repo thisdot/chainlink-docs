@@ -125,10 +125,12 @@ const formattedDate = formatDate(item["date-of-release"])
         // Check if card exceeds wrapper height
         if (card.scrollHeight <= wrapperMaxHeight) {
           // Card fits, hide the button and fade
-          footer.style.display = "none"
+          footer.style.opacity = "0"
+          footer.style.pointerEvents = "none"
         } else {
           // Card exceeds wrapper, show button and fade
-          footer.style.display = "flex"
+          footer.style.opacity = "1"
+          footer.style.pointerEvents = "auto"
         }
       }
 
@@ -170,14 +172,16 @@ const formattedDate = formatDate(item["date-of-release"])
           ;(wrapper as HTMLElement).style.maxHeight = card.scrollHeight + "px"
           // Hide mask and footer
           wrapper.classList.add("expanded")
-          footer.style.display = "none"
+          footer.style.opacity = "0"
+          footer.style.pointerEvents = "none"
           if (text) text.textContent = "Show less"
         } else {
           // Collapse wrapper back
           ;(wrapper as HTMLElement).style.maxHeight = ""
           // Show mask and footer
           wrapper.classList.remove("expanded")
-          footer.style.display = "block"
+          footer.style.opacity = "1"
+          footer.style.pointerEvents = "auto"
           if (text) text.textContent = "Show more"
         }
       })

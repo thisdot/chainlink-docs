@@ -50,17 +50,20 @@ const demos: Demo[] = [
             <img src={demo.image} alt={demo.title} class={styles.image} />
           </div>
           <div class={styles.content}>
-            <Typography
-              variant="h6"
-              style={{
-                fontWeight: "500",
-              }}
-            >
-              {demo.title}
-            </Typography>
-            <Typography variant="body-s" color="muted">
-              {demo.description}
-            </Typography>
+            <div class={styles.body}>
+              <Typography
+                variant="h6"
+                style={{
+                  fontWeight: "500",
+                  marginBottom: "var(--space-4x)",
+                }}
+              >
+                {demo.title}
+              </Typography>
+              <Typography variant="body-s" color="muted">
+                {demo.description}
+              </Typography>
+            </div>
             <footer class={styles.footer}>
               <div class={styles.tags}>
                 {demo.tags.map((tag) => (

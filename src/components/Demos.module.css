@@ -60,6 +60,9 @@
   background: linear-gradient(13deg, #667eea 0%, #764ba2 100%);
 }
 
+.body {
+  margin-bottom: var(--space-4x);
+}
 .content {
   display: flex;
   flex-direction: column;
@@ -78,6 +81,7 @@
   justify-content: space-between;
 
   margin-top: auto;
+  padding-top: var(--space-4x);
 }
 
 .footerArrow {

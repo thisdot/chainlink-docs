@@ -61,11 +61,19 @@ const demos: Demo[] = [
             <Typography variant="body-s" color="muted">
               {demo.description}
             </Typography>
-            <div class={styles.tags}>
-              {demo.tags.map((tag) => (
-                <Tag size="sm">{tag}</Tag>
-              ))}
-            </div>
+            <footer class={styles.footer}>
+              <div class={styles.tags}>
+                {demo.tags.map((tag) => (
+                  <Tag size="sm" className={styles.footerTag}>
+                    {tag}
+                  </Tag>
+                ))}
+              </div>
+
+              <div class={styles.footerArrow}>
+                <img src="/assets/icons/upper-right-arrow.svg" alt="" />
+              </div>
+            </footer>
           </div>
         </div>
       ))

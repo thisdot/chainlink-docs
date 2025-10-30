@@ -24,6 +24,18 @@
   overflow: hidden;
   transition: box-shadow 0.2s ease;
   gap: var(--space-4x);
+
+  &:hover {
+    background-color: var(--muted);
+  }
+
+  &:hover .footerTag {
+    background-color: var(--background);
+  }
+
+  &:hover .footerArrow {
+    opacity: 1;
+  }
 }
 
 .card:not(:last-child) {
@@ -59,10 +71,20 @@
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-1x);
-  padding-top: var(--space-6x);
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+
   margin-top: auto;
 }
 
+.footerArrow {
+  opacity: 0;
+  display: flex;
+  align-items: end;
+}
 @media screen and (max-width: 1024px) {
   .grid {
     grid-template-columns: repeat(2, 1fr);

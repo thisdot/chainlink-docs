@@ -64,17 +64,18 @@ const formattedDate = formatDate(item["date-of-release"])
     // Find all images with data-token attribute and swap src
     const tokenImages = document.querySelectorAll("img[data-token]")
     tokenImages.forEach((img) => {
-      const tokenUrl = img.getAttribute("data-token")
-      const originalSrc = img.getAttribute("src")
+      const imageEl = img as HTMLImageElement
+      const tokenUrl = imageEl.getAttribute("data-token")
+      const originalSrc = imageEl.getAttribute("src")
 
       if (tokenUrl && tokenUrl !== originalSrc) {
         // Try to load the data-token image
-        img.setAttribute("src", tokenUrl)
+        imageEl.setAttribute("src", tokenUrl)
 
         // Fallback to original src if image fails to load
-        img.onerror = () => {
-          img.setAttribute("src", originalSrc!)
-          img.onerror = null // Remove handler to prevent infinite loop
+        imageEl.onerror = () => {
+          imageEl.setAttribute("src", originalSrc!)
+          imageEl.onerror = null // Remove handler to prevent infinite loop
         }
       }
     })
@@ -82,17 +83,18 @@ const formattedDate = formatDate(item["date-of-release"])
     // Find all images with data-network attribute and swap src
     const networkImages = document.querySelectorAll("img[data-network]")
     networkImages.forEach((img) => {
-      const networkUrl = img.getAttribute("data-network")
-      const originalSrc = img.getAttribute("src")
+      const imageEl = img as HTMLImageElement
+      const networkUrl = imageEl.getAttribute("data-network")
+      const originalSrc = imageEl.getAttribute("src")
 
       if (networkUrl && networkUrl !== originalSrc) {
         // Try to load the data-network image
-        img.setAttribute("src", networkUrl)
+        imageEl.setAttribute("src", networkUrl)
 
         // Fallback to original src if image fails to load
-        img.onerror = () => {
-          img.setAttribute("src", originalSrc!)
-          img.onerror = null // Remove handler to prevent infinite loop
+        imageEl.onerror = () => {
+          imageEl.setAttribute("src", originalSrc!)
+          imageEl.onerror = null // Remove handler to prevent infinite loop
         }
       }
     })

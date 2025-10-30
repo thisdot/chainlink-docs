@@ -1,5 +1,5 @@
 ---
-import { Typography } from "@chainlink/blocks"
+import { SvgTaillessArrowDownSmall, Typography } from "@chainlink/blocks"
 import styles from "./ChangelogCard.module.css"
 import type { ChangelogItem } from "./types"
 
@@ -22,31 +22,185 @@ const formatDate = (dateString: string) => {
 const formattedDate = formatDate(item["date-of-release"])
 ---
 
-<div class={styles.card}>
-  <div class={styles.header}>
-    <div class={styles.metaSection}>
-      <Typography variant="body-semi">
-        {item.type}
+<div class={styles.cardWrapper} data-expandable="wrapper">
+  <div class={styles.card} data-expandable="card">
+    <div class={styles.header}>
+      <div class={styles.metaSection}>
+        <Typography variant="body-semi">
+          {item.type}
+        </Typography>
+        <Typography variant="body-s" color="muted">
+          {formattedDate}
+        </Typography>
+      </div>
+    </div>
+
+    <div class={styles.content} data-expandable="content">
+      <Typography
+        variant="h6"
+        style={{
+          marginBottom: "var(--space-2x)",
+        }}
+      >
+        {item.name}
       </Typography>
-      <Typography variant="body-s" color="muted">
-        {formattedDate}
-      </Typography>
+
+      <div class={styles.descriptionContent}>
+        {item["text-description"] && <div class="description" set:html={item["text-description"]} />}
+      </div>
     </div>
   </div>
 
-  <div class={styles.content}>
-    <Typography
-      variant="h6"
-      style={{
-        marginBottom: "var(--space-2x)",
-      }}
-    >
-      {item.name}
-    </Typography>
-
-    {item["text-description"] && <div class="description" set:html={item["text-description"]} />}
+  <div class={styles.contentFooter} data-expandable="footer">
+    <button class={styles.expandButton} data-expandable="button">
+      <span data-expandable="text">Show more</span>
+      <SvgTaillessArrowDownSmall color="muted" />
+    </button>
   </div>
 </div>
+
+<script>
+  function swapDataAttributeImages() {
+    // Find all images with data-token attribute and swap src
+    const tokenImages = document.querySelectorAll("img[data-token]")
+    tokenImages.forEach((img) => {
+      const tokenUrl = img.getAttribute("data-token")
+      const originalSrc = img.getAttribute("src")
+
+      if (tokenUrl && tokenUrl !== originalSrc) {
+        // Try to load the data-token image
+        img.setAttribute("src", tokenUrl)
+
+        // Fallback to original src if image fails to load
+        img.onerror = () => {
+          img.setAttribute("src", originalSrc!)
+          img.onerror = null // Remove handler to prevent infinite loop
+        }
+      }
+    })
+
+    // Find all images with data-network attribute and swap src
+    const networkImages = document.querySelectorAll("img[data-network]")
+    networkImages.forEach((img) => {
+      const networkUrl = img.getAttribute("data-network")
+      const originalSrc = img.getAttribute("src")
+
+      if (networkUrl && networkUrl !== originalSrc) {
+        // Try to load the data-network image
+        img.setAttribute("src", networkUrl)
+
+        // Fallback to original src if image fails to load
+        img.onerror = () => {
+          img.setAttribute("src", originalSrc!)
+          img.onerror = null // Remove handler to prevent infinite loop
+        }
+      }
+    })
+  }
+
+  function initExpandableCards() {
+    const wrappers = document.querySelectorAll('[data-expandable="wrapper"]')
+
+    wrappers.forEach((wrapper) => {
+      const card = wrapper.querySelector('[data-expandable="card"]') as HTMLElement
+      const content = wrapper.querySelector('[data-expandable="content"]') as HTMLElement
+      const footer = wrapper.querySelector('[data-expandable="footer"]') as HTMLElement
+      const button = wrapper.querySelector('[data-expandable="button"]') as HTMLElement
+      const text = button?.querySelector('[data-expandable="text"]')
+
+      if (!card || !content || !button) return
+
+      // Wait for images to load before checking height
+      const images = card.querySelectorAll("img")
+      let loadedImages = 0
+      const totalImages = images.length
+
+      const checkCardHeight = () => {
+        // Determine max height based on viewport
+        const isMobile = window.innerWidth <= 768
+        const wrapperMaxHeight = isMobile ? 300 : 400
+
+        // Check if card exceeds wrapper height
+        if (card.scrollHeight <= wrapperMaxHeight) {
+          // Card fits, hide the button and fade
+          footer.style.display = "none"
+        } else {
+          // Card exceeds wrapper, show button and fade
+          footer.style.display = "flex"
+        }
+      }
+
+      // Check height after each image loads
+      if (totalImages > 0) {
+        images.forEach((img) => {
+          if (img.complete) {
+            loadedImages++
+            if (loadedImages === totalImages) {
+              checkCardHeight()
+            }
+          } else {
+            img.addEventListener("load", () => {
+              loadedImages++
+              if (loadedImages === totalImages) {
+                checkCardHeight()
+              }
+            })
+            img.addEventListener("error", () => {
+              loadedImages++
+              if (loadedImages === totalImages) {
+                checkCardHeight()
+              }
+            })
+          }
+        })
+      } else {
+        // No images, check immediately
+        checkCardHeight()
+      }
+
+      let isExpanded = false
+
+      button.addEventListener("click", () => {
+        isExpanded = !isExpanded
+
+        if (isExpanded) {
+          // Expand wrapper to full card height
+          ;(wrapper as HTMLElement).style.maxHeight = card.scrollHeight + "px"
+          // Hide mask and footer
+          wrapper.classList.add("expanded")
+          footer.style.display = "none"
+          if (text) text.textContent = "Show less"
+        } else {
+          // Collapse wrapper back
+          ;(wrapper as HTMLElement).style.maxHeight = ""
+          // Show mask and footer
+          wrapper.classList.remove("expanded")
+          footer.style.display = "block"
+          if (text) text.textContent = "Show more"
+        }
+      })
+    })
+  }
+
+  // Initialize on page load
+  swapDataAttributeImages()
+  initExpandableCards()
+
+  // Re-initialize after navigation (for SPA-like behavior)
+  document.addEventListener("astro:page-load", () => {
+    swapDataAttributeImages()
+    initExpandableCards()
+  })
+
+  // Re-check on resize
+  let resizeTimer: ReturnType<typeof setTimeout>
+  window.addEventListener("resize", () => {
+    clearTimeout(resizeTimer)
+    resizeTimer = setTimeout(() => {
+      initExpandableCards()
+    }, 250)
+  })
+</script>
 
 <style is:global>
   /* Data Entry List */

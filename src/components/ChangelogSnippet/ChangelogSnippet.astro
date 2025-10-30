@@ -1,5 +1,5 @@
 ---
-import { Typography } from "@chainlink/blocks"
+import { SvgArrowRight2, Typography } from "@chainlink/blocks"
 import { searchClient } from "@algolia/client-search"
 import ChangelogCard from "./ChangelogCard.astro"
 import { ALGOLIA_INDEX, type ChangelogItem } from "./types"
@@ -26,14 +26,25 @@ const req = await client.search({
 })
 const results = req.results[0].hits as ChangelogItem[]
 const latestLog = results[0] as ChangelogItem
-
-console.log(latestLog)
 ---
 
 {
   results.length > 0 && (
     <section class={styles.container}>
-      <Typography variant="h1">Changelog</Typography>
+      <header class={styles.sectionHeader}>
+        <Typography
+          variant="h2"
+          style={{
+            fontSize: "32px",
+          }}
+        >
+          Changelog
+        </Typography>
+
+        <a href="https://dev.chain.link/changelog" class={styles.arrow}>
+          <SvgArrowRight2 height={12} width={12} />
+        </a>
+      </header>
       <ChangelogCard item={latestLog} />
     </section>
   )

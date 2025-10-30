@@ -23,26 +23,8 @@ const formattedContentTitle = `${CONFIG.PAGE.titleFallback} | ${CONFIG.SITE.titl
       </div>
     </div>
 
-    <div class="wrapper">
-      <div class="section">
-        <Typography variant="h4" className="section-title">Start your Chainlink journey</Typography>
-        <JourneyCards />
-      </div>
+    <Demos />
 
-      <div class="recommended">
-        <h4>Recommended reading</h4>
-        <h2>We think you'd love to explore</h2>
-        <div>
-          <a href="/getting-started/conceptual-overview">General</a>
-          <a href="/resources/link-token-contracts">Link Token Contracts</a>
-          <a href="/ccip/getting-started">Getting Started with CCIP</a>
-          <a href="/ccip/directory">CCIP Directory</a>
-          <a href="/data-feeds/price-feeds/addresses">Data Feed Addresses</a>
-          <a href="/data-feeds/smartdata/addresses">SmartData Feed Addresses</a>
-          <a href="/data-streams/getting-started-hardhat">Getting Started with Data Streams</a>
-          <a href="/data-streams/crypto-streams">Data Streams Addresses</a>
-        </div>
-    <section class="demos"><Demos /></section>
     <div class="recommended">
       <h4>Recommended reading</h4>
       <h2>We think you'd love to explore</h2>
@@ -220,15 +202,9 @@ const formattedContentTitle = `${CONFIG.PAGE.titleFallback} | ${CONFIG.SITE.titl
     }
   }
   @media (min-width: 72em) {
-    .hero,
-    .wrapper {
-    .demos {
+    .hero {
       max-width: min(1200px, calc(100% - 2 * var(--space-16x)));
       padding: 0;
-    }
-
-    .demos {
-      margin: 0 auto;
     }
 
     .recommended {

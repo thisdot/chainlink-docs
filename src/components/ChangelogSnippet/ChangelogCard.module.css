@@ -117,16 +117,10 @@
 }
 /* Responsive Design */
 @media (max-width: 768px) {
-  .cardWrapper {
-    max-height: 300px;
-  }
-
   .card {
     padding: var(--space-4x);
     flex-direction: column;
     gap: var(--space-4x);
-    -webkit-mask-image: linear-gradient(to bottom, black calc(100% - 100px), transparent 100%);
-    mask-image: linear-gradient(to bottom, black calc(100% - 100px), transparent 100%);
   }
 
   .header {
@@ -145,5 +139,9 @@
   .cardWrapper.expanded .card {
     -webkit-mask-image: none;
     mask-image: none;
+  }
+
+  .contentFooter {
+    padding-left: var(--space-4x);
   }
 }

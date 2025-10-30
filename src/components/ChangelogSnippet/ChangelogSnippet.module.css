@@ -37,3 +37,10 @@
     grid-template-columns: 1fr;
   }
 }
+
+@media screen and (max-width: 480px) {
+  .sectionHeader {
+    justify-content: space-between;
+    width: 100%;
+  }
+}

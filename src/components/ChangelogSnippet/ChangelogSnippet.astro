@@ -5,12 +5,6 @@ import ChangelogCard from "./ChangelogCard.astro"
 import { ALGOLIA_INDEX, type ChangelogItem } from "./types"
 import styles from "./ChangelogSnippet.module.css"
 
-type Results = {
-  results: {
-    hits: ChangelogItem[]
-  }[]
-}
-
 const appId = import.meta.env.PUBLIC_ALGOLIA_SEARCH_APP_ID
 const apiKey = import.meta.env.PUBLIC_ALGOLIA_SEARCH_PUBLIC_API_KEY
 
@@ -20,12 +14,14 @@ const req = await client.search({
   requests: [
     {
       indexName: ALGOLIA_INDEX.CHANGELOG,
-      query: "data feeds",
+      query: "data-feeds",
     },
   ],
 })
-const results = req.results[0].hits as ChangelogItem[]
-const latestLog = results[0] as ChangelogItem
+
+const firstResult = req.results[0]
+const results = "hits" in firstResult ? (firstResult.hits as ChangelogItem[]) : []
+const latestLog = results[0]
 ---
 
 {

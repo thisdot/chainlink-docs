@@ -106,8 +106,8 @@
   color: var(--foreground);
   font-size: 14px;
   font-weight: 600;
-  cursor: pointer;
   transition: color 0.2s ease;
+  cursor: default;
   margin-left: 256px;
   margin-bottom: var(--space-6x);
 }

@@ -14,13 +14,15 @@ const req = await client.search({
   requests: [
     {
       indexName: ALGOLIA_INDEX.CHANGELOG,
-      query: "data-feeds",
+      query: "ccip",
     },
   ],
 })
 
 const firstResult = req.results[0]
 const results = "hits" in firstResult ? (firstResult.hits as ChangelogItem[]) : []
+
+// logs are returned sorted by created_at DESC
 const latestLog = results[0]
 ---
 

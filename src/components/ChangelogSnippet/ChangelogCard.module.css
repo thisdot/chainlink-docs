@@ -115,7 +115,7 @@
 .expandButton svg {
   transition: transform 0.3s ease;
 }
-/* Responsive Design */
+
 @media (max-width: 768px) {
   .card {
     padding: var(--space-4x);

@@ -38,13 +38,7 @@ const GroupItem = ({ data }: { data: GroupItem }) => {
     <a href={data.link} className={styles.groupItem}>
       <img src={data.icon.src} alt={data.title} className={styles.groupItemIcon} />
       <div>
-        <Typography
-          variant="body-semi"
-          style={{
-            fontSize: "18px",
-            fontWeight: 500,
-          }}
-        >
+        <Typography variant="body-semi" className={styles.groupItemTitle}>
           {data.title}
         </Typography>
         <Typography color="muted" variant="body-s" className={styles.groupItemDescription}>

@@ -98,6 +98,16 @@
   overflow: hidden;
 }
 
+.groupItemTitle {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-size: 18px;
+  font-weight: 500;
+}
+
 @media screen and (min-width: 768px) {
   .megaMenuContainer {
     display: flex;

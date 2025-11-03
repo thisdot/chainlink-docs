@@ -7,6 +7,7 @@ export interface Demo {
   title: string
   description: string
   tags: string[]
+  href: string
 }
 
 const demos: Demo[] = [
@@ -16,6 +17,7 @@ const demos: Demo[] = [
     description:
       "See how you can bring your financial data onchain in a variety of different ways by creating a Net Asset Value feed, Proof of Reserve feed, or other custom data feed.",
     tags: ["CRE", "DATA FEEDS"],
+    href: "/",
   },
   {
     image: "/images/demos/Demos thumbnails 2.png",
@@ -23,6 +25,7 @@ const demos: Demo[] = [
     description:
       "Learn how to sell a variety of assets via a Delivery vs. Payment transaction using the Chainlink Runtime Environment (CRE).",
     tags: ["CRE"],
+    href: "/",
   },
   {
     image: "/images/demos/Demos thumbnails 3.png",
@@ -30,12 +33,14 @@ const demos: Demo[] = [
     description:
       "Learn how to invest in a variety of funds via a Digital Transfer Agent (DTA) transaction using the Chainlink Runtime Environment (CRE).",
     tags: ["CRE"],
+    href: "/",
   },
   {
     image: "/images/demos/Demos thumbnails 4.png",
     title: "Explore Chainlink",
     description: "Explore how the Chainlink standard powers tokenization and onchain finance through",
     tags: ["CRE", "CCIP", "DATA FEEDS"],
+    href: "/",
   },
 ]
 ---
@@ -45,7 +50,7 @@ const demos: Demo[] = [
   <div class={styles.grid}>
     {
       demos.map((demo) => (
-        <div class={styles.card}>
+        <a href={demo.href} class={styles.card}>
           <div class={styles.imageContainer}>
             <img src={demo.image} alt={demo.title} class={styles.image} />
           </div>
@@ -78,7 +83,7 @@ const demos: Demo[] = [
               </div>
             </footer>
           </div>
-        </div>
+        </a>
       ))
     }
   </div>

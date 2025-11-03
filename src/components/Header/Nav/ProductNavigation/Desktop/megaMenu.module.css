@@ -68,7 +68,7 @@
 .groupItem {
   display: flex;
   align-items: center;
-  padding: var(--space-4x) var(--space-6x);
+  padding: var(--space-6x) var(--space-8x);
   gap: var(--space-4x);
   text-decoration: none;
   transition: background-color 0.2s;
@@ -87,7 +87,6 @@
 .itemList {
   display: flex;
   flex-direction: column;
-  padding: var(--space-2x);
 }
 
 .groupItemDescription {

@@ -62,33 +62,21 @@ const cards = [
   .card-image {
     width: 140px;
     height: 140px;
-    background-size: 250%;
-    background-position: left;
     background-repeat: no-repeat;
   }
   .standard-card:first-child {
     border-bottom: 1px solid var(--border);
   }
 
-  .standard-card:last-child .card-image {
-    background-position: -55px -50px;
-  }
-
   .standard-card:first-child .card-image {
-    background-position: right;
   }
 
-  .card-body {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-4x);
-    flex: 1;
-  }
-
+  .card-body,
   .card-text {
     display: flex;
     flex-direction: column;
     gap: var(--space-4x);
+    flex: 1;
   }
 
   .card-arrow {
@@ -112,7 +100,8 @@ const cards = [
       border-bottom: 0;
     }
 
-    .card-body {
+    .card-body,
+    .card-text {
       flex: 1;
       justify-content: space-between;
     }

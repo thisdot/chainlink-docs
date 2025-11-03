@@ -1,23 +1,13 @@
-export const ALGOLIA_INDEX = {
-  CCIP_CHAINS: "CCIP Network",
-  CCIP_LANES: "CCIP Lane",
-  CCIP_TOKENS: "CCIP Tokens",
-  CCIP_TOKENS_ON_NETWORK: "CCIP Tokens on Network",
-  LINK_TOKENS: "LINK Token",
-  DATA_FEED: "Data Feed",
-  DATA_STREAMS: "Data Stream",
-  DATA_STREAMS_NETWORK: "Data Stream Network",
-  FAUCET: "Faucet",
-  SITE: "Site",
-  DOCUMENTATION: "Documentation",
-  QUICKSTART: "Quickstart",
-  GUIDE: "Guide",
-  TUTORIAL: "Tutorial",
-  CHANGELOG: "Changelog",
-  BOOTCAMP: "Bootcamp",
-  BLOG_NEW: "blog_new",
-  VIDEO: "Video",
-} as const
+export type AlgoliaQuery =
+  | "ccip"
+  | "data-streams"
+  | "smart-data"
+  | "nodes"
+  | "data-feeds"
+  | "functions"
+  | "automation"
+  | "vrf"
+  | "general"
 
 export interface ChangelogItem {
   createdOn: string

@@ -2,12 +2,12 @@
 import { SvgArrowRight2, Typography } from "@chainlink/blocks"
 import { searchClient } from "@algolia/client-search"
 import ChangelogCard from "./ChangelogCard.astro"
-import { ALGOLIA_INDEX, type ChangelogItem } from "./types"
+import { AlgoliaQuery, type ChangelogItem } from "./types"
 import styles from "./ChangelogSnippet.module.css"
 import { getSecret } from "astro:env/server"
 
 interface Props {
-  query: string
+  query: AlgoliaQuery
 }
 
 const { query } = Astro.props
@@ -24,8 +24,10 @@ const client = searchClient(appId, apiKey)
 const req = await client.search({
   requests: [
     {
-      indexName: ALGOLIA_INDEX.CHANGELOG,
+      indexName: "Changelog",
+      restrictSearchableAttributes: ["topic"],
       query,
+      hitsPerPage: 1,
     },
   ],
 })

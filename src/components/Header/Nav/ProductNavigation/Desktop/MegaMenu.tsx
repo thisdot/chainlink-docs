@@ -12,6 +12,7 @@ import nodesLogo from "../../../../../assets/product-logos/nodes-logo.svg"
 import chainlinkLocalLogo from "../../../../../assets/product-logos/chainlink-local-2-logo.svg"
 import creLogo from "../../../../../assets/product-logos/cre-logo.svg"
 import { Typography } from "@chainlink/blocks"
+import { clsx } from "../../utils.ts"
 
 const BlueSquare = () => {
   return (
@@ -166,9 +167,9 @@ export const megaMenuSections = {
   },
 }
 
-function MegaMenu({ cancel }: { cancel?: () => void }) {
+function MegaMenu({ cancel, isMobile }: { cancel?: () => void; isMobile?: boolean }) {
   return (
-    <div className={styles.wrapper} onMouseLeave={cancel}>
+    <div className={clsx(styles.wrapper, isMobile && styles.mobile)} onMouseLeave={cancel}>
       <div className={styles.row}>
         <div className={styles.section}>
           <header>

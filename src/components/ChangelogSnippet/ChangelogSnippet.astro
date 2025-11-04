@@ -19,7 +19,7 @@ let client: SearchClient
 let latestLog: ChangelogItem | undefined = undefined
 
 // Initialize client if appId and apiKey are available to avoid needing to update
-// the github actions with the new keys
+// the github actions with the new keys (satisfies linkcheck-internal)
 if (appId && apiKey) {
   client = searchClient(appId, apiKey)
 

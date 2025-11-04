@@ -72,7 +72,6 @@
   overflow: scroll;
   list-style: none;
   width: 100vw;
-  padding-bottom: 56px;
 }
 .subProductContent {
   display: flex;

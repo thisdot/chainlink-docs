@@ -32,7 +32,7 @@ export default function TryItOut() {
           <div>
             <Accordion collapsible type="single">
               {tabs.map((tab, idx) => (
-                <AccordionItem value={String(idx)} className={styles.accordionItem}>
+                <AccordionItem key={idx} value={String(idx)} className={styles.accordionItem}>
                   <AccordionTrigger className={styles.accordionTrigger}>
                     {tab.title}{" "}
                     <Typography variant="code" className={styles.indicator}>

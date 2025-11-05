@@ -7,6 +7,7 @@ import * as CONFIG from "../config"
 import Demos from "~/components/Demos.astro"
 import { Typography } from "@chainlink/blocks"
 import LandingHero from "~/components/LandingHero/LandingHero.astro"
+import TryItOut from "~/components/TryItOut/TryItOut"
 
 const formattedContentTitle = `${CONFIG.PAGE.titleFallback} | ${CONFIG.SITE.title}`
 ---
@@ -17,7 +18,11 @@ const formattedContentTitle = `${CONFIG.PAGE.titleFallback} | ${CONFIG.SITE.titl
 
     <div class="wrapper">
       <JourneyCards />
+    </div>
 
+    <TryItOut client:only="react" />
+
+    <div class="wrapper">
       <Demos />
 
       <TechnicalStandards />

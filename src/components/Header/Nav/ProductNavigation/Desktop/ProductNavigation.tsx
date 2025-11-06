@@ -6,6 +6,7 @@ import { extendRadixComponent } from "../extendRadixComponent.ts"
 import styles from "./productNavigation.module.css"
 import { CaretIcon } from "../CaretIcon.tsx"
 import MegaMenu from "./MegaMenu.tsx"
+import MegaMenuContainer from "./MegaMenuContainer.tsx"
 
 type Props = {
   setNavMenuOpen: (navMenuOpen: boolean) => void
@@ -44,9 +45,7 @@ export const ProductNavigation = ({ setNavMenuOpen, showMegaMenu, isMegamenuOpen
         <List className={styles.list}>
           <Item onMouseEnter={exitMegamenu}>
             <a
-              className={clsx(styles.navLink, {
-                [styles.megaMenu]: isMegamenuOpen,
-              })}
+              className={clsx(styles.navLink)}
               onMouseEnter={showMegaMenu}
               role="button"
               aria-expanded={isMegamenuOpen}
@@ -79,7 +78,11 @@ export const ProductNavigation = ({ setNavMenuOpen, showMegaMenu, isMegamenuOpen
             </NavigationMenu.Link>
           </Item>
         </List>
-        {isMegamenuOpen && <MegaMenu id="mega-menu" cancel={exitMegamenu} />}
+        {isMegamenuOpen && (
+          <MegaMenuContainer id="mega-menu" cancel={exitMegamenu}>
+            <MegaMenu cancel={exitMegamenu} />
+          </MegaMenuContainer>
+        )}
       </Root>
     </>
   )

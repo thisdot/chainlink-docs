@@ -1,0 +1,21 @@
+---
+import { SvgArrowRight2, Typography } from "@chainlink/blocks"
+import styles from "./styles.module.css"
+---
+
+<section>
+  <header class={styles.sectionHeader}>
+    <Typography
+      variant="h2"
+      style={{
+        fontSize: "32px",
+      }}
+    >
+      Community Events
+    </Typography>
+
+    <a href="https://dev.chain.link/changelog" class={styles.arrow}>
+      <SvgArrowRight2 height={12} width={12} />
+    </a>
+  </header>
+</section>

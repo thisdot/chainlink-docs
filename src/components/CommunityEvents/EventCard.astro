@@ -1,5 +1,5 @@
 ---
-import { Typography } from "@chainlink/blocks"
+import { SvgArrowRight2, Typography } from "@chainlink/blocks"
 import type { CommunityEvent } from "./types"
 import styles from "./EventCard.module.css"
 
@@ -26,16 +26,7 @@ const { event } = Astro.props
       <Typography variant="body-semi-l" className={styles.eventCardH}>
         {event.title}
       </Typography>
-      <div class={styles.linkArr}>
-        <svg xmlns="http://www.w3.org/2000/svg" display="block" width="16" height="16" viewBox="0 0 16 16" fill="none">
-          <path
-            d="M11.2996 4.69952L4.69996 11.2992M11.2996 4.69952L11.2996 10.3564M11.2996 4.69952L5.64276 4.69952"
-            stroke="var(--chainlink-blue)"
-            stroke-width="1.6"
-            stroke-linecap="round"
-            stroke-linejoin="round"></path>
-        </svg>
-      </div>
+      <img src="/assets/icons/upper-right-arrow.svg" alt="arrow" class={styles.linkArr} />
     </div>
   </div>
 </a>

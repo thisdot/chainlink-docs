@@ -17,32 +17,26 @@ const topRowDuplicated = [...topRowImages, ...topRowImages]
 const bottomRowDuplicated = [...bottomRowImages, ...bottomRowImages]
 ---
 
-<div class={styles.contentImageWrapper}>
-  <div class={styles.imagesLayout}>
-    <!-- Top row - scrolls left -->
-    <div class={styles.imageListTop}>
-      <div class={styles.imageList}>
-        {
-          topRowDuplicated.map((image) => (
-            <div class={styles.imageWrapper}>
-              <img src={image.imageUrl} alt={image.alt} loading="lazy" class={styles.image} />
-            </div>
-          ))
-        }
-      </div>
-    </div>
+<div class={styles.gallery}>
+  <!-- Top row - scrolls left -->
+  <div class={styles.row}>
+    {
+      topRowDuplicated.map((image) => (
+        <div class={styles.imageWrapper}>
+          <img src={image.imageUrl} alt={image.alt} loading="lazy" class={styles.image} />
+        </div>
+      ))
+    }
+  </div>
 
-    <!-- Bottom row - scrolls right -->
-    <div class={styles.imageListBottom}>
-      <div class={styles.imageList}>
-        {
-          bottomRowDuplicated.map((image) => (
-            <div class={styles.imageWrapper}>
-              <img src={image.imageUrl} alt={image.alt} loading="lazy" class={styles.image} />
-            </div>
-          ))
-        }
-      </div>
-    </div>
+  <!-- Bottom row - scrolls right -->
+  <div class={`${styles.row} ${styles.rowReverse}`}>
+    {
+      bottomRowDuplicated.map((image) => (
+        <div class={styles.imageWrapper}>
+          <img src={image.imageUrl} alt={image.alt} loading="lazy" class={styles.image} />
+        </div>
+      ))
+    }
   </div>
 </div>

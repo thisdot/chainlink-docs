@@ -2,7 +2,6 @@
   display: flex;
   align-items: center;
   gap: var(--space-4x);
-  padding: var(--space-4x);
   border-radius: 0.5rem;
   text-decoration: none;
   transition: all 0.3s ease;
@@ -15,7 +14,6 @@
 
 .eventCardLink:hover .linkArr {
   opacity: 1 !important;
-  transform: translate(4px, -4px);
 }
 
 .eventDate {
@@ -67,31 +65,16 @@
 
 .eventCardHWrap {
   display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
+  align-items: baseline;
   gap: var(--space-3x);
 }
 
 .linkArr {
   opacity: 0;
-  transition: all 0.3s ease;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.linkArr svg {
-  display: block;
 }
 
 @media (max-width: 768px) {
   .eventCardLink {
     gap: var(--space-3x);
-    padding: var(--space-3x);
-  }
-
-  .linkArr {
-    opacity: 1;
   }
 }

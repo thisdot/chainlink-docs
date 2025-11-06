@@ -50,19 +50,19 @@
 .eventList {
   display: flex;
   flex-direction: column;
-  gap: var(--space-4x);
+  gap: var(--space-6x);
 }
 
 /* Tablet */
 @media (max-width: 1024px) {
   .component {
     grid-template-columns: 1fr;
-    gap: var(--space-8x);
   }
 
   .contentRight {
     margin-left: 0;
     width: 100%;
+    padding: 0 var(--space-10x);
   }
 
   .contentLeft {
@@ -72,21 +72,15 @@
 
 /* Mobile */
 @media (max-width: 768px) {
-  .component {
-    gap: var(--space-6x);
-  }
-
   .sectionHeader {
     margin-bottom: var(--space-6x);
-
+    margin-left: unset;
+    margin-right: unset;
     & > h2 {
       font-size: 28px;
     }
   }
 
-  .eventList {
-    gap: var(--space-3x);
-  }
   .wrapper {
     margin: 36px 0;
   }

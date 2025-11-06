@@ -1,6 +1,7 @@
 .container {
   background-color: var(--tertiary-foreground);
   padding: var(--space-10x) var(--space-16x);
+  margin: 86px 0;
 }
 
 .title {
@@ -30,7 +31,10 @@
   border-top: 1px solid var(--segment-button-foreground);
   display: flex;
   flex-direction: column;
-  transition: all 0.3s ease-in-out;
+
+  * {
+    transition: all 0.2s linear;
+  }
 }
 
 .text {

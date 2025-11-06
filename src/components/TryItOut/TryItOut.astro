@@ -1,0 +1,25 @@
+---
+import { Button, Typography } from "@chainlink/blocks"
+import styles from "./styles.module.css"
+import CodeSample from "../CodeSample/CodeSample.astro"
+import { TryItOutAccordion } from "./TryItOutAccordion"
+---
+
+<div class={styles.container}>
+  <section class={styles.body}>
+    <Typography variant="h2" className={styles.title}> Try it out </Typography>
+
+    <section class={styles.content}>
+      <div>
+        <TryItOutAccordion client:only="react" />
+
+        <footer class={styles.contentFooter}>
+          <Button>Create CRE account</Button>
+          <Button variant="tertiary" className={styles.secondaryBtn}> Get the SDK </Button>
+        </footer>
+      </div>
+
+      <!-- <CodeSample src="/samples/ChainlinkFunctions/AutomatedFunctionsConsumerExample.sol" /> -->
+    </section>
+  </section>
+</div>

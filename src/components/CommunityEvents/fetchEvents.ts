@@ -1,4 +1,4 @@
-import type { CommunityEvent } from "./types"
+import type { CommunityEvent } from "./types.ts"
 
 // Fetch events from Webflow RSS feed
 export const fetchEventsFromRSS = async (): Promise<CommunityEvent[]> => {

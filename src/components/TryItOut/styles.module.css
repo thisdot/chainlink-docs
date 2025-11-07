@@ -21,7 +21,7 @@
 
 .content {
   display: grid;
-  grid-template-columns: 492px 735px;
+  grid-template-columns: 1fr 1fr;
   justify-content: space-between;
   gap: var(--space-24x);
 }
@@ -35,6 +35,12 @@
   * {
     transition: all 0.2s linear;
   }
+}
+
+.contentLeft {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .text {
@@ -57,11 +63,18 @@
   & svg {
     display: none;
   }
+
+  & span {
+    word-wrap: normal;
+  }
 }
 
 .image {
   width: 100%;
-  object-fit: cover;
+  max-height: 412px;
+  overflow: hidden;
+  border-bottom: 1.5px solid var(--stepper-counter-pending-foreground);
+  border-radius: 6.317px;
 }
 
 .accordionItem[data-state="open"] {
@@ -81,9 +94,31 @@
   margin: 0 auto;
 }
 
+.contentFooterMobile {
+  display: none;
+  gap: var(--space-6x);
+}
+
+@media screen and (max-width: 425px) {
+  .contentFooterMobile {
+    flex-direction: column;
+  }
+}
+
 @media screen and (max-width: 768px) {
   .content {
     grid-template-columns: 1fr;
-    padding: 0 var(--space-8x);
+    gap: var(--space-8x);
+  }
+
+  .title {
+    font-size: 28px;
+  }
+  .contentFooter {
+    display: none;
+  }
+
+  .contentFooterMobile {
+    display: flex;
   }
 }

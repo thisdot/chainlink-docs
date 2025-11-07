@@ -10,7 +10,7 @@ import { TryItOutAccordion } from "./TryItOutAccordion"
     <Typography variant="h2" className={styles.title}> Try it out </Typography>
 
     <section class={styles.content}>
-      <div>
+      <div class={styles.contentLeft}>
         <TryItOutAccordion client:only="react" />
 
         <footer class={styles.contentFooter}>
@@ -19,7 +19,14 @@ import { TryItOutAccordion } from "./TryItOutAccordion"
         </footer>
       </div>
 
-      <!-- <CodeSample src="/samples/ChainlinkFunctions/AutomatedFunctionsConsumerExample.sol" /> -->
+      <section class={styles.image}>
+        <CodeSample showButtons={false} src="/samples/ChainlinkFunctions/AutomatedFunctionsConsumerExample.sol" />
+      </section>
+
+      <footer class={styles.contentFooterMobile}>
+        <Button>Create CRE account</Button>
+        <Button variant="tertiary" className={styles.secondaryBtn}> Get the SDK </Button>
+      </footer>
     </section>
   </section>
 </div>

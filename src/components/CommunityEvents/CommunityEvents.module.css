@@ -56,13 +56,13 @@
 /* Tablet */
 @media (max-width: 1024px) {
   .component {
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column-reverse;
   }
 
   .contentRight {
     margin-left: 0;
     width: 100%;
-    padding: 0 var(--space-10x);
   }
 
   .contentLeft {

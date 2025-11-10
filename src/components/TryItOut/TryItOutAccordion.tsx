@@ -11,7 +11,6 @@ interface TryItOutAccordionProps {
 }
 
 export const TryItOutAccordion = ({ tabs }: TryItOutAccordionProps) => {
-
   return (
     <Accordion collapsible type="single">
       {tabs.map((tab, idx) => (

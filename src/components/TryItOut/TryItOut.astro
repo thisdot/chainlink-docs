@@ -3,6 +3,13 @@ import { Button, Typography } from "@chainlink/blocks"
 import styles from "./styles.module.css"
 import CodeSample from "../CodeSample/CodeSample.astro"
 import { TryItOutAccordion } from "./TryItOutAccordion"
+
+interface Props {
+  codeSampleSrc: string
+  accordionTabs: Array<{ title: string; text: string }>
+}
+
+const { codeSampleSrc, accordionTabs } = Astro.props
 ---
 
 <div class={styles.container}>
@@ -11,7 +18,7 @@ import { TryItOutAccordion } from "./TryItOutAccordion"
 
     <section class={styles.content}>
       <div class={styles.contentLeft}>
-        <TryItOutAccordion client:only="react" />
+        <TryItOutAccordion client:only="react" tabs={accordionTabs} />
 
         <footer class={styles.contentFooter}>
           <Button>Create CRE account</Button>
@@ -20,7 +27,7 @@ import { TryItOutAccordion } from "./TryItOutAccordion"
       </div>
 
       <section class={styles.image}>
-        <CodeSample showButtons={false} src="/samples/ChainlinkFunctions/AutomatedFunctionsConsumerExample.sol" />
+        <CodeSample showButtons={false} src={codeSampleSrc} />
       </section>
 
       <footer class={styles.contentFooterMobile}>

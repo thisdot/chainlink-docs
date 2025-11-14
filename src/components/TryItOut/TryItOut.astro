@@ -50,7 +50,12 @@ const { accordionTabs, ctas } = Astro.props
       <section class={styles.image}>
         {
           accordionTabs.map((tab, index) => (
-            <div class="code-sample-item" data-code-index={index} style={index === 0 ? "" : "display: none;"}>
+            <div
+              class="code-sample-item"
+              data-code-index={index}
+              style={index === 0 ? "" : "display: none;"}
+              aria-hidden={index === 0 ? "false" : "true"}
+            >
               <CodeSample showButtons={false} src={tab.codeSampleSrc} />
             </div>
           ))
@@ -84,16 +89,18 @@ const { accordionTabs, ctas } = Astro.props
 
   // Subscribe to nano store changes
   activeAccordionIndex.subscribe((newIndex) => {
-    // Hide all code samples
+    // Hide all code samples and mark as hidden for screen readers
     const allCodeSamples = document.querySelectorAll(".code-sample-item")
     allCodeSamples.forEach((el) => {
       ;(el as HTMLElement).style.display = "none"
+      ;(el as HTMLElement).setAttribute("aria-hidden", "true")
     })
 
-    // Show the active one
+    // Show the active one and mark as visible for screen readers
     const activeCodeSample = document.querySelector(`[data-code-index="${newIndex}"]`)
     if (activeCodeSample) {
       ;(activeCodeSample as HTMLElement).style.display = "block"
+      ;(activeCodeSample as HTMLElement).setAttribute("aria-hidden", "false")
     }
   })
 </script>

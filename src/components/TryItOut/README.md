@@ -69,3 +69,24 @@ Each CTA object needs:
 ## How It Works
 
 The component uses [Astro's nano stores](https://docs.astro.build/en/core-concepts/sharing-state/) to track which accordion item is currently expanded. When you click on a different accordion item, the code sample automatically updates to show the code associated with that item.
+
+### Technical Implementation
+
+**Why we pre-render all code samples:**
+
+All code samples are rendered at build time using the `<CodeSample>` Astro component and included in the HTML. While this means all code samples are present in the DOM, they are toggled via visibility rather than dynamically loaded. This approach is necessary because:
+
+1. **Astro components are build-time only** - The `<CodeSample>` component uses Astro's Prism integration which only runs during the build process, not at runtime
+2. **Proper syntax highlighting** - Pre-rendering ensures all code has proper syntax highlighting applied via Prism
+3. **Performance** - No runtime file reading or syntax highlighting processing; instant switching between code samples
+4. **Simplicity** - Avoids complex API endpoints or client-side file fetching
+
+**Accessibility considerations:**
+
+Inactive code samples are hidden from both visual users and assistive technology:
+
+- `display: none` hides them visually
+- `aria-hidden="true"` ensures screen readers ignore hidden code blocks
+- Only the active code sample has `aria-hidden="false"`, making it visible to screen readers
+
+When the active accordion changes, the visibility and `aria-hidden` attributes are updated via JavaScript to show the new code sample and hide all others.

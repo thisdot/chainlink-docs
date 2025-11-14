@@ -1,15 +1,22 @@
 ---
-import { Button, Typography } from "@chainlink/blocks"
+import { buttonVariants, Typography } from "@chainlink/blocks"
 import styles from "./styles.module.css"
 import CodeSample from "../CodeSample/CodeSample.astro"
 import { TryItOutAccordion } from "./TryItOutAccordion"
+import { clsx } from "~/lib/clsx/clsx"
 
-interface Props {
-  codeSampleSrc: string
-  accordionTabs: Array<{ title: string; text: string }>
+interface CTA {
+  text: string
+  href: string
+  variant?: "primary" | "secondary"
 }
 
-const { codeSampleSrc, accordionTabs } = Astro.props
+interface Props {
+  accordionTabs: Array<{ title: string; text: string; codeSampleSrc: string }>
+  ctas: CTA[]
+}
+
+const { accordionTabs, ctas } = Astro.props
 ---
 
 <div class={styles.container}>
@@ -18,22 +25,75 @@ const { codeSampleSrc, accordionTabs } = Astro.props
 
     <section class={styles.content}>
       <div class={styles.contentLeft}>
-        <TryItOutAccordion client:only="react" tabs={accordionTabs} />
+        <TryItOutAccordion client:load tabs={accordionTabs} />
 
         <footer class={styles.contentFooter}>
-          <Button>Create CRE account</Button>
-          <Button variant="tertiary" className={styles.secondaryBtn}> Get the SDK </Button>
+          {
+            ctas.map((cta) => (
+              <a
+                href={cta.href}
+                class={clsx(
+                  buttonVariants({
+                    variant: cta.variant === "secondary" ? "tertiary" : "primary",
+                    size: "default",
+                  }),
+                  cta.variant === "secondary" && styles.secondaryBtn
+                )}
+              >
+                {cta.text}
+              </a>
+            ))
+          }
         </footer>
       </div>
 
       <section class={styles.image}>
-        <CodeSample showButtons={false} src={codeSampleSrc} />
+        {
+          accordionTabs.map((tab, index) => (
+            <div class="code-sample-item" data-code-index={index} style={index === 0 ? "" : "display: none;"}>
+              <CodeSample showButtons={false} src={tab.codeSampleSrc} />
+            </div>
+          ))
+        }
       </section>
 
       <footer class={styles.contentFooterMobile}>
-        <Button>Create CRE account</Button>
-        <Button variant="tertiary" className={styles.secondaryBtn}> Get the SDK </Button>
+        {
+          ctas.map((cta) => (
+            <a
+              href={cta.href}
+              class={clsx(
+                buttonVariants({
+                  variant: cta.variant === "secondary" ? "tertiary" : "primary",
+                  size: "default",
+                }),
+                cta.variant === "secondary" && styles.secondaryBtn
+              )}
+            >
+              {cta.text}
+            </a>
+          ))
+        }
       </footer>
     </section>
   </section>
 </div>
+
+<script>
+  import { activeAccordionIndex } from "~/stores/tryItOutStore.ts"
+
+  // Subscribe to nano store changes
+  activeAccordionIndex.subscribe((newIndex) => {
+    // Hide all code samples
+    const allCodeSamples = document.querySelectorAll(".code-sample-item")
+    allCodeSamples.forEach((el) => {
+      ;(el as HTMLElement).style.display = "none"
+    })
+
+    // Show the active one
+    const activeCodeSample = document.querySelector(`[data-code-index="${newIndex}"]`)
+    if (activeCodeSample) {
+      ;(activeCodeSample as HTMLElement).style.display = "block"
+    }
+  })
+</script>

@@ -1,12 +1,12 @@
 ---
 import BaseLayout from "~/layouts/BaseLayout.astro"
-import * as CONFIG from "../config"
 import { clsx } from "~/lib/clsx/clsx"
 import { typographyVariants } from "@chainlink/blocks"
 
-const formattedContentTitle = `Chainlink Certifications | ${CONFIG.SITE.title}`
+const formattedContentTitle = `Courses | Chainlink Certifications`
 ---
 
+<!-- NOTE: This page's HTML structure and styling are sourced from Webflow -->
 <BaseLayout title={formattedContentTitle}>
   <div class="overflow-hidden">
     <section id="demo" data-scroll="mid" class="sec-big sec-big--dark sec-big--light">
@@ -669,16 +669,17 @@ const formattedContentTitle = `Chainlink Certifications | ${CONFIG.SITE.title}`
   .plat-absolute {
     aspect-ratio: 16 / 9;
     border-radius: 16px;
-    width: 100%;
+    width: 95%;
     transition: transform 0.2s;
     position: absolute;
-    inset: 0% auto auto 0%;
+    bottom: 0;
+    right: 0;
     overflow: hidden;
   }
 
   .plat-absolute.plat-absolute--1 {
     z-index: 3;
-    transform: translate(0);
+    transform: translate(0, 0);
   }
 
   .plat-absolute.plat-absolute--2 {
@@ -687,6 +688,7 @@ const formattedContentTitle = `Chainlink Certifications | ${CONFIG.SITE.title}`
   }
 
   .plat-absolute.plat-absolute--3 {
+    z-index: 1;
     transform: translate(-32px, -32px);
   }
 
@@ -808,7 +810,7 @@ const formattedContentTitle = `Chainlink Certifications | ${CONFIG.SITE.title}`
     }
 
     .plat-wrapper {
-      width: 100%;
+      width: 90%;
       margin-left: 0;
       margin-right: 0;
       margin-bottom: 40px;
@@ -816,6 +818,7 @@ const formattedContentTitle = `Chainlink Certifications | ${CONFIG.SITE.title}`
 
     .academy-accordion {
       max-width: 100%;
+      min-height: auto;
     }
 
     .course-row {
@@ -851,11 +854,6 @@ const formattedContentTitle = `Chainlink Certifications | ${CONFIG.SITE.title}`
   @media screen and (max-width: 767px) {
     .w-container {
       max-width: none;
-    }
-
-    .cont {
-      padding-left: 16px;
-      padding-right: 16px;
     }
 
     .demo-h-wrap {

@@ -526,7 +526,7 @@ const formattedContentTitle = `Courses | Chainlink Certifications`
   }
 
   .course-card_h {
-    color: #1a2b6b;
+    color: var(--biscay);
     width: 325.33px;
     margin-top: 0;
     margin-bottom: 10px;
@@ -536,7 +536,7 @@ const formattedContentTitle = `Courses | Chainlink Certifications`
   }
 
   .course-card__details {
-    color: #0c162c;
+    color: var(--mirage);
     flex-flow: wrap;
     justify-content: flex-start;
     align-items: center;
@@ -923,9 +923,10 @@ const formattedContentTitle = `Courses | Chainlink Certifications`
     item.addEventListener("click", function () {
       // Apply z-index and transform based on the clicked index
       absoluteItems.forEach((el, i) => {
+        const htmlEl = el as HTMLElement
         const newIndex = (i - index + absoluteItems.length) % absoluteItems.length
-        el.style.zIndex = zIndexValues[newIndex]
-        el.style.transform = transformValues[newIndex]
+        htmlEl.style.zIndex = zIndexValues[newIndex].toString()
+        htmlEl.style.transform = transformValues[newIndex]
       })
     })
   })

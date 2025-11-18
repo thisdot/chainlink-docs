@@ -5,9 +5,10 @@ import type { ChangelogItem } from "./types"
 
 interface Props {
   item: ChangelogItem
+  showBorder?: boolean
 }
 
-const { item } = Astro.props
+const { item, showBorder = true } = Astro.props
 
 // Format the date
 const formatDate = (dateString: string) => {
@@ -22,14 +23,14 @@ const formatDate = (dateString: string) => {
 const formattedDate = formatDate(item["date-of-release"])
 ---
 
-<div class={styles.cardWrapper} data-expandable="wrapper">
+<div class={showBorder ? styles.cardWrapperWithBorder : styles.cardWrapper} data-expandable="wrapper">
   <div class={styles.card} data-expandable="card">
     <div class={styles.header}>
       <div class={styles.metaSection}>
-        <Typography variant="body-semi">
+        <Typography variant="body-semi" className={styles.changelogType}>
           {item.type}
         </Typography>
-        <Typography variant="body-s" color="muted">
+        <Typography variant="body-s" color="muted" className={styles.date}>
           {formattedDate}
         </Typography>
       </div>
@@ -46,7 +47,7 @@ const formattedDate = formatDate(item["date-of-release"])
       </Typography>
 
       <div class={styles.descriptionContent}>
-        {item["text-description"] && <div class="description" set:html={item["text-description"]} />}
+        {item["text-description"] && <div class={styles.description} set:html={item["text-description"]} />}
       </div>
     </div>
   </div>

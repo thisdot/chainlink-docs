@@ -1,27 +1,43 @@
-/* Card Wrapper */
+/* Card Wrapper used in Changelog page */
 .cardWrapper {
   max-height: 400px;
   overflow: hidden;
-  transition: max-height 0.5s ease;
+  transition: all 0.5s ease;
   position: relative;
+
+  &:hover {
+    background-color: var(--gray-50);
+  }
+}
+
+.cardWrapper,
+.cardWrapperWithBorder {
+  & .card {
+    padding: var(--space-6x);
+  }
+}
+
+/* Used on individual pages like CCIP/DataFeeds */
+.cardWrapperWithBorder {
   border: 1px solid var(--border);
+
+  &:hover {
+    background-color: var(--muted);
+  }
 }
 
 /* Card Container */
 .card {
   display: flex;
   gap: 82px;
-  padding: var(--space-6x);
 }
 
-.cardWrapper.expanded .card {
+.cardWrapperWithBorder.expanded .card {
   -webkit-mask-image: none;
   mask-image: none;
 }
 
-.cardWrapper:hover {
-  background-color: var(--muted);
-
+.cardWrapperWithBorder:hover {
   & .contentFooter {
     background: linear-gradient(to top, var(--muted) 50%, transparent);
   }
@@ -54,11 +70,11 @@
 
 .description p {
   margin: 0;
-  color: var(--foreground);
+  color: var(--muted-foreground);
 }
 
 .description a {
-  color: var(--color-blue-600);
+  color: var(--link);
   text-decoration: none;
 }
 
@@ -68,7 +84,7 @@
 
 .header {
   display: flex;
-  width: 150px;
+  width: 160px;
 }
 
 .content {
@@ -119,16 +135,28 @@
   transition: transform 0.3s ease;
 }
 
-@media (max-width: 768px) {
+@media screen and (max-width: 425px) {
+  .card {
+    flex-direction: column;
+  }
+
+  .changelogType {
+    font-size: 14px;
+  }
+
+  .metaSection {
+    gap: 0 !important;
+  }
+}
+
+@media screen and (max-width: 768px) {
   .card {
     padding: var(--space-4x);
-    flex-direction: column;
     gap: var(--space-4x);
   }
 
   .header {
     gap: var(--space-3x);
-    width: 100%;
   }
 
   .metaSection {

@@ -9,6 +9,10 @@
     background-color: var(--gray-50);
   }
 
+  &:hover .copyButton {
+    opacity: 1;
+  }
+
   & .card {
     padding: var(--space-6x);
   }
@@ -132,11 +136,40 @@
   transition: transform 0.3s ease;
 }
 
-@media screen and (max-width: 425px) {
-  .card {
-    flex-direction: column;
+.copyButton {
+  display: flex;
+  height: fit-content;
+  gap: var(--space-2x);
+  border-radius: var(--space-1x);
+  border: 1px solid var(--border);
+  width: 118px;
+  justify-content: center;
+  align-items: center;
+  padding: var(--space-2x) 0;
+  transition: all 0.2s ease;
+  opacity: 0;
+
+  & > svg {
+    color: var(--muted-foreground);
   }
 
+  &:hover {
+    border: 1px solid var(--foreground);
+  }
+}
+
+.checkmark {
+  stroke: var(--success-foreground);
+}
+.copyIconMobile {
+  display: none;
+}
+
+.copyIconDesktop {
+  display: block;
+}
+
+@media screen and (max-width: 425px) {
   .changelogType {
     font-size: 14px;
   }
@@ -150,6 +183,7 @@
   .card {
     padding: var(--space-4x);
     gap: var(--space-4x);
+    flex-direction: column;
   }
 
   .header {
@@ -171,5 +205,28 @@
 
   .contentFooter {
     padding-left: var(--space-4x);
+  }
+
+  .copyIconDesktop {
+    display: none;
+  }
+
+  .copyIconMobile {
+    display: block;
+  }
+  .copyText {
+    display: none;
+  }
+
+  .copyButton {
+    width: 32px;
+  }
+}
+
+@media screen and (max-width: 990px) {
+  .copyButton {
+    position: absolute;
+    right: var(--space-4x);
+    top: var(--space-4x);
   }
 }

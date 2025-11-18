@@ -3,6 +3,7 @@ import { SvgTaillessArrowDownSmall, Typography } from "@chainlink/blocks"
 import styles from "./ChangelogCard.module.css"
 import type { ChangelogItem } from "./types"
 import { clsx } from "~/lib/clsx/clsx"
+import CopyButton from "./CopyButton.tsx"
 
 interface Props {
   item: ChangelogItem
@@ -51,6 +52,8 @@ const formattedDate = formatDate(item["date-of-release"])
         {item["text-description"] && <div class={styles.description} set:html={item["text-description"]} />}
       </div>
     </div>
+
+    <CopyButton client:only="react" url={item.slug} />
   </div>
 
   <div class={styles.contentFooter} data-expandable="footer">

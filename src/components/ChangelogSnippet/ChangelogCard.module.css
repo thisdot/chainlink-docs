@@ -8,17 +8,14 @@
   &:hover {
     background-color: var(--gray-50);
   }
-}
 
-.cardWrapper,
-.cardWrapperWithBorder {
   & .card {
     padding: var(--space-6x);
   }
 }
 
 /* Used on individual pages like CCIP/DataFeeds */
-.cardWrapperWithBorder {
+.cardWrapper.withBorder {
   border: 1px solid var(--border);
 
   &:hover {
@@ -32,12 +29,12 @@
   gap: 82px;
 }
 
-.cardWrapperWithBorder.expanded .card {
+.cardWrapper.withBorder.expanded .card {
   -webkit-mask-image: none;
   mask-image: none;
 }
 
-.cardWrapperWithBorder:hover {
+.cardWrapper.withBorder:hover {
   & .contentFooter {
     background: linear-gradient(to top, var(--muted) 50%, transparent);
   }

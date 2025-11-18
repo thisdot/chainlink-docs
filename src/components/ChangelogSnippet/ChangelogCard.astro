@@ -2,6 +2,7 @@
 import { SvgTaillessArrowDownSmall, Typography } from "@chainlink/blocks"
 import styles from "./ChangelogCard.module.css"
 import type { ChangelogItem } from "./types"
+import { clsx } from "~/lib/clsx/clsx"
 
 interface Props {
   item: ChangelogItem
@@ -23,7 +24,7 @@ const formatDate = (dateString: string) => {
 const formattedDate = formatDate(item["date-of-release"])
 ---
 
-<div class={showBorder ? styles.cardWrapperWithBorder : styles.cardWrapper} data-expandable="wrapper">
+<div class={clsx(styles.cardWrapper, showBorder && styles.withBorder)} data-expandable="wrapper">
   <div class={styles.card} data-expandable="card">
     <div class={styles.header}>
       <div class={styles.metaSection}>

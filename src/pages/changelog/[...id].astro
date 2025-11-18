@@ -1,0 +1,52 @@
+---
+import BaseLayout from "~/layouts/BaseLayout.astro"
+import * as CONFIG from "../../config"
+import { getSecret } from "astro:env/server"
+import { searchClient, SearchClient } from "@algolia/client-search"
+import { ChangelogItem } from "~/components/ChangelogSnippet/types"
+
+export const prerender = false
+
+const { id } = Astro.params
+
+console.log(id)
+
+const appId = getSecret("ALGOLIA_APP_ID")
+const apiKey = getSecret("PUBLIC_ALGOLIA_SEARCH_PUBLIC_API_KEY")
+
+let client: SearchClient
+let latestLog: ChangelogItem | undefined = undefined
+
+// Initialize client if appId and apiKey are available to avoid needing to update
+// the github actions with the new keys (satisfies linkcheck-internal)
+if (appId && apiKey) {
+  client = searchClient(appId, apiKey)
+
+  const req = await client.search({
+    requests: [
+      {
+        indexName: "Changelog",
+        restrictSearchableAttributes: ["slug"],
+        query: id,
+        hitsPerPage: 1,
+      },
+    ],
+  })
+
+  console.log(req)
+
+  const firstResult = req.results[0]
+  const results = "hits" in firstResult ? (firstResult.hits as ChangelogItem[]) : []
+
+  // logs are returned sorted by created_at DESC
+  latestLog = results[0]
+}
+
+console.log(latestLog)
+
+const formattedContentTitle = `Changelog and Releases | ${CONFIG.SITE.title}`
+---
+
+<BaseLayout title={formattedContentTitle}>
+  <main class="wrapper"></main>
+</BaseLayout>

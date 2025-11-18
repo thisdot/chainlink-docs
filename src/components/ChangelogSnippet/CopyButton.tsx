@@ -6,7 +6,8 @@ export default function CopyButton({ url }: { url: string }) {
   const [isCopied, setIsCopied] = useState(false)
 
   const copyToClipboard = () => {
-    navigator.clipboard.writeText(`/changelog/${url}`)
+    const mode = import.meta.env.MODE === "development" ? "http://localhost:4321" : "https://dev.chain.link"
+    navigator.clipboard.writeText(`${mode}/changelog/${url}`)
     setIsCopied(true)
     setTimeout(() => setIsCopied(false), 2000)
   }

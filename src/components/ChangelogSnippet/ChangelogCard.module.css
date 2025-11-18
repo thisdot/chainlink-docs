@@ -204,9 +204,8 @@
 
 @media screen and (max-width: 768px) {
   .card {
-    padding: 0 !important;
-    gap: 0;
-    flex-direction: column;
+    padding: var(--space-4x);
+    gap: var(--space-4x);
   }
 
   .header {

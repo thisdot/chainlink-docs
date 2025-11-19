@@ -2,51 +2,127 @@
 import BaseLayout from "~/layouts/BaseLayout.astro"
 import * as CONFIG from "../../config"
 import { getSecret } from "astro:env/server"
-import { searchClient, SearchClient } from "@algolia/client-search"
+import { searchClient } from "@algolia/client-search"
 import { ChangelogItem } from "~/components/ChangelogSnippet/types"
+import ChangelogCard from "~/components/ChangelogSnippet/ChangelogCard.astro"
+import { SvgArrowLeft, SvgArrowLeft2, SvgTaillessArrowLeftSmall, Typography } from "@chainlink/blocks"
 
-export const prerender = false
+export async function getStaticPaths() {
+  const appId = getSecret("ALGOLIA_APP_ID")
+  const apiKey = getSecret("PUBLIC_ALGOLIA_SEARCH_PUBLIC_API_KEY")
 
-const { id } = Astro.params
+  // Return empty array if credentials are not available (CI/CD environments)
+  if (!appId || !apiKey) {
+    console.warn("Algolia credentials not available, skipping changelog static generation")
+    return []
+  }
 
-console.log(id)
+  const client = searchClient(appId, apiKey)
 
-const appId = getSecret("ALGOLIA_APP_ID")
-const apiKey = getSecret("PUBLIC_ALGOLIA_SEARCH_PUBLIC_API_KEY")
+  try {
+    // Fetch all changelog items from Algolia
+    const req = await client.search({
+      requests: [
+        {
+          indexName: "Changelog",
+          hitsPerPage: 1000, // Adjust based on expected total number of changelog items
+        },
+      ],
+    })
 
-let client: SearchClient
-let latestLog: ChangelogItem | undefined = undefined
+    console.log(req)
+    const firstResult = req.results[0]
+    const logs = "hits" in firstResult ? (firstResult.hits as ChangelogItem[]) : []
 
-// Initialize client if appId and apiKey are available to avoid needing to update
-// the github actions with the new keys (satisfies linkcheck-internal)
-if (appId && apiKey) {
-  client = searchClient(appId, apiKey)
-
-  const req = await client.search({
-    requests: [
-      {
-        indexName: "Changelog",
-        restrictSearchableAttributes: ["slug"],
-        query: id,
-        hitsPerPage: 1,
-      },
-    ],
-  })
-
-  console.log(req)
-
-  const firstResult = req.results[0]
-  const results = "hits" in firstResult ? (firstResult.hits as ChangelogItem[]) : []
-
-  // logs are returned sorted by created_at DESC
-  latestLog = results[0]
+    // Generate static paths for each changelog item
+    return logs.map((log) => ({
+      params: { id: log.slug },
+      props: { log },
+    }))
+  } catch (error) {
+    console.error("Error fetching changelog items:", error)
+    return []
+  }
 }
 
-console.log(latestLog)
+interface Props {
+  log: ChangelogItem
+}
 
-const formattedContentTitle = `Changelog and Releases | ${CONFIG.SITE.title}`
+const { log } = Astro.props
+
+const pageTitle = `Changelog and Releases | ${CONFIG.SITE.title}`
 ---
 
-<BaseLayout title={formattedContentTitle}>
-  <main class="wrapper"></main>
+<BaseLayout title={pageTitle}>
+  <main class="wrapper changelog-page">
+    <div class="changelog-header">
+      <a href="/changelog" class="back-link">
+        <SvgArrowLeft2 color="link" />
+        <span>Back to Changelog</span>
+      </a>
+
+      <Typography variant="h1" className="header-title">Integration</Typography>
+    </div>
+
+    <div class="changelog-content">
+      <ChangelogCard item={log} showBorder={false} autoExpand={true} />
+    </div>
+  </main>
 </BaseLayout>
+
+<style>
+  .changelog-page {
+    max-width: 1264px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 100px 0;
+  }
+
+  .changelog-header {
+    margin-bottom: var(--space-6x);
+    padding: 0 var(--space-8x);
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2x);
+    color: var(--link);
+    text-decoration: none;
+
+    font-weight: 500;
+    transition: color 0.2s ease;
+
+    & span {
+      font-size: 16px !important;
+    }
+  }
+
+  .header-title {
+    margin-top: var(--space-4x);
+    font-size: 2.5rem;
+    font-weight: 500;
+  }
+
+  @media screen and (max-width: 425px) {
+    .header-title {
+      font-size: 1.75rem !important;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .header-title {
+      font-size: 2rem;
+    }
+
+    .changelog-page {
+      padding: 60px 0;
+    }
+
+    .changelog-header {
+      padding: 0 var(--space-6x);
+      margin-bottom: 0;
+    }
+  }
+</style>

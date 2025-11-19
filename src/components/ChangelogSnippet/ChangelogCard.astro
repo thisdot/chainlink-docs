@@ -8,9 +8,10 @@ import CopyButton from "./CopyButton.tsx"
 interface Props {
   item: ChangelogItem
   showBorder?: boolean
+  autoExpand?: boolean
 }
 
-const { item, showBorder = true } = Astro.props
+const { item, showBorder = true, autoExpand = false } = Astro.props
 
 // Format the date
 const formatDate = (dateString: string) => {
@@ -25,7 +26,11 @@ const formatDate = (dateString: string) => {
 const formattedDate = formatDate(item["date-of-release"])
 ---
 
-<div class={clsx(styles.cardWrapper, showBorder && styles.withBorder)} data-expandable="wrapper">
+<div
+  class={clsx(styles.cardWrapper, showBorder && styles.withBorder)}
+  data-expandable="wrapper"
+  data-auto-expand={autoExpand}
+>
   <div class={styles.card} data-expandable="card">
     <div class={styles.header}>
       <div class={styles.metaSection}>
@@ -116,6 +121,18 @@ const formattedDate = formatDate(item["date-of-release"])
       const text = button?.querySelector('[data-expandable="text"]')
 
       if (!card || !content || !button) return
+
+      // Check if auto-expand is enabled
+      const autoExpand = (wrapper as HTMLElement).dataset.autoExpand === "true"
+
+      if (autoExpand) {
+        // Auto-expand: set to full height and hide footer
+        ;(wrapper as HTMLElement).style.maxHeight = "none"
+        wrapper.classList.add("expanded")
+        footer.style.opacity = "0"
+        footer.style.pointerEvents = "none"
+        return // Skip the rest of the logic
+      }
 
       // Wait for images to load before checking height
       const images = card.querySelectorAll("img")

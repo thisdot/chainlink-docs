@@ -40,3 +40,54 @@ import ChangelogSnippet from "@components/ChangelogSnippet/ChangelogSnippet.astr
 ```
 
 This will display the latest CCIP-related changelog entry with a link to view the full changelog.
+
+---
+
+# ChangelogCard Component
+
+## What This Component Does
+
+The ChangelogCard component displays a single changelog item in a card format. It shows the changelog entry's type, date, title, and description with optional expand/collapse functionality.
+
+## How to Use It
+
+Import the component and pass a changelog item:
+
+```astro
+import ChangelogCard from "@components/ChangelogSnippet/ChangelogCard.astro" import type {ChangelogItem} from "@components/ChangelogSnippet/types"
+const item: ChangelogItem = {
+  // ... changelog item data
+}
+
+<ChangelogCard item={item} />
+```
+
+## Props
+
+| Prop             | Type          | Required | Default | Description                                                                                                          |
+| ---------------- | ------------- | -------- | ------- | -------------------------------------------------------------------------------------------------------------------- |
+| `item`           | ChangelogItem | Yes      | -       | The changelog item to display                                                                                        |
+| `showBorder`     | boolean       | No       | `true`  | Whether to show a border around the card                                                                             |
+| `autoExpand`     | boolean       | No       | `false` | Whether to automatically expand the card to full height (skips height restrictions and hides expand/collapse button) |
+| `showCopyButton` | boolean       | No       | `true`  | Whether to show the "Copy URL" button                                                                                |
+| `disableHover`   | boolean       | No       | `false` | Whether to disable hover effects (background color change)                                                           |
+
+## Usage Examples
+
+### Default Card (with border and interactions)
+
+```astro
+<ChangelogCard item={changelogItem} />
+```
+
+### Card without border (like on main changelog page)
+
+```astro
+<ChangelogCard item={changelogItem} showBorder={false} />
+```
+
+### Fully expanded card without interactions (like on individual pages)
+
+```astro
+<ChangelogCard item={changelogItem} showBorder={false} autoExpand={true} showCopyButton={false} disableHover={true} />
+```

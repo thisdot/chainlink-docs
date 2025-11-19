@@ -9,9 +9,11 @@ interface Props {
   item: ChangelogItem
   showBorder?: boolean
   autoExpand?: boolean
+  showCopyButton?: boolean
+  disableHover?: boolean
 }
 
-const { item, showBorder = true, autoExpand = false } = Astro.props
+const { item, showBorder = true, autoExpand = false, showCopyButton = true, disableHover = false } = Astro.props
 
 // Format the date
 const formatDate = (dateString: string) => {
@@ -30,6 +32,7 @@ const formattedDate = formatDate(item["date-of-release"])
   class={clsx(styles.cardWrapper, showBorder && styles.withBorder)}
   data-expandable="wrapper"
   data-auto-expand={autoExpand}
+  data-disable-hover={disableHover}
 >
   <div class={styles.card} data-expandable="card">
     <div class={styles.header}>
@@ -58,7 +61,7 @@ const formattedDate = formatDate(item["date-of-release"])
       </div>
     </div>
 
-    <CopyButton client:only="react" url={item.slug} />
+    {showCopyButton && <CopyButton client:only="react" url={item.slug} />}
   </div>
 
   <div class={styles.contentFooter} data-expandable="footer">
@@ -331,5 +334,22 @@ const formattedDate = formatDate(item["date-of-release"])
   /* Hidden filter elements */
   .log-item__list-chains .hidden {
     display: none;
+  }
+
+  /* Disable hover effects when data-disable-hover is true */
+  [data-disable-hover="true"]:hover {
+    background-color: transparent !important;
+  }
+
+  [data-disable-hover="true"]:hover .copyButton {
+    opacity: 0 !important;
+  }
+
+  [data-disable-hover="true"].withBorder:hover {
+    background-color: transparent !important;
+  }
+
+  [data-disable-hover="true"].withBorder:hover .contentFooter {
+    background: none !important;
   }
 </style>

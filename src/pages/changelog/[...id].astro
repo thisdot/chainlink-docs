@@ -5,7 +5,7 @@ import { getSecret } from "astro:env/server"
 import { searchClient } from "@algolia/client-search"
 import { ChangelogItem } from "~/components/ChangelogSnippet/types"
 import ChangelogCard from "~/components/ChangelogSnippet/ChangelogCard.astro"
-import { SvgArrowLeft, SvgArrowLeft2, SvgTaillessArrowLeftSmall, Typography } from "@chainlink/blocks"
+import { SvgArrowLeft2, Typography } from "@chainlink/blocks"
 
 export async function getStaticPaths() {
   const appId = getSecret("ALGOLIA_APP_ID")
@@ -20,22 +20,41 @@ export async function getStaticPaths() {
   const client = searchClient(appId, apiKey)
 
   try {
-    // Fetch all changelog items from Algolia
-    const req = await client.search({
-      requests: [
-        {
-          indexName: "Changelog",
-          hitsPerPage: 1000, // Adjust based on expected total number of changelog items
-        },
-      ],
-    })
+    const records: ChangelogItem[] = []
+    let currentPage = 0
+    let nbPages = 1
+    const hitsPerPage = 1000 // Maximum allowed by Algolia
 
-    console.log(req)
-    const firstResult = req.results[0]
-    const logs = "hits" in firstResult ? (firstResult.hits as ChangelogItem[]) : []
+    // Fetch all changelog items from Algolia with pagination
+    while (currentPage < nbPages) {
+      const req = await client.search({
+        requests: [
+          {
+            indexName: "Changelog",
+            hitsPerPage,
+            page: currentPage,
+          },
+        ],
+      })
+
+      const firstResult = req.results[0]
+
+      if ("hits" in firstResult) {
+        // Add hits from current page to records
+        const hits = firstResult.hits as ChangelogItem[]
+        records.push(...hits)
+
+        // Update nbPages from the response
+        if ("nbPages" in firstResult) {
+          nbPages = firstResult.nbPages as number
+        }
+      }
+
+      currentPage++
+    }
 
     // Generate static paths for each changelog item
-    return logs.map((log) => ({
+    return records.map((log) => ({
       params: { id: log.slug },
       props: { log },
     }))

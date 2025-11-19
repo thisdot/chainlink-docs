@@ -29,7 +29,7 @@ const isVideo = type === "video"
     <Typography
       variant="body-semi-l"
       style={{
-        marginBottom: "var(--space-8x)",
+        marginBottom: isVideo ? "var(--space-2x)" : "var(--space-8x)",
       }}>{label}</Typography
     >
     <Typography variant="body-s" color="muted">

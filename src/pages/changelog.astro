@@ -148,30 +148,30 @@ if (appId && apiKey) {
     flex-direction: column;
     align-items: center;
     gap: var(--space-4x);
-    margin-top: var(--space-12x);
+    margin-top: var(--space-10x);
   }
 
   .load-more-button {
-    padding: var(--space-3x) var(--space-8x);
+    padding: var(--space-2x) var(--space-6x);
     background: transparent;
-    border: 2px solid var(--blue-600);
-    border-radius: 6px;
-    color: var(--blue-600);
-    font-size: 16px;
+    border: 1px solid var(--link);
+    border-radius: var(--space-1x);
+    color: var(--link);
+    font-size: 14px;
     font-weight: 500;
     cursor: pointer;
     transition: all 0.2s ease;
   }
 
   .load-more-button:hover {
-    background: var(--blue-600);
-    color: white;
+    border: 1px solid var(--brand);
   }
 
   .count-text {
     font-size: 14px;
     color: var(--grey-600);
     margin: 0;
+    margin-top: 84px;
   }
 
   @media screen and (max-width: 768px) {

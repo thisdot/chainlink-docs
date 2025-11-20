@@ -15,25 +15,40 @@ const apiKey = getSecret("PUBLIC_ALGOLIA_SEARCH_PUBLIC_API_KEY")
 let client: SearchClient
 let logs: ChangelogItem[] | undefined = undefined
 
-// Initialize client if appId and apiKey are available to avoid needing to update
-// the github actions with the new keys (satisfies linkcheck-internal)
 if (appId && apiKey) {
   client = searchClient(appId, apiKey)
 
-  const req = await client.search({
+  const firstReq = await client.search({
     requests: [
       {
         indexName: "Changelog",
-        restrictSearchableAttributes: ["topic"],
+        page: 0,
+        hitsPerPage: 1000,
       },
     ],
   })
 
-  const firstResult = req.results[0]
-  const results = "hits" in firstResult ? (firstResult.hits as ChangelogItem[]) : []
+  const firstResult = firstReq.results[0]
+  let allHits = "hits" in firstResult ? (firstResult.hits as ChangelogItem[]) : []
+  const nbPages = "nbPages" in firstResult ? firstResult.nbPages : 1
 
-  // logs are returned sorted by created_at DESC
-  logs = results
+  if (nbPages && nbPages > 1) {
+    const remainingRequests = Array.from({ length: nbPages - 1 }, (_, i) => ({
+      indexName: "Changelog",
+      page: i + 1,
+      hitsPerPage: 1000,
+    }))
+
+    const remainingResults = await client.search({ requests: remainingRequests })
+
+    remainingResults.results.forEach((result) => {
+      if ("hits" in result) {
+        allHits = [...allHits, ...(result.hits as ChangelogItem[])]
+      }
+    })
+  }
+
+  logs = allHits
 }
 ---
 
@@ -45,10 +60,63 @@ if (appId && apiKey) {
     </header>
 
     <section class="changelog-list">
-      {logs?.map((log) => <ChangelogCard showBorder={false} item={log} />)}
+      {
+        logs?.map((log, index) => (
+          <div class="changelog-item" data-index={index} style={index >= 25 ? "display: none;" : ""}>
+            <ChangelogCard showBorder={false} item={log} />
+          </div>
+        ))
+      }
     </section>
+
+    {
+      logs && logs.length > 25 && (
+        <div class="load-more-section">
+          <button id="load-more-btn" class="load-more-button">
+            Load more
+          </button>
+          <p class="count-text">
+            Showing <span id="visible-count">25</span> of <span id="total-count">{logs.length}</span> updates
+          </p>
+        </div>
+      )
+    }
   </main>
 </BaseLayout>
+
+<script>
+  const loadMoreBtn = document.getElementById("load-more-btn")
+  const visibleCountSpan = document.getElementById("visible-count")
+  const totalCountSpan = document.getElementById("total-count")
+
+  if (loadMoreBtn && visibleCountSpan && totalCountSpan) {
+    let visibleCount = 25
+    const totalCount = parseInt(totalCountSpan.textContent || "0")
+    const items = document.querySelectorAll(".changelog-item")
+
+    loadMoreBtn.addEventListener("click", () => {
+      // Show next 25 items
+      const newVisibleCount = Math.min(visibleCount + 25, totalCount)
+
+      for (let i = visibleCount; i < newVisibleCount; i++) {
+        if (items[i]) {
+          ;(items[i] as HTMLElement).style.display = ""
+        }
+      }
+
+      visibleCount = newVisibleCount
+      visibleCountSpan.textContent = visibleCount.toString()
+
+      // Hide button if all items are visible
+      if (visibleCount >= totalCount) {
+        const loadMoreSection = document.querySelector(".load-more-section")
+        if (loadMoreSection) {
+          ;(loadMoreSection as HTMLElement).style.display = "none"
+        }
+      }
+    })
+  }
+</script>
 
 <style is:global>
   .changelog-list {
@@ -73,6 +141,37 @@ if (appId && apiKey) {
 
   .header {
     margin-bottom: var(--space-16x);
+  }
+
+  .load-more-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-4x);
+    margin-top: var(--space-12x);
+  }
+
+  .load-more-button {
+    padding: var(--space-3x) var(--space-8x);
+    background: transparent;
+    border: 2px solid var(--blue-600);
+    border-radius: 6px;
+    color: var(--blue-600);
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .load-more-button:hover {
+    background: var(--blue-600);
+    color: white;
+  }
+
+  .count-text {
+    font-size: 14px;
+    color: var(--grey-600);
+    margin: 0;
   }
 
   @media screen and (max-width: 768px) {

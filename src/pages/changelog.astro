@@ -2,7 +2,7 @@
 import BaseLayout from "~/layouts/BaseLayout.astro"
 import * as CONFIG from "../config"
 import { Typography } from "@chainlink/blocks"
-
+import { ChangelogFilters } from "~/components/ChangelogFilters/ChangelogFilters.tsx"
 import { getSecret } from "astro:env/server"
 import { searchClient, SearchClient } from "@algolia/client-search"
 import { ChangelogItem } from "~/components/ChangelogSnippet/types"
@@ -50,6 +50,8 @@ if (appId && apiKey) {
 
   logs = allHits
 }
+
+console.log(logs[0])
 ---
 
 <BaseLayout title={formattedContentTitle}>
@@ -81,6 +83,8 @@ if (appId && apiKey) {
         </div>
       )
     }
+
+    <ChangelogFilters client:load />
   </main>
 </BaseLayout>
 
@@ -119,11 +123,6 @@ if (appId && apiKey) {
 </script>
 
 <style is:global>
-  .changelog-list {
-    display: flex;
-    flex-direction: column;
-    gap: 60px;
-  }
   .wrapper {
     max-width: 1064px;
     width: 100%;
@@ -141,6 +140,12 @@ if (appId && apiKey) {
 
   .header {
     margin-bottom: var(--space-16x);
+  }
+
+  .changelog-list {
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
   }
 
   .load-more-section {
@@ -188,6 +193,10 @@ if (appId && apiKey) {
 
     .wrapper {
       padding: 60px var(--space-6x);
+    }
+
+    .changelog-list {
+      gap: 40px;
     }
   }
 </style>

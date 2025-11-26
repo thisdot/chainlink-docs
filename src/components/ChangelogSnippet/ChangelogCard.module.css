@@ -27,6 +27,20 @@
   }
 }
 
+/* Disable hover background when disableHover is true */
+.cardWrapper[data-disable-hover="true"]:hover {
+  background-color: transparent !important;
+}
+
+.cardWrapper.withBorder[data-disable-hover="true"]:hover {
+  background-color: transparent !important;
+}
+
+/* Remove padding when disableHover is true */
+.cardWrapper[data-disable-hover="true"] .card {
+  padding: 0 !important;
+}
+
 /* Card Container */
 .card {
   display: flex;

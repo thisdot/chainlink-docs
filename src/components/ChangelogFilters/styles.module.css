@@ -1,8 +1,8 @@
 .wrapper {
   background: #252e42e6;
   border-radius: var(--space-8x);
-  max-width: 492px;
-  width: 100%;
+  min-width: 492px;
+
   margin: 0 auto;
   position: fixed;
   bottom: var(--space-4x);

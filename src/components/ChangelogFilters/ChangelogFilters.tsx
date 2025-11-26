@@ -35,7 +35,15 @@ const Trigger = ({ label }: { label: string }) => {
   )
 }
 
-export const ChangelogFilters = () => {
+export const ChangelogFilters = ({
+  products,
+  networks,
+  types,
+}: {
+  products: string[]
+  networks: string[]
+  types: string[]
+}) => {
   const [searchExpanded, setSearchExpanded] = useState(false)
 
   const searchClickHandler = (value: boolean) => {

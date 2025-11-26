@@ -64,13 +64,14 @@ const item: ChangelogItem = {
 
 ## Props
 
-| Prop             | Type          | Required | Default | Description                                                                                                          |
-| ---------------- | ------------- | -------- | ------- | -------------------------------------------------------------------------------------------------------------------- |
-| `item`           | ChangelogItem | Yes      | -       | The changelog item to display                                                                                        |
-| `showBorder`     | boolean       | No       | `true`  | Whether to show a border around the card                                                                             |
-| `autoExpand`     | boolean       | No       | `false` | Whether to automatically expand the card to full height (skips height restrictions and hides expand/collapse button) |
-| `showCopyButton` | boolean       | No       | `true`  | Whether to show the "Copy URL" button                                                                                |
-| `disableHover`   | boolean       | No       | `false` | Whether to disable hover effects (background color change)                                                           |
+| Prop                   | Type          | Required | Default | Description                                                                                                          |
+| ---------------------- | ------------- | -------- | ------- | -------------------------------------------------------------------------------------------------------------------- |
+| `item`                 | ChangelogItem | Yes      | -       | The changelog item to display                                                                                        |
+| `showBorder`           | boolean       | No       | `true`  | Whether to show a border around the card                                                                             |
+| `autoExpand`           | boolean       | No       | `false` | Whether to automatically expand the card to full height (skips height restrictions and hides expand/collapse button) |
+| `showCopyButton`       | boolean       | No       | `true`  | Whether to show the "Copy URL" button                                                                                |
+| `disableHover`         | boolean       | No       | `false` | Whether to disable hover effects (background color change and card padding)                                          |
+| `showNetworksAndTopic` | boolean       | No       | `false` | Whether to show the networks icons and topic chip above the title                                                    |
 
 ## Usage Examples
 
@@ -90,4 +91,10 @@ const item: ChangelogItem = {
 
 ```astro
 <ChangelogCard item={changelogItem} showBorder={false} autoExpand={true} showCopyButton={false} disableHover={true} />
+```
+
+### Card with networks and topic displayed
+
+```astro
+<ChangelogCard item={changelogItem} showNetworksAndTopic={true} />
 ```

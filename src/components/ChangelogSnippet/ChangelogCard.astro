@@ -11,9 +11,17 @@ interface Props {
   autoExpand?: boolean
   showCopyButton?: boolean
   disableHover?: boolean
+  showNetworksAndTopic?: boolean
 }
 
-const { item, showBorder = true, autoExpand = false, showCopyButton = true, disableHover = false } = Astro.props
+const {
+  item,
+  showBorder = true,
+  autoExpand = false,
+  showCopyButton = true,
+  disableHover = false,
+  showNetworksAndTopic = false,
+} = Astro.props
 
 // Format the date
 const formatDate = (dateString: string) => {
@@ -47,6 +55,15 @@ const formattedDate = formatDate(item["date-of-release"])
     </div>
 
     <div class={styles.content} data-expandable="content">
+      {
+        showNetworksAndTopic && (item.networks || item.topic) && (
+          <div class={styles.networksAndTopicSection}>
+            {item.networks && <div set:html={item.networks} />}
+            {item.topic && <span class="prod-chip">{item.topic}</span>}
+          </div>
+        )
+      }
+
       <Typography
         variant="h6"
         style={{
@@ -308,13 +325,12 @@ const formattedDate = formatDate(item["date-of-release"])
   .log-item__list-chains {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: var(--space-1x);
   }
 
   .log-item__img-chain {
     width: 24px;
     height: 24px;
-    border-radius: 50%;
     object-fit: cover;
   }
 
@@ -324,11 +340,11 @@ const formattedDate = formatDate(item["date-of-release"])
     justify-content: center;
     width: 24px;
     height: 24px;
-    border-radius: 50%;
-    background-color: var(--muted);
+    background-color: var(--gray-950);
     font-size: 10px;
     font-weight: 600;
-    color: var(--color-text-secondary);
+    color: var(--white);
+    border-radius: 3px;
   }
 
   /* Hidden filter elements */
@@ -351,5 +367,17 @@ const formattedDate = formatDate(item["date-of-release"])
 
   [data-disable-hover="true"].withBorder:hover .contentFooter {
     background: none !important;
+  }
+
+  /* Product Chip */
+  .prod-chip {
+    background-color: var(--muted-more);
+    color: var(--mirage);
+    border-radius: 4px;
+    margin-bottom: 0;
+    padding: var(--space-1x) var(--space-2x);
+    font-size: 12px;
+    line-height: 16px;
+    display: inline-block;
   }
 </style>

@@ -31,7 +31,7 @@ if (appId && apiKey) {
 
   const firstResult = req.results[0]
   const results = "hits" in firstResult ? (firstResult.hits as ChangelogItem[]) : []
-
+  console.log(results[1])
   // logs are returned sorted by created_at DESC
   logs = results
 }
@@ -45,7 +45,7 @@ if (appId && apiKey) {
     </header>
 
     <section class="changelog-list">
-      {logs?.map((log) => <ChangelogCard showBorder={false} item={log} />)}
+      {logs?.map((log) => <ChangelogCard showNetworksAndTopic showBorder={false} item={log} />)}
     </section>
   </main>
 </BaseLayout>
@@ -75,13 +75,22 @@ if (appId && apiKey) {
     margin-bottom: var(--space-16x);
   }
 
+  @media screen and (max-width: 428px) {
+    .title {
+      font-size: 2rem !important;
+    }
+  }
+
   @media screen and (max-width: 768px) {
+    .changelog-list {
+      gap: var(--space-12x);
+    }
     .tag {
       font-size: 12px;
       margin-bottom: var(--space-3x);
     }
     .title {
-      font-size: 2rem;
+      font-size: 2.5rem;
     }
     .header {
       margin-bottom: var(--space-10x);

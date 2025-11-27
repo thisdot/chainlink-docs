@@ -1,7 +1,8 @@
 import styles from "./styles.module.css"
-import { useState, useEffect, useCallback } from "react"
+import { useState, useEffect } from "react"
 import type { ChangelogItem } from "~/components/ChangelogSnippet/types"
 import { matchesFilters } from "~/utils/changelogFilters"
+import { parseURLParams, updateFilterURL, toggleItemInArray } from "~/utils/changelogFilterUtils"
 import { DesktopFilters } from "./DesktopFilters"
 import { MobileFilters } from "./MobileFilters"
 
@@ -21,58 +22,20 @@ export const ChangelogFilters = ({ products, networks, types, items }: Changelog
 
   // Read URL parameters on mount
   useEffect(() => {
-    if (typeof window === "undefined") return
+    const urlParams = parseURLParams()
 
-    const params = new URLSearchParams(window.location.search)
-    const productParam = params.get("product")
-    const networkParam = params.get("network")
-    const typeParam = params.get("type")
-    const searchParam = params.get("*")
-
-    if (productParam) {
-      setSelectedProducts(productParam.split(","))
-    }
-    if (networkParam) {
-      setSelectedNetworks(networkParam.split(","))
-    }
-    if (typeParam) {
-      setSelectedTypes(typeParam.split(","))
-    }
-    if (searchParam) {
-      setSearchTerm(searchParam)
-      setSearchExpanded(true)
-    }
+    setSelectedProducts(urlParams.products)
+    setSelectedNetworks(urlParams.networks)
+    setSelectedTypes(urlParams.types)
+    setSearchTerm(urlParams.searchTerm)
+    setSearchExpanded(urlParams.searchExpanded)
   }, [])
 
-
-  // Update URL whenever filters change
-  const updateURL = useCallback((products: string[], networks: string[], types: string[], search: string) => {
-    if (typeof window === "undefined") return
-
-    const params = new URLSearchParams()
-
-    if (search) {
-      params.set("*", search)
-    } else {
-      if (products.length > 0) {
-        params.set("product", products.join(","))
-      }
-      if (networks.length > 0) {
-        params.set("network", networks.join(","))
-      }
-      if (types.length > 0) {
-        params.set("type", types.join(","))
-      }
-    }
-
-    const newURL = params.toString() ? `?${params.toString()}` : window.location.pathname
-    window.history.replaceState({}, "", newURL)
-  }, [])
 
   // Update URL when filters change
   useEffect(() => {
-    updateURL(selectedProducts, selectedNetworks, selectedTypes, searchTerm)
-  }, [selectedProducts, selectedNetworks, selectedTypes, searchTerm, updateURL])
+    updateFilterURL(selectedProducts, selectedNetworks, selectedTypes, searchTerm)
+  }, [selectedProducts, selectedNetworks, selectedTypes, searchTerm])
 
   // Filter items and update the display
   useEffect(() => {
@@ -186,13 +149,13 @@ export const ChangelogFilters = ({ products, networks, types, items }: Changelog
   const toggleSelection = (type: "product" | "network" | "type", value: string) => {
     switch (type) {
       case "product":
-        setSelectedProducts((prev) => (prev.includes(value) ? prev.filter((p) => p !== value) : [...prev, value]))
+        setSelectedProducts((prev) => toggleItemInArray(prev, value))
         break
       case "network":
-        setSelectedNetworks((prev) => (prev.includes(value) ? prev.filter((n) => n !== value) : [...prev, value]))
+        setSelectedNetworks((prev) => toggleItemInArray(prev, value))
         break
       case "type":
-        setSelectedTypes((prev) => (prev.includes(value) ? prev.filter((t) => t !== value) : [...prev, value]))
+        setSelectedTypes((prev) => toggleItemInArray(prev, value))
         break
     }
   }

@@ -1,4 +1,4 @@
-import { ChangelogItem } from "~/components/ChangelogSnippet/types"
+import { ChangelogItem } from "~/components/ChangelogSnippet/types.ts"
 
 /**
  * Extracts network names from the HTML networks field

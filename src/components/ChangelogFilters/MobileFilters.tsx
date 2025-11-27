@@ -3,6 +3,8 @@ import styles from "./styles.module.css"
 import { useState, useEffect } from "react"
 import { createPortal } from "react-dom"
 import { clsx } from "~/lib/clsx/clsx.ts"
+import type { ChangelogItem } from "~/components/ChangelogSnippet/types.ts"
+import { useChangelogFilters } from "./useChangelogFilters.ts"
 
 type FilterType = "product" | "network" | "type" | null
 
@@ -249,39 +251,27 @@ interface MobileFiltersProps {
   products: string[]
   networks: string[]
   types: string[]
-  selectedProducts: string[]
-  selectedNetworks: string[]
-  selectedTypes: string[]
-  onToggleSelection: (type: "product" | "network" | "type", value: string) => void
-  onClearProducts: () => void
-  onClearNetworks: () => void
-  onClearTypes: () => void
-  onClearAll: () => void
-  searchTerm: string
-  searchExpanded: boolean
-  onSearchChange: (value: string) => void
-  onSearchToggle: (expanded: boolean) => void
+  items: ChangelogItem[]
 }
 
-export const MobileFilters = ({
-  products,
-  networks,
-  types,
-  selectedProducts,
-  selectedNetworks,
-  selectedTypes,
-  onToggleSelection,
-  onClearProducts,
-  onClearNetworks,
-  onClearTypes,
-  onClearAll,
-  searchTerm,
-  searchExpanded,
-  onSearchChange,
-  onSearchToggle,
-}: MobileFiltersProps) => {
+export const MobileFilters = ({ products, networks, types, items }: MobileFiltersProps) => {
   const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false)
   const [expandedSection, setExpandedSection] = useState<FilterType>(null)
+
+  const {
+    searchExpanded,
+    searchTerm,
+    selectedProducts,
+    selectedNetworks,
+    selectedTypes,
+    handleSearchChange,
+    handleSearchToggle,
+    toggleSelection,
+    clearProductFilters,
+    clearNetworkFilters,
+    clearTypeFilters,
+    clearAllFilters,
+  } = useChangelogFilters({ products, networks, types, items })
 
   const totalFilterCount = selectedProducts.length + selectedNetworks.length + selectedTypes.length
 
@@ -310,15 +300,15 @@ export const MobileFilters = ({
       selectedProducts={selectedProducts}
       selectedNetworks={selectedNetworks}
       selectedTypes={selectedTypes}
-      onSelectProduct={(value) => onToggleSelection("product", value)}
-      onSelectNetwork={(value) => onToggleSelection("network", value)}
-      onSelectType={(value) => onToggleSelection("type", value)}
-      onClearAll={onClearAll}
+      onSelectProduct={(value) => toggleSelection("product", value)}
+      onSelectNetwork={(value) => toggleSelection("network", value)}
+      onSelectType={(value) => toggleSelection("type", value)}
+      onClearAll={clearAllFilters}
       expandedSection={expandedSection}
       onToggleSection={setExpandedSection}
-      onClearProducts={onClearProducts}
-      onClearNetworks={onClearNetworks}
-      onClearTypes={onClearTypes}
+      onClearProducts={clearProductFilters}
+      onClearNetworks={clearNetworkFilters}
+      onClearTypes={clearTypeFilters}
     />
   )
 
@@ -328,9 +318,9 @@ export const MobileFilters = ({
         <MobileFiltersButton totalCount={totalFilterCount} onClick={() => setIsMobileFiltersOpen(true)} />
         <SearchInput
           isExpanded={searchExpanded}
-          onClick={onSearchToggle}
+          onClick={handleSearchToggle}
           value={searchTerm}
-          onChange={onSearchChange}
+          onChange={handleSearchChange}
         />
       </div>
 

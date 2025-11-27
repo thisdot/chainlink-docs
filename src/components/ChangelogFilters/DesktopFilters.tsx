@@ -2,6 +2,8 @@ import { SvgSearch, SvgTaillessArrowDownSmall, SvgX } from "@chainlink/blocks"
 import styles from "./styles.module.css"
 import { useState } from "react"
 import { clsx } from "~/lib/clsx/clsx.ts"
+import type { ChangelogItem } from "~/components/ChangelogSnippet/types.ts"
+import { useChangelogFilters } from "./useChangelogFilters.ts"
 
 type FilterType = "product" | "network" | "type" | null
 
@@ -114,36 +116,25 @@ interface DesktopFiltersProps {
   products: string[]
   networks: string[]
   types: string[]
-  selectedProducts: string[]
-  selectedNetworks: string[]
-  selectedTypes: string[]
-  onToggleSelection: (type: "product" | "network" | "type", value: string) => void
-  onClearProducts: () => void
-  onClearNetworks: () => void
-  onClearTypes: () => void
-  searchTerm: string
-  searchExpanded: boolean
-  onSearchChange: (value: string) => void
-  onSearchToggle: (expanded: boolean) => void
+  items: ChangelogItem[]
 }
 
-export const DesktopFilters = ({
-  products,
-  networks,
-  types,
-  selectedProducts,
-  selectedNetworks,
-  selectedTypes,
-  onToggleSelection,
-  onClearProducts,
-  onClearNetworks,
-  onClearTypes,
-  searchTerm,
-  searchExpanded,
-  onSearchChange,
-  onSearchToggle,
-}: DesktopFiltersProps) => {
+export const DesktopFilters = ({ products, networks, types, items }: DesktopFiltersProps) => {
   const [activeFilter, setActiveFilter] = useState<FilterType>(null)
+
+  const {
+    searchExpanded,
+    searchTerm,
+    selectedProducts,
+    selectedNetworks,
+    selectedTypes,
+    handleSearchChange,
+    handleSearchToggle,
+    toggleSelection,
+    clearProductFilters,
+    clearNetworkFilters,
+    clearTypeFilters,
+  } = useChangelogFilters({ products, networks, types, items })
 
   const toggleFilter = (filterType: FilterType) => {
     setActiveFilter(filterType)
@@ -190,7 +181,7 @@ export const DesktopFilters = ({
               isSelected={getSelectedValues().includes(option)}
               onClick={() => {
                 const type = activeFilter as "product" | "network" | "type"
-                onToggleSelection(type, option)
+                toggleSelection(type, option)
               }}
             />
           ))}
@@ -205,7 +196,7 @@ export const DesktopFilters = ({
               isActive={activeFilter === "product"}
               onClick={() => toggleFilter("product")}
               onClose={closeFilter}
-              onClearAll={onClearProducts}
+              onClearAll={clearProductFilters}
             />
             <Trigger
               label="Network"
@@ -213,7 +204,7 @@ export const DesktopFilters = ({
               isActive={activeFilter === "network"}
               onClick={() => toggleFilter("network")}
               onClose={closeFilter}
-              onClearAll={onClearNetworks}
+              onClearAll={clearNetworkFilters}
             />
             <Trigger
               label="Type"
@@ -221,11 +212,11 @@ export const DesktopFilters = ({
               isActive={activeFilter === "type"}
               onClick={() => toggleFilter("type")}
               onClose={closeFilter}
-              onClearAll={onClearTypes}
+              onClearAll={clearTypeFilters}
             />
           </>
         )}
-        <SearchInput isExpanded={searchExpanded} onClick={onSearchToggle} value={searchTerm} onChange={onSearchChange} />
+        <SearchInput isExpanded={searchExpanded} onClick={handleSearchToggle} value={searchTerm} onChange={handleSearchChange} />
       </div>
     </>
   )

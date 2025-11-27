@@ -359,8 +359,25 @@
   overflow-y: auto;
 }
 
+/* Desktop/Mobile Filter Visibility */
+.desktopFilters {
+  display: block;
+}
+
+.mobileFilters {
+  display: none;
+}
+
 /* Mobile Responsive */
 @media screen and (max-width: 576px) {
+  .desktopFilters {
+    display: none;
+  }
+
+  .mobileFilters {
+    display: block;
+  }
+
   .wrapper {
     min-width: auto;
     max-width: calc(100% - var(--space-4x));

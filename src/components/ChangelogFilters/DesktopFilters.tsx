@@ -216,7 +216,12 @@ export const DesktopFilters = ({ products, networks, types, items }: DesktopFilt
             />
           </>
         )}
-        <SearchInput isExpanded={searchExpanded} onClick={handleSearchToggle} value={searchTerm} onChange={handleSearchChange} />
+        <SearchInput
+          isExpanded={searchExpanded}
+          onClick={handleSearchToggle}
+          value={searchTerm}
+          onChange={handleSearchChange}
+        />
       </div>
     </>
   )

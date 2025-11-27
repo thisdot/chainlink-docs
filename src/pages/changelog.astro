@@ -75,6 +75,14 @@ const types = logs ? getUniqueTypes(logs) : []
       }
     </section>
 
+    <section class="empty-state" style="display: none;">
+      <Typography variant="h3" className="empty-state-title">No updates found</Typography>
+      <Typography variant="body-l" color="muted" className="empty-state-text">
+        We couldn't find anything matching your filters.
+      </Typography>
+      <img src="/images/not-found.svg" alt="No updates found" class="empty-state-image" />
+    </section>
+
     {
       logs && logs.length > 25 && (
         <div class="load-more-section">
@@ -150,6 +158,31 @@ const types = logs ? getUniqueTypes(logs) : []
     display: flex;
     flex-direction: column;
     gap: 60px;
+  }
+
+  .empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: var(--space-16x) var(--space-6x);
+    margin-top: var(--space-10x);
+  }
+
+  .empty-state-image {
+    max-width: 400px;
+    width: 100%;
+    height: auto;
+    margin-top: var(--space-6x);
+  }
+
+  .empty-state-title {
+    margin-bottom: var(--space-2x);
+  }
+
+  .empty-state-text {
+    max-width: 400px;
   }
 
   .load-more-section {

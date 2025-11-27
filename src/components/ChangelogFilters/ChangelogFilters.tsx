@@ -46,20 +46,43 @@ interface TriggerProps {
   count: number
   isActive: boolean
   onClick: () => void
+  onClose: () => void
+  onClearAll: () => void
 }
 
-const Trigger = ({ label, count, isActive, onClick }: TriggerProps) => {
+const Trigger = ({ label, count, isActive, onClick, onClose, onClearAll }: TriggerProps) => {
   return (
     <button className={clsx(styles.btn, isActive && styles.btnActive)} onClick={onClick}>
       <div>
         {label}
         {count > 0 && (
           <span>
-            {count} <SvgX height={10} width={10} color="input-muted-more" />{" "}
+            {count}{" "}
+            <SvgX
+              height={10}
+              width={10}
+              color="input-muted-more"
+              onClick={(e) => {
+                e.stopPropagation()
+                onClearAll()
+              }}
+            />{" "}
           </span>
         )}
       </div>{" "}
-      <SvgTaillessArrowDownSmall color="pill-active" />
+      {isActive ? (
+        <SvgX
+          color="pill-active"
+          onClick={(e) => {
+            e.stopPropagation()
+            onClose()
+          }}
+          height={10}
+          width={10}
+        />
+      ) : (
+        <SvgTaillessArrowDownSmall color="pill-active" />
+      )}
     </button>
   )
 }
@@ -72,7 +95,13 @@ interface FilterPillProps {
 
 const FilterPill = ({ label, isSelected, onClick }: FilterPillProps) => {
   return (
-    <button className={clsx(styles.pill, isSelected && styles.pillSelected)} onClick={onClick}>
+    <button
+      className={clsx(styles.pill, isSelected && styles.pillSelected)}
+      onClick={(e) => {
+        e.stopPropagation()
+        onClick()
+      }}
+    >
       {label}
       {isSelected && (
         <span>
@@ -159,6 +188,8 @@ export const ChangelogFilters = ({ products, networks, types, items }: Changelog
     const changelogItems = document.querySelectorAll(".changelog-item")
     const loadMoreSection = document.querySelector(".load-more-section") as HTMLElement
     const visibleCountSpan = document.getElementById("visible-count")
+    const emptyState = document.querySelector(".empty-state") as HTMLElement
+    const changelogList = document.querySelector(".changelog-list") as HTMLElement
 
     if (searchTerm) {
       // Search takes priority - filter by search term
@@ -184,6 +215,17 @@ export const ChangelogFilters = ({ products, networks, types, items }: Changelog
       // Hide load more section when searching
       if (loadMoreSection) {
         loadMoreSection.style.display = "none"
+      }
+
+      // Show/hide empty state
+      if (emptyState && changelogList) {
+        if (visibleCount === 0) {
+          emptyState.style.display = "flex"
+          changelogList.style.display = "none"
+        } else {
+          emptyState.style.display = "none"
+          changelogList.style.display = "flex"
+        }
       }
     } else {
       // Apply filter logic
@@ -226,6 +268,17 @@ export const ChangelogFilters = ({ products, networks, types, items }: Changelog
       if (visibleCountSpan) {
         visibleCountSpan.textContent = visibleCount.toString()
       }
+
+      // Show/hide empty state
+      if (emptyState && changelogList) {
+        if (hasFilters && visibleCount === 0) {
+          emptyState.style.display = "flex"
+          changelogList.style.display = "none"
+        } else {
+          emptyState.style.display = "none"
+          changelogList.style.display = "flex"
+        }
+      }
     }
   }, [searchTerm, selectedProducts, selectedNetworks, selectedTypes, items])
 
@@ -238,7 +291,24 @@ export const ChangelogFilters = ({ products, networks, types, items }: Changelog
   }
 
   const toggleFilter = (filterType: FilterType) => {
-    setActiveFilter(activeFilter === filterType ? null : filterType)
+    // Only open, don't close if already active
+    setActiveFilter(filterType)
+  }
+
+  const closeFilter = () => {
+    setActiveFilter(null)
+  }
+
+  const clearProductFilters = () => {
+    setSelectedProducts([])
+  }
+
+  const clearNetworkFilters = () => {
+    setSelectedNetworks([])
+  }
+
+  const clearTypeFilters = () => {
+    setSelectedTypes([])
   }
 
   const toggleSelection = (type: "product" | "network" | "type", value: string) => {
@@ -303,18 +373,24 @@ export const ChangelogFilters = ({ products, networks, types, items }: Changelog
               count={selectedProducts.length}
               isActive={activeFilter === "product"}
               onClick={() => toggleFilter("product")}
+              onClose={closeFilter}
+              onClearAll={clearProductFilters}
             />
             <Trigger
               label="Network"
               count={selectedNetworks.length}
               isActive={activeFilter === "network"}
               onClick={() => toggleFilter("network")}
+              onClose={closeFilter}
+              onClearAll={clearNetworkFilters}
             />
             <Trigger
               label="Type"
               count={selectedTypes.length}
               isActive={activeFilter === "type"}
               onClick={() => toggleFilter("type")}
+              onClose={closeFilter}
+              onClearAll={clearTypeFilters}
             />
           </>
         )}

@@ -326,7 +326,12 @@ export const MobileFilters = ({
     <>
       <div className={styles.content}>
         <MobileFiltersButton totalCount={totalFilterCount} onClick={() => setIsMobileFiltersOpen(true)} />
-        <SearchInput isExpanded={searchExpanded} onClick={onSearchToggle} value={searchTerm} onChange={onSearchChange} />
+        <SearchInput
+          isExpanded={searchExpanded}
+          onClick={onSearchToggle}
+          value={searchTerm}
+          onChange={onSearchChange}
+        />
       </div>
 
       {typeof document !== "undefined" && createPortal(modalContent, document.body)}

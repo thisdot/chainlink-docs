@@ -1,12 +1,13 @@
 .wrapper {
   background: #252e42e6;
   border-radius: var(--space-8x);
-  min-width: 492px;
-
+  max-width: 492px;
+  width: 100%;
   margin: 0 auto;
   position: fixed;
   bottom: var(--space-4x);
-  height: 56px;
+  height: fit-content;
+  min-height: 56px;
   z-index: 11;
   left: 0;
   right: 0;
@@ -36,10 +37,21 @@
     background-color: #252e42;
   }
 
-  & span {
+  & div {
     margin-right: var(--space-2x);
     font-size: 16px;
-    display: block;
+    display: flex;
+    align-items: center;
+    gap: var(--space-2x);
+    & span {
+      display: flex;
+      color: var(--white);
+      align-items: center;
+      gap: var(--space-2x);
+      background-color: var(--gray-500);
+      border-radius: var(--space-8x);
+      padding: var(--space-1x) var(--space-3x);
+    }
   }
 }
 
@@ -71,4 +83,71 @@
     color: var(--gray-400);
     font-style: normal;
   }
+}
+
+.expandedContent {
+  max-height: 312px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: var(--space-4x);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1x);
+  margin-bottom: var(--space-2x);
+}
+
+.expandedContent::-webkit-scrollbar {
+  width: 6px;
+}
+
+.expandedContent::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.expandedContent::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+}
+
+.expandedContent::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.pill {
+  background-color: transparent;
+  color: var(--white);
+  border-radius: var(--space-8x);
+  padding: var(--space-1x) var(--space-3x);
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2x);
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  cursor: pointer;
+  border: none;
+  width: fit-content;
+  text-align: left;
+}
+
+.pill:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.pillSelected {
+  color: var(--white);
+
+  & span {
+    background-color: var(--gray-700);
+    border-radius: var(--space-2x);
+  }
+}
+
+.pillSelected:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.btnActive {
+  background-color: #1e2635;
 }

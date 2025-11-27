@@ -1,10 +1,10 @@
 import styles from "./styles.module.css"
 import { useState, useEffect } from "react"
-import type { ChangelogItem } from "~/components/ChangelogSnippet/types"
-import { matchesFilters } from "~/utils/changelogFilters"
-import { parseURLParams, updateFilterURL, toggleItemInArray } from "~/utils/changelogFilterUtils"
-import { DesktopFilters } from "./DesktopFilters"
-import { MobileFilters } from "./MobileFilters"
+import type { ChangelogItem } from "~/components/ChangelogSnippet/types.ts"
+import { matchesFilters } from "~/utils/changelogFilters.ts"
+import { parseURLParams, updateFilterURL, toggleItemInArray } from "~/utils/changelogFilterUtils.ts"
+import { DesktopFilters } from "./DesktopFilters.tsx"
+import { MobileFilters } from "./MobileFilters.tsx"
 
 export interface ChangelogFiltersProps {
   products: string[]
@@ -30,7 +30,6 @@ export const ChangelogFilters = ({ products, networks, types, items }: Changelog
     setSearchTerm(urlParams.searchTerm)
     setSearchExpanded(urlParams.searchExpanded)
   }, [])
-
 
   // Update URL when filters change
   useEffect(() => {

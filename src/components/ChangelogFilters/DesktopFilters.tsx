@@ -134,7 +134,7 @@ export const DesktopFilters = ({ products, networks, types, items }: DesktopFilt
     clearProductFilters,
     clearNetworkFilters,
     clearTypeFilters,
-  } = useChangelogFilters({ products, networks, types, items })
+  } = useChangelogFilters({ items })
 
   const toggleFilter = (filterType: FilterType) => {
     setActiveFilter(filterType)

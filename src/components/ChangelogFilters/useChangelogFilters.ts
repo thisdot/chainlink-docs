@@ -1,37 +1,62 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import type { ChangelogItem } from "~/components/ChangelogSnippet/types.ts"
 import { matchesFilters } from "~/utils/changelogFilters.ts"
 import { parseURLParams, updateFilterURL, toggleItemInArray } from "~/utils/changelogFilterUtils.ts"
 
 export interface UseChangelogFiltersProps {
-  products: string[]
-  networks: string[]
-  types: string[]
   items: ChangelogItem[]
 }
 
-export const useChangelogFilters = ({ products, networks, types, items }: UseChangelogFiltersProps) => {
-  const [searchExpanded, setSearchExpanded] = useState(false)
-  const [searchTerm, setSearchTerm] = useState("")
-  const [selectedProducts, setSelectedProducts] = useState<string[]>([])
-  const [selectedNetworks, setSelectedNetworks] = useState<string[]>([])
-  const [selectedTypes, setSelectedTypes] = useState<string[]>([])
+interface FilterState {
+  selectedProducts: string[]
+  selectedNetworks: string[]
+  selectedTypes: string[]
+  searchTerm: string
+  searchExpanded: boolean
+}
+
+export const useChangelogFilters = ({ items }: UseChangelogFiltersProps) => {
+  const [filters, setFilters] = useState<FilterState>({
+    selectedProducts: [],
+    selectedNetworks: [],
+    selectedTypes: [],
+    searchTerm: "",
+    searchExpanded: false,
+  })
+  const isInitialMount = useRef(true)
+  const hasLoadedFromURL = useRef(false)
 
   // Read URL parameters on mount
   useEffect(() => {
     const urlParams = parseURLParams()
 
-    setSelectedProducts(urlParams.products)
-    setSelectedNetworks(urlParams.networks)
-    setSelectedTypes(urlParams.types)
-    setSearchTerm(urlParams.searchTerm)
-    setSearchExpanded(urlParams.searchExpanded)
+    setFilters({
+      selectedProducts: urlParams.products,
+      selectedNetworks: urlParams.networks,
+      selectedTypes: urlParams.types,
+      searchTerm: urlParams.searchTerm,
+      searchExpanded: urlParams.searchExpanded,
+    })
+
+    hasLoadedFromURL.current = true
   }, [])
 
-  // Update URL when filters change
+  // Update URL when filters change (but not on initial mount)
   useEffect(() => {
-    updateFilterURL(selectedProducts, selectedNetworks, selectedTypes, searchTerm)
-  }, [selectedProducts, selectedNetworks, selectedTypes, searchTerm])
+    // Skip the first render and the initial load from URL
+    if (isInitialMount.current) {
+      isInitialMount.current = false
+      return
+    }
+
+    // Skip if we just loaded from URL
+    if (hasLoadedFromURL.current) {
+      hasLoadedFromURL.current = false
+      return
+    }
+
+    updateFilterURL(filters.selectedProducts, filters.selectedNetworks, filters.selectedTypes, filters.searchTerm)
+  }, [filters])
 
   // Filter items and update the display
   useEffect(() => {
@@ -43,9 +68,9 @@ export const useChangelogFilters = ({ products, networks, types, items }: UseCha
     const emptyState = document.querySelector(".empty-state") as HTMLElement
     const changelogList = document.querySelector(".changelog-list") as HTMLElement
 
-    if (searchTerm) {
+    if (filters.searchTerm) {
       // Search takes priority - filter by search term
-      const searchLower = searchTerm.toLowerCase()
+      const searchLower = filters.searchTerm.toLowerCase()
       let visibleCount = 0
 
       changelogItems.forEach((item) => {
@@ -82,14 +107,20 @@ export const useChangelogFilters = ({ products, networks, types, items }: UseCha
     } else {
       // Apply filter logic
       let visibleCount = 0
-      const hasFilters = selectedProducts.length > 0 || selectedNetworks.length > 0 || selectedTypes.length > 0
+      const hasFilters =
+        filters.selectedProducts.length > 0 || filters.selectedNetworks.length > 0 || filters.selectedTypes.length > 0
 
       changelogItems.forEach((item) => {
         const index = parseInt(item.getAttribute("data-index") || "0")
         const changelogItem = items[index]
 
         if (hasFilters && changelogItem) {
-          const matches = matchesFilters(changelogItem, selectedProducts, selectedNetworks, selectedTypes)
+          const matches = matchesFilters(
+            changelogItem,
+            filters.selectedProducts,
+            filters.selectedNetworks,
+            filters.selectedTypes
+          )
           if (matches) {
             ;(item as HTMLElement).style.display = ""
             visibleCount++
@@ -132,54 +163,53 @@ export const useChangelogFilters = ({ products, networks, types, items }: UseCha
         }
       }
     }
-  }, [searchTerm, selectedProducts, selectedNetworks, selectedTypes, items])
+  }, [filters, items])
 
   const handleSearchChange = (value: string) => {
-    setSearchTerm(value)
+    setFilters((prev) => ({ ...prev, searchTerm: value }))
   }
 
   const handleSearchToggle = (expanded: boolean) => {
-    setSearchExpanded(expanded)
+    setFilters((prev) => ({ ...prev, searchExpanded: expanded }))
   }
 
   const toggleSelection = (type: "product" | "network" | "type", value: string) => {
-    switch (type) {
-      case "product":
-        setSelectedProducts((prev) => toggleItemInArray(prev, value))
-        break
-      case "network":
-        setSelectedNetworks((prev) => toggleItemInArray(prev, value))
-        break
-      case "type":
-        setSelectedTypes((prev) => toggleItemInArray(prev, value))
-        break
-    }
+    setFilters((prev) => {
+      switch (type) {
+        case "product":
+          return { ...prev, selectedProducts: toggleItemInArray(prev.selectedProducts, value) }
+        case "network":
+          return { ...prev, selectedNetworks: toggleItemInArray(prev.selectedNetworks, value) }
+        case "type":
+          return { ...prev, selectedTypes: toggleItemInArray(prev.selectedTypes, value) }
+        default:
+          return prev
+      }
+    })
   }
 
   const clearProductFilters = () => {
-    setSelectedProducts([])
+    setFilters((prev) => ({ ...prev, selectedProducts: [] }))
   }
 
   const clearNetworkFilters = () => {
-    setSelectedNetworks([])
+    setFilters((prev) => ({ ...prev, selectedNetworks: [] }))
   }
 
   const clearTypeFilters = () => {
-    setSelectedTypes([])
+    setFilters((prev) => ({ ...prev, selectedTypes: [] }))
   }
 
   const clearAllFilters = () => {
-    setSelectedProducts([])
-    setSelectedNetworks([])
-    setSelectedTypes([])
+    setFilters((prev) => ({ ...prev, selectedProducts: [], selectedNetworks: [], selectedTypes: [] }))
   }
 
   return {
-    searchExpanded,
-    searchTerm,
-    selectedProducts,
-    selectedNetworks,
-    selectedTypes,
+    searchExpanded: filters.searchExpanded,
+    searchTerm: filters.searchTerm,
+    selectedProducts: filters.selectedProducts,
+    selectedNetworks: filters.selectedNetworks,
+    selectedTypes: filters.selectedTypes,
     handleSearchChange,
     handleSearchToggle,
     toggleSelection,

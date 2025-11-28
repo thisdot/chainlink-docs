@@ -271,7 +271,7 @@ export const MobileFilters = ({ products, networks, types, items }: MobileFilter
     clearNetworkFilters,
     clearTypeFilters,
     clearAllFilters,
-  } = useChangelogFilters({ products, networks, types, items })
+  } = useChangelogFilters({ items })
 
   const totalFilterCount = selectedProducts.length + selectedNetworks.length + selectedTypes.length
 

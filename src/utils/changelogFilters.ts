@@ -70,21 +70,21 @@ export function getUniqueTypes(items: ChangelogItem[]): string[] {
  */
 export function matchesFilters(
   item: ChangelogItem,
-  selectedTopics: string[],
+  selectedProducts: string[],
   selectedNetworks: string[],
   selectedTypes: string[]
 ): boolean {
   // If no filters selected, show all items
-  const hasTopicFilter = selectedTopics.length > 0
+  const hasProductFilter = selectedProducts.length > 0
   const hasNetworkFilter = selectedNetworks.length > 0
   const hasTypeFilter = selectedTypes.length > 0
 
-  if (!hasTopicFilter && !hasNetworkFilter && !hasTypeFilter) {
+  if (!hasProductFilter && !hasNetworkFilter && !hasTypeFilter) {
     return true
   }
 
-  // Check topic filter
-  if (hasTopicFilter && !selectedTopics.includes(item.topic)) {
+  // Check product filter (matches against item.topic field)
+  if (hasProductFilter && !selectedProducts.includes(item.topic)) {
     return false
   }
 

@@ -376,17 +376,36 @@
 
   .mobileFilters {
     display: block;
+    width: 100%;
   }
 
   .wrapper {
-    min-width: auto;
     max-width: calc(100% - var(--space-4x));
     padding: var(--space-2x);
+    min-width: unset;
+  }
+
+  .wrapper.searchExpanded {
+    width: 100%;
+    max-width: 100%;
   }
 
   .content {
     grid-template-columns: auto 1fr;
     gap: var(--space-2x);
+  }
+
+  /* When search is expanded on mobile, keep both elements inline */
+  .content.searchExpanded {
+    grid-template-columns: auto 1fr;
+    gap: var(--space-3x);
+    width: 100%;
+  }
+
+  /* Override desktop expanded behavior for mobile */
+  .searchInputWrapper.expanded {
+    width: auto;
+    grid-column-end: auto;
   }
 
   .searchInputWrapper {

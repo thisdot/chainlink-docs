@@ -252,20 +252,27 @@ interface MobileFiltersProps {
   networks: string[]
   types: string[]
   items: ChangelogItem[]
+  searchExpanded: boolean
+  onSearchExpandedChange: (expanded: boolean) => void
 }
 
-export const MobileFilters = ({ products, networks, types, items }: MobileFiltersProps) => {
+export const MobileFilters = ({
+  products,
+  networks,
+  types,
+  items,
+  searchExpanded,
+  onSearchExpandedChange,
+}: MobileFiltersProps) => {
   const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false)
   const [expandedSection, setExpandedSection] = useState<FilterType>(null)
 
   const {
-    searchExpanded,
     searchTerm,
     selectedProducts,
     selectedNetworks,
     selectedTypes,
     handleSearchChange,
-    handleSearchToggle,
     toggleSelection,
     clearProductFilters,
     clearNetworkFilters,
@@ -314,11 +321,11 @@ export const MobileFilters = ({ products, networks, types, items }: MobileFilter
 
   return (
     <>
-      <div className={styles.content}>
+      <div className={clsx(styles.content, searchExpanded && styles.searchExpanded)}>
         <MobileFiltersButton totalCount={totalFilterCount} onClick={() => setIsMobileFiltersOpen(true)} />
         <SearchInput
           isExpanded={searchExpanded}
-          onClick={handleSearchToggle}
+          onClick={onSearchExpandedChange}
           value={searchTerm}
           onChange={handleSearchChange}
         />

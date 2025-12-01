@@ -69,7 +69,7 @@ const types = logs ? getUniqueTypes(logs) : []
       {
         logs?.map((log, index) => (
           <div class="changelog-item" data-index={index} style={index >= 25 ? "display: none;" : ""}>
-            <ChangelogCard showBorder={false} item={log} />
+            <ChangelogCard showNetworksAndTopic showBorder={false} item={log} />
           </div>
         ))
       }

@@ -16,6 +16,13 @@
   & .card {
     padding: var(--space-4x);
   }
+
+  & ul {
+    padding-left: var(--space-6x);
+  }
+  & li {
+    list-style-type: disc;
+  }
 }
 
 /* Used on individual pages like CCIP/DataFeeds */
@@ -203,9 +210,13 @@
 }
 
 @media screen and (max-width: 768px) {
+  .cardWrapper {
+    max-height: 440px;
+  }
   .card {
     padding: var(--space-4x);
     gap: var(--space-4x);
+    flex-direction: column;
   }
 
   .header {

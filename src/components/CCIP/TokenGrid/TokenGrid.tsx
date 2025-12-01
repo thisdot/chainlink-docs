@@ -1,10 +1,12 @@
-import TokenCard from "../Cards/TokenCard.tsx"
+import { fallbackTokenIconUrl } from "~/features/utils/index.ts"
+import Card from "../Cards/Card.tsx"
 import Grid from "../Landing/Grid.tsx"
 
 interface TokenGridProps {
   tokens: {
     id: string
     logo: string
+    totalNetworks?: number
   }[]
   environment: string
 }
@@ -17,14 +19,24 @@ function TokenGrid({ tokens, environment }: TokenGridProps) {
       items={tokens}
       initialDisplayCount={BEFORE_SEE_MORE}
       seeMoreLabel="View all tokens"
-      renderItem={(token) => (
-        <TokenCard
-          id={token.id}
-          key={token.id}
-          logo={token.logo}
-          link={`/ccip/directory/${environment}/token/${token.id}`}
-        />
-      )}
+      renderItem={(token) => {
+        const subtitle = token.totalNetworks !== undefined ? `${token.totalNetworks} ${token.totalNetworks === 1 ? "network" : "networks"}` : undefined
+        const logoElement = (
+          <object data={token.logo} type="image/png" aria-label={`${token.id} token logo`}>
+            <img src={fallbackTokenIconUrl} alt={`${token.id} token logo`} loading="lazy" />
+          </object>
+        )
+        return (
+          <Card
+            key={token.id}
+            logo={logoElement}
+            title={token.id}
+            subtitle={subtitle}
+            link={`/ccip/directory/${environment}/token/${token.id}`}
+            ariaLabel={`View ${token.id} token details`}
+          />
+        )
+      }}
     />
   )
 }

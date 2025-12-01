@@ -1,4 +1,4 @@
-import NetworkCard from "../Cards/NetworkCard.tsx"
+import Card from "../Cards/Card.tsx"
 import Grid from "./Grid.tsx"
 
 interface NetworkGridProps {
@@ -20,16 +20,18 @@ function NetworkGrid({ networks, environment }: NetworkGridProps) {
       items={networks}
       initialDisplayCount={BEFORE_SEE_MORE}
       seeMoreLabel="View all networks"
-      renderItem={(chain) => (
-        <a href={`/ccip/directory/${environment}/chain/${chain.chain}`} key={chain.chain}>
-          <NetworkCard
-            name={chain.name}
-            totalLanes={chain.totalLanes}
-            totalTokens={chain.totalTokens}
-            logo={chain.logo}
+      renderItem={(chain) => {
+        const subtitle = `${chain.totalLanes} ${chain.totalLanes === 1 ? "lane" : "lanes"} | ${chain.totalTokens} ${chain.totalTokens === 1 ? "token" : "tokens"}`
+        return (
+          <Card
+            key={chain.chain}
+            logo={<img src={chain.logo} alt="" loading="lazy" />}
+            title={chain.name}
+            subtitle={subtitle}
+            link={`/ccip/directory/${environment}/chain/${chain.chain}`}
           />
-        </a>
-      )}
+        )
+      }}
     />
   )
 }

@@ -1,6 +1,6 @@
 import { SvgSearch, SvgTaillessArrowDownSmall, SvgX } from "@chainlink/blocks"
 import styles from "./styles.module.css"
-import { useState } from "react"
+import { useState, useEffect, useRef } from "react"
 import { clsx } from "~/lib/clsx/clsx.ts"
 import type { ChangelogItem } from "~/components/ChangelogSnippet/types.ts"
 import { useChangelogFilters } from "./useChangelogFilters.ts"
@@ -121,6 +121,7 @@ interface DesktopFiltersProps {
 
 export const DesktopFilters = ({ products, networks, types, items }: DesktopFiltersProps) => {
   const [activeFilter, setActiveFilter] = useState<FilterType>(null)
+  const wrapperRef = useRef<HTMLDivElement>(null)
 
   const {
     searchExpanded,
@@ -143,6 +144,22 @@ export const DesktopFilters = ({ products, networks, types, items }: DesktopFilt
   const closeFilter = () => {
     setActiveFilter(null)
   }
+
+  // Close filter when clicking outside
+  useEffect(() => {
+    if (!activeFilter) return
+
+    const handleClickOutside = (event: MouseEvent) => {
+      if (wrapperRef.current && !wrapperRef.current.contains(event.target as Node)) {
+        closeFilter()
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside)
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside)
+    }
+  }, [activeFilter])
 
   const getFilterOptions = () => {
     switch (activeFilter) {
@@ -171,7 +188,7 @@ export const DesktopFilters = ({ products, networks, types, items }: DesktopFilt
   }
 
   return (
-    <>
+    <div ref={wrapperRef}>
       {activeFilter && (
         <div className={styles.expandedContent}>
           {getFilterOptions().map((option) => (
@@ -223,6 +240,6 @@ export const DesktopFilters = ({ products, networks, types, items }: DesktopFilt
           onChange={handleSearchChange}
         />
       </div>
-    </>
+    </div>
   )
 }

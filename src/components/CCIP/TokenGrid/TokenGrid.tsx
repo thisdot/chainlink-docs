@@ -20,7 +20,10 @@ function TokenGrid({ tokens, environment }: TokenGridProps) {
       initialDisplayCount={BEFORE_SEE_MORE}
       seeMoreLabel="View all tokens"
       renderItem={(token) => {
-        const subtitle = token.totalNetworks !== undefined ? `${token.totalNetworks} ${token.totalNetworks === 1 ? "network" : "networks"}` : undefined
+        const subtitle =
+          token.totalNetworks !== undefined
+            ? `${token.totalNetworks} ${token.totalNetworks === 1 ? "network" : "networks"}`
+            : undefined
         const logoElement = (
           <object data={token.logo} type="image/png" aria-label={`${token.id} token logo`}>
             <img src={fallbackTokenIconUrl} alt={`${token.id} token logo`} loading="lazy" />

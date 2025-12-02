@@ -18,9 +18,19 @@ const TokenCard = memo(function TokenCard({ id, logo, link, onClick, totalNetwor
     </object>
   )
 
-  const subtitle = totalNetworks !== undefined ? `${totalNetworks} ${totalNetworks === 1 ? "network" : "networks"}` : undefined
+  const subtitle =
+    totalNetworks !== undefined ? `${totalNetworks} ${totalNetworks === 1 ? "network" : "networks"}` : undefined
 
-  return <Card logo={logoElement} title={id} subtitle={subtitle} link={link} onClick={onClick} ariaLabel={`View ${id} token details`} />
+  return (
+    <Card
+      logo={logoElement}
+      title={id}
+      subtitle={subtitle}
+      link={link}
+      onClick={onClick}
+      ariaLabel={`View ${id} token details`}
+    />
+  )
 })
 
 export default TokenCard

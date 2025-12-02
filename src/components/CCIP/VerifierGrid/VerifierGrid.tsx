@@ -1,3 +1,4 @@
+import { fallbackVerifierIconUrl } from "~/features/utils/index.ts"
 import Card from "../Cards/Card.tsx"
 import Grid from "../Landing/Grid.tsx"
 
@@ -19,10 +20,13 @@ function VerifierGrid({ verifiers, environment }: VerifierGridProps) {
       items={verifiers}
       initialDisplayCount={BEFORE_SEE_MORE}
       seeMoreLabel="View all verifiers"
+      seeMoreLink="/verifiers"
       renderItem={(verifier) => {
         const subtitle = `${verifier.totalNetworks} ${verifier.totalNetworks === 1 ? "network" : "networks"}`
         const logoElement = (
-          <img src={verifier.logo} alt={`${verifier.name} verifier logo`} loading="lazy" />
+          <object data={verifier.logo} type="image/svg+xml" aria-label={`${verifier.name} verifier logo`}>
+            <img src={fallbackVerifierIconUrl} alt={`${verifier.name} verifier logo`} loading="lazy" />
+          </object>
         )
         return (
           <Card

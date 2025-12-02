@@ -8,9 +8,10 @@ interface GridProps {
   initialDisplayCount: number
   seeMoreLabel: string
   className?: string
+  seeMoreLink?: string
 }
 
-function Grid({ items, renderItem, initialDisplayCount, seeMoreLabel, className = "grid" }: GridProps) {
+function Grid({ items, renderItem, initialDisplayCount, seeMoreLabel, className = "grid", seeMoreLink }: GridProps) {
   const [seeMore, setSeeMore] = useState(items.length <= initialDisplayCount)
 
   return (
@@ -18,7 +19,7 @@ function Grid({ items, renderItem, initialDisplayCount, seeMoreLabel, className 
       <div className={className}>
         {items.slice(0, seeMore ? items.length : initialDisplayCount).map((item, index) => renderItem(item, index))}
       </div>
-      {!seeMore && <SeeMore onClick={() => setSeeMore(!seeMore)} label={seeMoreLabel} />}
+      {!seeMore && <SeeMore onClick={() => setSeeMore(!seeMore)} label={seeMoreLabel} href={seeMoreLink} />}
     </>
   )
 }

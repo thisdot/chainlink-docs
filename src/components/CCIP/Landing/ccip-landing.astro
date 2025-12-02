@@ -6,6 +6,7 @@ import {
   Environment,
   getAllNetworks,
   getAllSupportedTokens,
+  getAllUniqueVerifiers,
   getChainsOfToken,
   getSearchLanes,
   Version,
@@ -13,6 +14,7 @@ import {
 import { getTokenIconUrl } from "~/features/utils"
 import LazyNetworkGrid from "./LazyNetworkGrid"
 import LazyTokenGrid from "../TokenGrid/LazyTokenGrid"
+import LazyVerifierGrid from "../VerifierGrid/LazyVerifierGrid"
 import StructuredData from "~/components/StructuredData.astro"
 import { generateDirectoryStructuredData } from "~/utils/ccipStructuredData"
 import { DOCS_BASE_URL } from "~/utils/structuredData"
@@ -42,6 +44,10 @@ const allTokens = tokens.map((token) => {
     logo,
     totalNetworks: getChainsOfToken({ token, filter: environment }).length,
   }
+})
+const allVerifiers = getAllUniqueVerifiers({
+  environment,
+  version: Version.V1_2_0,
 })
 const searchLanes = getSearchLanes({ environment })
 
@@ -79,6 +85,12 @@ const directoryStructuredData = generateDirectoryStructuredData(environment, net
         <a class="button secondary" href="/ccip/tutorials/evm/token-manager#verifying-your-token">Add my token</a>
       </div>
       <LazyTokenGrid tokens={allTokens} environment={environment} client:visible />
+    </div>
+    <div>
+      <div class="ccip-heading">
+        <h2>Verifiers <span>({allVerifiers.length})</span></h2>
+      </div>
+      <LazyVerifierGrid verifiers={allVerifiers} environment={environment} client:visible />
     </div>
   </section>
 </CcipDirectoryLayout>

@@ -240,13 +240,31 @@ function LaneDrawer({
 
                         <td>
                           {lane.supportedTokens &&
-                            displayCapacity(
-                              data[sourceNetwork.key].decimals,
-                              token,
-                              lane.supportedTokens[token]?.rateLimiterConfig?.[
-                                inOutbound === LaneFilter.Inbound ? "in" : "out"
-                              ]
-                            )}
+                            (() => {
+                              const capacity = displayCapacity(
+                                data[sourceNetwork.key].decimals,
+                                token,
+                                lane.supportedTokens[token]?.rateLimiterConfig?.[
+                                  inOutbound === LaneFilter.Inbound ? "in" : "out"
+                                ]
+                              )
+                              return capacity === "N/A" ? (
+                                <Tooltip
+                                  label="Unavailable"
+                                  tip="Rate limit data is currently unavailable. You can find the Token Pool rate limit by reading the Token Pool contract directly on the relevant blockchain."
+                                  labelStyle={{
+                                    marginRight: "5px",
+                                  }}
+                                  style={{
+                                    display: "inline-block",
+                                    verticalAlign: "middle",
+                                    marginBottom: "2px",
+                                  }}
+                                />
+                              ) : (
+                                capacity
+                              )
+                            })()}
                         </td>
                         <td className="rate-tooltip-cell">
                           {lane.supportedTokens && (
@@ -256,6 +274,7 @@ function LaneDrawer({
                               symbol={token}
                               decimals={data[sourceNetwork.key].decimals}
                               position="left"
+                              showUnavailableText={true}
                             />
                           )}
                         </td>

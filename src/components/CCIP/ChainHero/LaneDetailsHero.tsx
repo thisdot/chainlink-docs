@@ -69,13 +69,13 @@ const DetailItem = ({
   clipboardType?: string
   tooltip?: React.ReactNode
 }) => (
-  <>
+  <div className="lane-details-hero__details__item">
     <div className="lane-details-hero__details__label">
       {label}
       {tooltip}
     </div>
     <div data-clipboard-type={clipboardType}>{children}</div>
-  </>
+  </div>
 )
 
 function LaneDetailsHero({

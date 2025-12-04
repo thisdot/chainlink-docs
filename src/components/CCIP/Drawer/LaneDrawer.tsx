@@ -39,7 +39,7 @@ function LaneDrawer({
 
   return (
     <>
-      <h2 className="ccip-table__drawer-heading">Lane details</h2>
+      <h2 className="ccip-table__drawer-heading">Lane Details</h2>
       <LaneDetailsHero
         sourceNetwork={{
           logo: sourceNetwork.logo,

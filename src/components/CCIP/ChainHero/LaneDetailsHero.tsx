@@ -19,8 +19,8 @@ interface LaneDetailsHeroProps {
   }
   onRamp: string
   offRamp: string
+  sourceAddress: string
   destinationAddress: string
-  enforceOutOfOrder?: boolean
   explorer: ExplorerInfo
   inOutbound: LaneFilter
 }
@@ -69,13 +69,13 @@ const DetailItem = ({
   clipboardType?: string
   tooltip?: React.ReactNode
 }) => (
-  <>
+  <div className="lane-details-hero__details__item">
     <div className="lane-details-hero__details__label">
       {label}
       {tooltip}
     </div>
     <div data-clipboard-type={clipboardType}>{children}</div>
-  </>
+  </div>
 )
 
 function LaneDetailsHero({
@@ -83,17 +83,11 @@ function LaneDetailsHero({
   destinationNetwork,
   onRamp,
   offRamp,
+  sourceAddress,
   destinationAddress,
-  enforceOutOfOrder,
   explorer,
   inOutbound,
 }: LaneDetailsHeroProps) {
-  // Map boolean values to display strings
-  const getOutOfOrderText = (value?: boolean) => {
-    if (value === true) return "Required"
-    if (value === false) return "Optional"
-    return "N/A"
-  }
 
   return (
     <div className="lane-details-hero">
@@ -115,44 +109,41 @@ function LaneDetailsHero({
       </div>
 
       <div className="lane-details-hero__details">
-        {/* Display address information based on lane type */}
-        {inOutbound === LaneFilter.Inbound ? (
-          <DetailItem label="OffRamp address" clipboardType="offramp">
-            <AddressComponent
-              address={offRamp}
-              endLength={6}
-              contractUrl={getExplorerAddressUrl(explorer, destinationNetwork.chainType)(offRamp)}
-            />
-          </DetailItem>
-        ) : (
-          <DetailItem
-            label="OnRamp address"
-            clipboardType="onramp"
-            tooltip={sourceNetwork.chainType === "solana" ? <StyledTooltip tip="Same as Router." /> : undefined}
-          >
-            <AddressComponent
-              address={onRamp}
-              endLength={6}
-              contractUrl={getExplorerAddressUrl(explorer, sourceNetwork.chainType)(onRamp)}
-            />
-          </DetailItem>
-        )}
-
-        <DetailItem label="Destination chain selector" clipboardType="destination-chain-selector">
-          {destinationAddress ? <CopyValue value={destinationAddress} /> : "n/a"}{" "}
+        <DetailItem
+          label="OnRamp address"
+          clipboardType="onramp"
+          tooltip={sourceNetwork.chainType === "solana" ? <StyledTooltip tip="Same as Router." /> : undefined}
+        >
+          <AddressComponent
+            address={onRamp}
+            endLength={6}
+            contractUrl={getExplorerAddressUrl(explorer, sourceNetwork.chainType)(onRamp)}
+          />
         </DetailItem>
 
-        {inOutbound === LaneFilter.Outbound && (
-          <DetailItem
-            label="Out of Order Execution"
-            clipboardType="out-of-order-execution"
-            tooltip={
-              <StyledTooltip tip="Controls the execution order of your messages on the destination blockchain. Setting this to true allows messages to be executed in any order. Setting it to false ensures messages are executed in sequence, so a message will only be executed if the preceding one has been executed. On lanes where 'Out of Order Execution' is required, you must set this to true; otherwise, the transaction will revert." />
-            }
-          >
-            {getOutOfOrderText(enforceOutOfOrder)}
-          </DetailItem>
-        )}
+        <DetailItem label="OffRamp address" clipboardType="offramp">
+          <AddressComponent
+            address={offRamp}
+            endLength={6}
+            contractUrl={getExplorerAddressUrl(explorer, destinationNetwork.chainType)(offRamp)}
+          />
+        </DetailItem>
+
+        <DetailItem
+          label="Source chain selector"
+          clipboardType="source-chain-selector"
+          tooltip={<StyledTooltip tip="Unique identifier for the source blockchain network." />}
+        >
+          {sourceAddress ? <CopyValue value={sourceAddress} /> : "n/a"}
+        </DetailItem>
+
+        <DetailItem
+          label="Destination chain selector"
+          clipboardType="destination-chain-selector"
+          tooltip={<StyledTooltip tip="Unique identifier for the destination blockchain network." />}
+        >
+          {destinationAddress ? <CopyValue value={destinationAddress} /> : "n/a"}
+        </DetailItem>
       </div>
     </div>
   )

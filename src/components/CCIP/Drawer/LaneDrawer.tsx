@@ -53,8 +53,8 @@ function LaneDrawer({
         }}
         onRamp={lane.onRamp.address}
         offRamp={lane.offRamp.address}
-        enforceOutOfOrder={lane.onRamp.enforceOutOfOrder}
         explorer={explorer}
+        sourceAddress={sourceNetworkDetails?.chainSelector || ""}
         destinationAddress={destinationNetworkDetails?.chainSelector || ""}
         inOutbound={inOutbound}
       />

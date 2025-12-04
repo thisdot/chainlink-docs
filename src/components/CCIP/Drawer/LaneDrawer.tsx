@@ -73,7 +73,7 @@ function LaneDrawer({
             <thead>
               <tr>
                 <th style={{ width: "100px" }}>Ticker</th>
-                <th style={{ width: "150px" }}>Token address (Source)</th>
+                <th style={{ width: "150px" }}>Source token address</th>
                 <th style={{ width: "80px" }}>Decimals</th>
                 <th style={{ width: "100px" }}>
                   Mechanism
@@ -91,34 +91,84 @@ function LaneDrawer({
                   />
                 </th>
                 <th style={{ width: "150px" }}>
-                  Rate limit capacity
-                  <Tooltip
-                    label=""
-                    tip="Maximum amount per transaction"
-                    labelStyle={{
-                      marginRight: "5px",
-                    }}
-                    style={{
-                      display: "inline-block",
-                      verticalAlign: "middle",
-                      marginBottom: "2px",
-                    }}
-                  />
+                  <div>
+                    Rate limit capacity
+                    <Tooltip
+                      label=""
+                      tip="Maximum amount per transaction"
+                      labelStyle={{
+                        marginRight: "5px",
+                      }}
+                      style={{
+                        display: "inline-block",
+                        verticalAlign: "middle",
+                        marginBottom: "2px",
+                      }}
+                    />
+                  </div>
+                  <div style={{ color: "var(--muted-more-foreground)", fontSize: "0.875rem", fontWeight: "normal" }}>
+                    (Tokens)
+                  </div>
                 </th>
                 <th style={{ width: "180px" }}>
-                  Rate limit refill rate
-                  <Tooltip
-                    label=""
-                    tip="Rate at which available capacity is replenished"
-                    labelStyle={{
-                      marginRight: "5px",
-                    }}
-                    style={{
-                      display: "inline-block",
-                      verticalAlign: "middle",
-                      marginBottom: "2px",
-                    }}
-                  />
+                  <div>
+                    Rate limit refill rate
+                    <Tooltip
+                      label=""
+                      tip="Rate at which available capacity is replenished"
+                      labelStyle={{
+                        marginRight: "5px",
+                      }}
+                      style={{
+                        display: "inline-block",
+                        verticalAlign: "middle",
+                        marginBottom: "2px",
+                      }}
+                    />
+                  </div>
+                  <div style={{ color: "var(--muted-more-foreground)", fontSize: "0.875rem", fontWeight: "normal" }}>
+                    (Tokens/sec)
+                  </div>
+                </th>
+                <th style={{ width: "150px" }}>
+                  <div>
+                    FTF Rate limit capacity
+                    <Tooltip
+                      label=""
+                      tip="Maximum amount per transaction for Fast Token Finality"
+                      labelStyle={{
+                        marginRight: "5px",
+                      }}
+                      style={{
+                        display: "inline-block",
+                        verticalAlign: "middle",
+                        marginBottom: "2px",
+                      }}
+                    />
+                  </div>
+                  <div style={{ color: "var(--muted-more-foreground)", fontSize: "0.875rem", fontWeight: "normal" }}>
+                    (Tokens)
+                  </div>
+                </th>
+                <th style={{ width: "180px" }}>
+                  <div>
+                    FTF Rate limit refill rate
+                    <Tooltip
+                      label=""
+                      tip="Rate at which available capacity is replenished for Fast Token Finality"
+                      labelStyle={{
+                        marginRight: "5px",
+                      }}
+                      style={{
+                        display: "inline-block",
+                        verticalAlign: "middle",
+                        marginBottom: "2px",
+                      }}
+                    />
+                  </div>
+                  <div style={{ color: "var(--muted-more-foreground)", fontSize: "0.875rem", fontWeight: "normal" }}>
+                    (Tokens/sec)
+                  </div>
                 </th>
               </tr>
             </thead>
@@ -208,6 +258,14 @@ function LaneDrawer({
                               position="left"
                             />
                           )}
+                        </td>
+                        <td>
+                          {/* Placeholder for FTF Rate limit capacity - data not yet available */}
+                          -
+                        </td>
+                        <td>
+                          {/* Placeholder for FTF Rate limit refill rate - data not yet available */}
+                          -
                         </td>
                       </tr>
                     )

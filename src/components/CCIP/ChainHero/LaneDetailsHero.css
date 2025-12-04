@@ -1,5 +1,5 @@
 .lane-details-hero {
-  background-color: var(--gray-100);
+  background: var(--Page-Background-Alt);
   padding: var(--space-6x);
   border-bottom: 1px solid var(--gray-200);
 }

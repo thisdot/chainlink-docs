@@ -139,6 +139,7 @@
   padding: var(--space-2x);
   color: var(--gray-900);
   margin-bottom: 0px;
+  background: var(--Page-Background-Alt);
 }
 
 .ccip-table__filters {

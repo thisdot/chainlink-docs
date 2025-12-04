@@ -48,8 +48,9 @@
 }
 
 @media (min-width: 768px) {
+  /* Full width minus ESC button width (--space-12x) and spacing (--space-8x for gaps on both sides) */
   .drawer__container {
-    width: 75%;
+    width: calc(100% - var(--space-12x) - var(--space-8x));
   }
 
   .drawer__closeMobile {

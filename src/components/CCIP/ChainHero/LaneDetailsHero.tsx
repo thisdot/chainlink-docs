@@ -108,41 +108,49 @@ function LaneDetailsHero({
       </div>
 
       <div className="lane-details-hero__details">
-        <DetailItem
-          label="OnRamp address"
-          clipboardType="onramp"
-          tooltip={sourceNetwork.chainType === "solana" ? <StyledTooltip tip="Same as Router." /> : undefined}
-        >
-          <AddressComponent
-            address={onRamp}
-            endLength={6}
-            contractUrl={getExplorerAddressUrl(explorer, sourceNetwork.chainType)(onRamp)}
-          />
-        </DetailItem>
+        {onRamp && (
+          <DetailItem
+            label="OnRamp address"
+            clipboardType="onramp"
+            tooltip={sourceNetwork.chainType === "solana" ? <StyledTooltip tip="Same as Router." /> : undefined}
+          >
+            <AddressComponent
+              address={onRamp}
+              endLength={6}
+              contractUrl={getExplorerAddressUrl(explorer, sourceNetwork.chainType)(onRamp)}
+            />
+          </DetailItem>
+        )}
 
-        <DetailItem label="OffRamp address" clipboardType="offramp">
-          <AddressComponent
-            address={offRamp}
-            endLength={6}
-            contractUrl={getExplorerAddressUrl(explorer, destinationNetwork.chainType)(offRamp)}
-          />
-        </DetailItem>
+        {offRamp && (
+          <DetailItem label="OffRamp address" clipboardType="offramp">
+            <AddressComponent
+              address={offRamp}
+              endLength={6}
+              contractUrl={getExplorerAddressUrl(explorer, destinationNetwork.chainType)(offRamp)}
+            />
+          </DetailItem>
+        )}
 
-        <DetailItem
-          label="Source chain selector"
-          clipboardType="source-chain-selector"
-          tooltip={<StyledTooltip tip="Unique identifier for the source blockchain network." />}
-        >
-          {sourceAddress ? <CopyValue value={sourceAddress} /> : "n/a"}
-        </DetailItem>
+        {sourceAddress && (
+          <DetailItem
+            label="Source chain selector"
+            clipboardType="source-chain-selector"
+            tooltip={<StyledTooltip tip="Unique identifier for the source blockchain network." />}
+          >
+            <CopyValue value={sourceAddress} />
+          </DetailItem>
+        )}
 
-        <DetailItem
-          label="Destination chain selector"
-          clipboardType="destination-chain-selector"
-          tooltip={<StyledTooltip tip="Unique identifier for the destination blockchain network." />}
-        >
-          {destinationAddress ? <CopyValue value={destinationAddress} /> : "n/a"}
-        </DetailItem>
+        {destinationAddress && (
+          <DetailItem
+            label="Destination chain selector"
+            clipboardType="destination-chain-selector"
+            tooltip={<StyledTooltip tip="Unique identifier for the destination blockchain network." />}
+          >
+            <CopyValue value={destinationAddress} />
+          </DetailItem>
+        )}
       </div>
     </div>
   )

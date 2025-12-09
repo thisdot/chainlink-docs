@@ -116,7 +116,7 @@ function LaneDetailsHero({
           >
             <AddressComponent
               address={onRamp}
-              endLength={6}
+              endLength={4}
               contractUrl={getExplorerAddressUrl(explorer, sourceNetwork.chainType)(onRamp)}
             />
           </DetailItem>
@@ -126,7 +126,7 @@ function LaneDetailsHero({
           <DetailItem label="OffRamp address" clipboardType="offramp">
             <AddressComponent
               address={offRamp}
-              endLength={6}
+              endLength={4}
               contractUrl={getExplorerAddressUrl(explorer, destinationNetwork.chainType)(offRamp)}
             />
           </DetailItem>

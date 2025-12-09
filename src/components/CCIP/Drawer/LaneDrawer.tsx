@@ -280,11 +280,11 @@ function LaneDrawer({
                         </td>
                         <td>
                           {/* Placeholder for FTF Rate limit capacity - data not yet available */}
-                          -
+                          TBC
                         </td>
                         <td>
                           {/* Placeholder for FTF Rate limit refill rate - data not yet available */}
-                          -
+                          TBC
                         </td>
                       </tr>
                     )

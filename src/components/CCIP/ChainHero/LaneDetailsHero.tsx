@@ -88,7 +88,6 @@ function LaneDetailsHero({
   explorer,
   inOutbound,
 }: LaneDetailsHeroProps) {
-
   return (
     <div className="lane-details-hero">
       {/* Display networks with direction based on lane type */}

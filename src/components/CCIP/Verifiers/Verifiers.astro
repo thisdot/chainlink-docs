@@ -5,8 +5,7 @@ import { getAllNetworks, getAllVerifiers, getSearchLanes, Version, Environment }
 import Table from "~/components/CCIP/Tables/VerifiersTable"
 import { getAllUniqueVerifiers } from "~/config/data/ccip/data.ts"
 import { DOCS_BASE_URL } from "~/utils/structuredData"
-import Breadcrumb from "~/components/CCIP/Breadcrumb/Breadcrumb"
-import Search from "~/components/CCIP/Search/Search"
+import ChainHero from "~/components/CCIP/ChainHero/ChainHero"
 
 interface Props {
   environment: Environment
@@ -68,38 +67,27 @@ const canonicalForJsonLd = `${DOCS_BASE_URL}${currentPath}`
     excerpt: verifiersMetadata.excerpt,
   }}
 >
-  <section class="ccip-chain-hero">
-    <div class="ccip-chain-hero__content">
-      <div class="ccip-chain-hero__top">
-        <Breadcrumb
-          items={[
-            {
-              name: "CCIP Directory",
-              url: `/ccip/directory/${environment}`,
-            },
-            {
-              name: "Verifiers",
-              url: `/ccip/directory/${environment}/verifiers`,
-            },
-          ]}
-        />
-        <div class="ccip-chain-hero__chainSearch">
-          <Search
-            chains={networks}
-            tokens={uniqueVerifiers.map((verifier) => ({
-              id: verifier.id,
-              totalNetworks: verifier.totalNetworks,
-              logo: verifier.logo,
-            }))}
-            small
-            environment={environment}
-            lanes={searchLanes}
-            client:load
-          />
-        </div>
-      </div>
-    </div>
-  </section>
+  <ChainHero
+    chains={networks}
+    tokens={uniqueVerifiers.map((verifier) => ({
+      id: verifier.id,
+      totalNetworks: verifier.totalNetworks,
+      logo: verifier.logo,
+    }))}
+    lanes={searchLanes}
+    environment={environment}
+    breadcrumbItems={[
+      {
+        name: "CCIP Directory",
+        url: `/ccip/directory/${environment}`,
+      },
+      {
+        name: "Verifiers",
+        url: `/ccip/directory/${environment}/verifiers`,
+      },
+    ]}
+    client:load
+  />
 
   <section class="layout">
     <div>
@@ -109,42 +97,6 @@ const canonicalForJsonLd = `${DOCS_BASE_URL}${currentPath}`
 </CcipDirectoryLayout>
 
 <style scoped="false">
-  .ccip-chain-hero {
-    background: var(--gray-50);
-    border-bottom: 1px solid var(--gray-200);
-  }
-
-  .ccip-chain-hero__content {
-    max-width: 1500px;
-    margin: 0 auto;
-    padding: var(--space-6x);
-  }
-
-  .ccip-chain-hero__top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: var(--space-4x);
-  }
-
-  .ccip-chain-hero__chainSearch {
-    flex-shrink: 0;
-  }
-
-  @media (max-width: 768px) {
-    .ccip-chain-hero__top {
-      flex-direction: column;
-      align-items: stretch;
-      gap: var(--space-3x);
-    }
-  }
-
-  @media (min-width: 992px) {
-    .ccip-chain-hero__content {
-      padding: var(--space-10x) var(--space-8x);
-    }
-  }
-
   .layout {
     margin: 0 auto;
     padding: var(--space-6x);

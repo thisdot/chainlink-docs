@@ -136,8 +136,8 @@ function ChainHero({ chains, tokens, network, token, environment, lanes }: Chain
               overflow: "visible",
             }}
           >
-            {network?.name || token?.id}
-            <span className="ccip-chain-hero__token-logo__symbol">{token?.name}</span>
+            {network?.name || token?.name}
+            <span className="ccip-chain-hero__token-logo__symbol">{token?.id}</span>
 
             {chainTooltipConfig && (
               <Tooltip

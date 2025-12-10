@@ -127,15 +127,7 @@ function ChainHero({ chains, tokens, network, token, environment, lanes }: Chain
               currentTarget.src = fallbackTokenIconUrl
             }}
           />
-          <h1
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "8px",
-              position: "relative",
-              overflow: "visible",
-            }}
-          >
+          <h1>
             {network?.name || token?.name}
             <span className="ccip-chain-hero__token-logo__symbol">{token?.id}</span>
 

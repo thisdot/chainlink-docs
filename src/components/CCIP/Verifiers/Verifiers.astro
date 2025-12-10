@@ -6,6 +6,7 @@ import Table from "~/components/CCIP/Tables/VerifiersTable"
 import { getAllUniqueVerifiers } from "~/config/data/ccip/data.ts"
 import { DOCS_BASE_URL } from "~/utils/structuredData"
 import ChainHero from "~/components/CCIP/ChainHero/ChainHero"
+import "./Verifiers.css"
 
 interface Props {
   environment: Environment
@@ -95,49 +96,3 @@ const canonicalForJsonLd = `${DOCS_BASE_URL}${currentPath}`
     </div>
   </section>
 </CcipDirectoryLayout>
-
-<style scoped="false">
-  .layout {
-    margin: 0 auto;
-    padding: var(--space-6x);
-  }
-
-  .layout h2 {
-    color: var(--gray-900);
-    font-size: 22px;
-    line-height: var(--space-10x);
-    padding-bottom: var(--space-4x);
-    border-bottom: 1px solid var(--gray-200);
-    margin-bottom: var(--space-6x);
-  }
-
-  .layout h2 span {
-    color: var(--gray-400);
-    font-weight: 600;
-    letter-spacing: 0.5px;
-  }
-
-  .networks__grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--space-8x);
-  }
-
-  .tokens__grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-8x);
-  }
-
-  @media (min-width: 50em) {
-    .layout {
-      max-width: 1500px;
-    }
-  }
-
-  @media (min-width: 992px) {
-    .layout {
-      padding: var(--space-10x) var(--space-8x);
-    }
-  }
-</style>

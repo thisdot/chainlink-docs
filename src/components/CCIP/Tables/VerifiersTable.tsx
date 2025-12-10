@@ -21,7 +21,6 @@ function VerifiersTable({ verifiers }: VerifiersTableProps) {
   const [search, setSearch] = useState("")
 
   // Transform verifiers data to include network information
-  console.log("VerifiersTable verifiers:", verifiers)
   const verifiersWithNetworkInfo = verifiers.map((verifier) => {
     const supportedChain = directoryToSupportedChain(verifier.network)
     const networkName = getTitle(supportedChain) || verifier.network

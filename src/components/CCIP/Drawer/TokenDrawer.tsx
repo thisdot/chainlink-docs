@@ -15,7 +15,7 @@ import {
   getVerifiersByNetwork,
   getVerifierTypeDisplay,
 } from "~/config/data/ccip/index.ts"
-import { useState, useEffect } from "react"
+import { useState, useMemo } from "react"
 import { ChainType, ExplorerInfo, SupportedChain } from "~/config/index.ts"
 import { getExplorerAddressUrl } from "~/features/utils/index.ts"
 import Address from "~/components/AddressReact.tsx"
@@ -23,8 +23,9 @@ import LaneDrawer from "../Drawer/LaneDrawer.tsx"
 import TableSearchInput from "../Tables/TableSearchInput.tsx"
 import Tabs from "../Tables/Tabs.tsx"
 import { Tooltip } from "~/features/common/Tooltip/Tooltip.tsx"
-import { RealtimeDataService } from "~/lib/ccip/services/realtime-data.ts"
-import type { TokenRateLimits } from "~/lib/ccip/types/index.ts"
+import { useMultiLaneRateLimits } from "~/hooks/useMultiLaneRateLimits.ts"
+import { RateLimitCell } from "~/components/CCIP/RateLimitCell.tsx"
+import { realtimeDataService } from "~/lib/ccip/services/realtime-data-instance.ts"
 
 function TokenDrawer({
   token,
@@ -60,7 +61,6 @@ function TokenDrawer({
 }) {
   const [search, setSearch] = useState("")
   const [activeTab, setActiveTab] = useState<"outbound" | "inbound" | "verifiers">("outbound")
-  const [rateLimits, setRateLimits] = useState<Record<string, Record<string, TokenRateLimits>>>({})
 
   // Get verifiers for the current network
   const verifiers = getVerifiersByNetwork({
@@ -79,28 +79,16 @@ function TokenDrawer({
     destinationPoolType: PoolType
   }
 
-  // Fetch rate limits for all lanes
-  useEffect(() => {
-    const fetchAllRateLimits = async () => {
-      const realtimeService = new RealtimeDataService()
-      const newRateLimits: Record<string, Record<string, TokenRateLimits>> = {}
+  // Build lane configurations for fetching rate limits
+  const laneConfigs = useMemo(() => {
+    return Object.keys(destinationLanes).map((destinationChain) => ({
+      source: activeTab === "outbound" ? network.key : destinationChain,
+      destination: activeTab === "outbound" ? destinationChain : network.key,
+    }))
+  }, [destinationLanes, network.key, activeTab])
 
-      for (const destinationChain of Object.keys(destinationLanes)) {
-        const source = activeTab === "outbound" ? network.key : destinationChain
-        const destination = activeTab === "outbound" ? destinationChain : network.key
-        const laneKey = `${source}-${destination}`
-
-        const response = await realtimeService.getLaneSupportedTokens(source, destination, environment)
-        if (response?.data) {
-          newRateLimits[laneKey] = response.data
-        }
-      }
-
-      setRateLimits(newRateLimits)
-    }
-
-    fetchAllRateLimits()
-  }, [network.key, destinationLanes, environment, activeTab])
+  // Fetch rate limits for all lanes using custom hook
+  const { rateLimitsMap, isLoading: isLoadingRateLimits } = useMultiLaneRateLimits(laneConfigs, environment)
 
   const laneRows: LaneRow[] = Object.keys(destinationLanes)
     .map((destinationChain) => {
@@ -318,29 +306,18 @@ function TokenDrawer({
                     const source = activeTab === "outbound" ? network.key : destinationChain
                     const destination = activeTab === "outbound" ? destinationChain : network.key
                     const laneKey = `${source}-${destination}`
-                    const laneRateLimits = rateLimits[laneKey]
+                    const laneRateLimits = rateLimitsMap[laneKey]
                     const tokenRateLimits = laneRateLimits?.[token.id]
 
-                    const realtimeService = new RealtimeDataService()
                     const direction = activeTab === "outbound" ? "out" : "in"
 
                     // Get standard and FTF rate limits
                     const allLimits = tokenRateLimits
-                      ? realtimeService.getAllRateLimitsForDirection(tokenRateLimits, direction)
+                      ? realtimeDataService.getAllRateLimitsForDirection(tokenRateLimits, direction)
                       : { standard: null, ftf: null }
 
                     // Token is paused if standard rate limit capacity is 0
                     const tokenPaused = allLimits.standard?.capacity === "0"
-
-                    // Format rate limit values
-                    const formatRateLimit = (value: string | null) => {
-                      if (!value || value === "0") return "0"
-                      const numValue = BigInt(value)
-                      const formatted = Number(numValue) / 1e18
-                      return formatted.toLocaleString(undefined, { maximumFractionDigits: 2 })
-                    }
-
-                    const isLoading = !laneRateLimits
 
                     return (
                       <tr key={networkDetails.name} className={tokenPaused ? "ccip-table__row--paused" : ""}>
@@ -381,40 +358,20 @@ function TokenDrawer({
                           </button>
                         </td>
                         <td>
-                          {isLoading
-                            ? "Loading..."
-                            : allLimits.standard
-                              ? allLimits.standard.isEnabled
-                                ? formatRateLimit(allLimits.standard.capacity)
-                                : "Disabled"
-                              : "N/A"}
+                          <RateLimitCell
+                            isLoading={isLoadingRateLimits}
+                            rateLimit={allLimits.standard}
+                            type="capacity"
+                          />
                         </td>
                         <td>
-                          {isLoading
-                            ? "Loading..."
-                            : allLimits.standard
-                              ? allLimits.standard.isEnabled
-                                ? formatRateLimit(allLimits.standard.rate)
-                                : "Disabled"
-                              : "N/A"}
+                          <RateLimitCell isLoading={isLoadingRateLimits} rateLimit={allLimits.standard} type="rate" />
                         </td>
                         <td>
-                          {isLoading
-                            ? "Loading..."
-                            : allLimits.ftf
-                              ? allLimits.ftf.isEnabled
-                                ? formatRateLimit(allLimits.ftf.capacity)
-                                : "Disabled"
-                              : "N/A"}
+                          <RateLimitCell isLoading={isLoadingRateLimits} rateLimit={allLimits.ftf} type="capacity" />
                         </td>
                         <td>
-                          {isLoading
-                            ? "Loading..."
-                            : allLimits.ftf
-                              ? allLimits.ftf.isEnabled
-                                ? formatRateLimit(allLimits.ftf.rate)
-                                : "Disabled"
-                              : "N/A"}
+                          <RateLimitCell isLoading={isLoadingRateLimits} rateLimit={allLimits.ftf} type="rate" />
                         </td>
                         <td>
                           {activeTab === "outbound"

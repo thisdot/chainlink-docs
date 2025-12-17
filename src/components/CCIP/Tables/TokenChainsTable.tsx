@@ -5,12 +5,11 @@ import { Environment, SupportedTokenConfig, tokenPoolDisplay, PoolType } from "~
 import { areAllLanesPaused } from "~/config/data/ccip/utils.ts"
 import { ChainType, ExplorerInfo } from "~/config/types.ts"
 import TableSearchInput from "./TableSearchInput.tsx"
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { getExplorerAddressUrl, fallbackTokenIconUrl } from "~/features/utils/index.ts"
 import TokenDrawer from "../Drawer/TokenDrawer.tsx"
 import { Tooltip } from "~/features/common/Tooltip/Tooltip.tsx"
-import { RealtimeDataService } from "~/lib/ccip/services/realtime-data.ts"
-import type { TokenFinalityData } from "~/lib/ccip/types/index.ts"
+import { useTokenFinality } from "~/hooks/useTokenFinality.ts"
 
 interface TableProps {
   networks: {
@@ -45,29 +44,9 @@ interface TableProps {
 
 function TokenChainsTable({ networks, token, lanes, environment }: TableProps) {
   const [search, setSearch] = useState("")
-  const [finalityData, setFinalityData] = useState<Record<string, TokenFinalityData>>({})
-  const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
-    const fetchFinalityData = async () => {
-      try {
-        const realtimeService = new RealtimeDataService()
-        const result = await realtimeService.getTokenFinality(token.id, environment, "internal_id")
-
-        if (result && result.data) {
-          setFinalityData(result.data)
-        } else {
-          console.warn("[TokenChainsTable] No data received")
-        }
-      } catch (error) {
-        console.error("Failed to fetch token finality data:", error)
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    fetchFinalityData()
-  }, [token.id, environment])
+  // Fetch finality data using custom hook
+  const { finalityData, isLoading: loading } = useTokenFinality(token.id, environment, "internal_id")
 
   return (
     <>

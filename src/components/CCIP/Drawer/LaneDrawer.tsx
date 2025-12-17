@@ -3,14 +3,15 @@ import "../Tables/Table.css"
 import { Environment, LaneConfig, LaneFilter, Version } from "~/config/data/ccip/types.ts"
 import { getNetwork, getTokenData } from "~/config/data/ccip/data.ts"
 import { determineTokenMechanism } from "~/config/data/ccip/utils.ts"
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import LaneDetailsHero from "../ChainHero/LaneDetailsHero.tsx"
 import { getExplorerAddressUrl, getTokenIconUrl, fallbackTokenIconUrl } from "~/features/utils/index.ts"
 import TableSearchInput from "../Tables/TableSearchInput.tsx"
 import { Tooltip } from "~/features/common/Tooltip/Tooltip.tsx"
 import { ChainType, ExplorerInfo } from "@config/types.ts"
-import { RealtimeDataService } from "~/lib/ccip/services/realtime-data.ts"
-import type { TokenRateLimits } from "~/lib/ccip/types/index.ts"
+import { useTokenRateLimits } from "~/hooks/useTokenRateLimits.ts"
+import { RateLimitCell } from "~/components/CCIP/RateLimitCell.tsx"
+import { realtimeDataService } from "~/lib/ccip/services/realtime-data-instance.ts"
 
 function LaneDrawer({
   lane,
@@ -28,8 +29,6 @@ function LaneDrawer({
   inOutbound: LaneFilter
 }) {
   const [search, setSearch] = useState("")
-  const [rateLimits, setRateLimits] = useState<Record<string, TokenRateLimits>>({})
-  const [isLoadingRateLimits, setIsLoadingRateLimits] = useState(true)
 
   const destinationNetworkDetails = getNetwork({
     filter: environment,
@@ -41,26 +40,12 @@ function LaneDrawer({
     chain: sourceNetwork.key,
   })
 
-  // Fetch rate limits data
-  useEffect(() => {
-    const fetchRateLimits = async () => {
-      setIsLoadingRateLimits(true)
-      const realtimeService = new RealtimeDataService()
+  // Determine source and destination based on inOutbound filter
+  const source = inOutbound === LaneFilter.Outbound ? sourceNetwork.key : destinationNetwork.key
+  const destination = inOutbound === LaneFilter.Outbound ? destinationNetwork.key : sourceNetwork.key
 
-      // Determine source and destination based on inOutbound filter
-      const source = inOutbound === LaneFilter.Outbound ? sourceNetwork.key : destinationNetwork.key
-      const destination = inOutbound === LaneFilter.Outbound ? destinationNetwork.key : sourceNetwork.key
-
-      const response = await realtimeService.getLaneSupportedTokens(source, destination, environment)
-
-      if (response?.data) {
-        setRateLimits(response.data)
-      }
-      setIsLoadingRateLimits(false)
-    }
-
-    fetchRateLimits()
-  }, [sourceNetwork.key, destinationNetwork.key, environment, inOutbound])
+  // Fetch rate limits data using custom hook
+  const { rateLimits, isLoading: isLoadingRateLimits } = useTokenRateLimits(source, destination, environment)
 
   return (
     <>
@@ -212,27 +197,17 @@ function LaneDrawer({
 
                     // Get rate limit data for this token
                     const tokenRateLimits = rateLimits[token]
-                    const realtimeService = new RealtimeDataService()
 
                     // Determine direction based on inOutbound filter
                     const direction = inOutbound === LaneFilter.Outbound ? "out" : "in"
 
                     // Get standard and FTF rate limits
                     const allLimits = tokenRateLimits
-                      ? realtimeService.getAllRateLimitsForDirection(tokenRateLimits, direction)
+                      ? realtimeDataService.getAllRateLimitsForDirection(tokenRateLimits, direction)
                       : { standard: null, ftf: null }
 
                     // Token is paused if standard rate limit capacity is 0
                     const tokenPaused = allLimits.standard?.capacity === "0"
-
-                    // Format rate limit values
-                    const formatRateLimit = (value: string | null) => {
-                      if (!value || value === "0") return "0"
-                      // Convert from wei to tokens (divide by 1e18)
-                      const numValue = BigInt(value)
-                      const formatted = Number(numValue) / 1e18
-                      return formatted.toLocaleString(undefined, { maximumFractionDigits: 2 })
-                    }
 
                     return (
                       <tr key={index} className={tokenPaused ? "ccip-table__row--paused" : ""}>
@@ -280,68 +255,26 @@ function LaneDrawer({
                         </td>
 
                         <td>
-                          {isLoadingRateLimits ? (
-                            "Loading..."
-                          ) : allLimits.standard ? (
-                            allLimits.standard.isEnabled ? (
-                              formatRateLimit(allLimits.standard.capacity)
-                            ) : (
-                              "Disabled"
-                            )
-                          ) : (
-                            <span style={{ display: "inline-flex", alignItems: "center", gap: "4px" }}>
-                              Unavailable
-                              <Tooltip
-                                label=""
-                                tip="Rate limit data is currently unavailable. You can find the Token Pool rate limit by reading the Token Pool contract directly on the relevant blockchain."
-                                style={{
-                                  display: "inline-block",
-                                  verticalAlign: "middle",
-                                }}
-                              />
-                            </span>
-                          )}
+                          <RateLimitCell
+                            isLoading={isLoadingRateLimits}
+                            rateLimit={allLimits.standard}
+                            type="capacity"
+                            showUnavailableTooltip
+                          />
                         </td>
                         <td className="rate-tooltip-cell">
-                          {isLoadingRateLimits
-                            ? "Loading..."
-                            : allLimits.standard
-                              ? allLimits.standard.isEnabled
-                                ? formatRateLimit(allLimits.standard.rate)
-                                : "Disabled"
-                              : "N/A"}
+                          <RateLimitCell isLoading={isLoadingRateLimits} rateLimit={allLimits.standard} type="rate" />
                         </td>
                         <td>
-                          {isLoadingRateLimits ? (
-                            "Loading..."
-                          ) : allLimits.ftf ? (
-                            allLimits.ftf.isEnabled ? (
-                              formatRateLimit(allLimits.ftf.capacity)
-                            ) : (
-                              "Disabled"
-                            )
-                          ) : (
-                            <span style={{ display: "inline-flex", alignItems: "center", gap: "4px" }}>
-                              Unavailable
-                              <Tooltip
-                                label=""
-                                tip="Rate limit data is currently unavailable. You can find the Token Pool rate limit by reading the Token Pool contract directly on the relevant blockchain."
-                                style={{
-                                  display: "inline-block",
-                                  verticalAlign: "middle",
-                                }}
-                              />
-                            </span>
-                          )}
+                          <RateLimitCell
+                            isLoading={isLoadingRateLimits}
+                            rateLimit={allLimits.ftf}
+                            type="capacity"
+                            showUnavailableTooltip
+                          />
                         </td>
                         <td>
-                          {isLoadingRateLimits
-                            ? "Loading..."
-                            : allLimits.ftf
-                              ? allLimits.ftf.isEnabled
-                                ? formatRateLimit(allLimits.ftf.rate)
-                                : "Disabled"
-                              : "N/A"}
+                          <RateLimitCell isLoading={isLoadingRateLimits} rateLimit={allLimits.ftf} type="rate" />
                         </td>
                       </tr>
                     )

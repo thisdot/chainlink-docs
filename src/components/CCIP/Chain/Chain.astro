@@ -187,8 +187,12 @@ const chainStructuredData = generateChainStructuredData(
       display: grid;
       --doc-padding: var(--space-10x);
       padding: var(--doc-padding) var(--space-8x);
-      grid-template-columns: 1fr 1fr;
-      gap: var(--space-24x);
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: var(--space-8x);
+    }
+
+    .layout > div {
+      min-width: 0;
     }
 
     .networks__grid {

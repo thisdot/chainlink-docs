@@ -1,16 +1,16 @@
 import { useMemo } from "react"
-import { Environment, LaneFilter, Version } from "~/config/data/ccip/types"
-import { getTokenData } from "~/config/data/ccip/data"
-import { getTokenIconUrl } from "~/features/utils"
-import { realtimeDataService } from "~/lib/ccip/services/realtime-data-instance"
+import { Environment, LaneFilter, Version } from "~/config/data/ccip/types.ts"
+import { getTokenData } from "~/config/data/ccip/data.ts"
+import { getTokenIconUrl } from "~/features/utils/index.ts"
+import { realtimeDataService } from "~/lib/ccip/services/realtime-data-instance.ts"
 
 export interface ProcessedToken {
   id: string
   data: ReturnType<typeof getTokenData>
   logo: string
   rateLimits: {
-    standard?: { capacity: string; rate: string; isEnabled: boolean }
-    ftf?: { capacity: string; rate: string; isEnabled: boolean }
+    standard: { capacity: string; rate: string; isEnabled: boolean } | null
+    ftf: { capacity: string; rate: string; isEnabled: boolean } | null
   }
   isPaused: boolean
 }

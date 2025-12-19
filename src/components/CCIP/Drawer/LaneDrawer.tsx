@@ -246,11 +246,7 @@ function LaneDrawer({
                     />
                   </td>
                   <td className="rate-tooltip-cell">
-                    <RateLimitCell
-                      isLoading={isLoadingRateLimits}
-                      rateLimit={token.rateLimits.standard}
-                      type="rate"
-                    />
+                    <RateLimitCell isLoading={isLoadingRateLimits} rateLimit={token.rateLimits.standard} type="rate" />
                   </td>
                   <td>
                     <RateLimitCell

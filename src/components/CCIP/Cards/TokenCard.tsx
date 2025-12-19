@@ -12,7 +12,14 @@ interface TokenCardProps {
   variant?: "default" | "square"
 }
 
-const TokenCard = memo(function TokenCard({ id, logo, link, onClick, totalNetworks, variant = "default" }: TokenCardProps) {
+const TokenCard = memo(function TokenCard({
+  id,
+  logo,
+  link,
+  onClick,
+  totalNetworks,
+  variant = "default",
+}: TokenCardProps) {
   const logoElement = (
     <object data={logo} type="image/png" aria-label={`${id} token logo`}>
       <img src={fallbackTokenIconUrl} alt={`${id} token logo`} loading="lazy" />
@@ -43,7 +50,12 @@ const TokenCard = memo(function TokenCard({ id, logo, link, onClick, totalNetwor
 
     if (onClick) {
       return (
-        <button type="button" className="token-card__square-container" onClick={onClick} aria-label={`View ${id} token details`}>
+        <button
+          type="button"
+          className="token-card__square-container"
+          onClick={onClick}
+          aria-label={`View ${id} token details`}
+        >
           {content}
         </button>
       )

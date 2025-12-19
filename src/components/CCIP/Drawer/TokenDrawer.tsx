@@ -217,29 +217,29 @@ function TokenDrawer({
                   </tr>
                 ) : (
                   filteredVerifiers.map((verifier) => (
-                      <tr key={verifier.address}>
-                        <td>
-                          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                            <img
-                              src={verifier.logo}
-                              alt={`${verifier.name} logo`}
-                              className="ccip-table__logo"
-                              style={{ width: "24px", height: "24px" }}
-                            />
-                            {verifier.name}
-                          </div>
-                        </td>
-                        <td>
-                          <Address
-                            contractUrl={getExplorerAddressUrl(network.explorer, network.chainType)(verifier.address)}
-                            address={verifier.address}
-                            endLength={4}
+                    <tr key={verifier.address}>
+                      <td>
+                        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                          <img
+                            src={verifier.logo}
+                            alt={`${verifier.name} logo`}
+                            className="ccip-table__logo"
+                            style={{ width: "24px", height: "24px" }}
                           />
-                        </td>
-                        <td>{getVerifierTypeDisplay(verifier.type)}</td>
-                        <td>N/A</td>
-                      </tr>
-                    ))
+                          {verifier.name}
+                        </div>
+                      </td>
+                      <td>
+                        <Address
+                          contractUrl={getExplorerAddressUrl(network.explorer, network.chainType)(verifier.address)}
+                          address={verifier.address}
+                          endLength={4}
+                        />
+                      </td>
+                      <td>{getVerifierTypeDisplay(verifier.type)}</td>
+                      <td>N/A</td>
+                    </tr>
+                  ))
                 )}
               </tbody>
             </table>
@@ -343,7 +343,9 @@ function TokenDrawer({
                                     logo: networkDetails?.logo || "",
                                     key: destinationChain,
                                   }}
-                                  inOutbound={activeTab === TokenTab.Outbound ? LaneFilter.Outbound : LaneFilter.Inbound}
+                                  inOutbound={
+                                    activeTab === TokenTab.Outbound ? LaneFilter.Outbound : LaneFilter.Inbound
+                                  }
                                   explorer={network.explorer}
                                 />
                               ))

@@ -27,6 +27,12 @@ import { useMultiLaneRateLimits } from "~/hooks/useMultiLaneRateLimits.ts"
 import { RateLimitCell } from "~/components/CCIP/RateLimitCell.tsx"
 import { realtimeDataService } from "~/lib/ccip/services/realtime-data-instance.ts"
 
+enum TokenTab {
+  Outbound = "outbound",
+  Inbound = "inbound",
+  Verifiers = "verifiers",
+}
+
 function TokenDrawer({
   token,
   network,
@@ -60,7 +66,7 @@ function TokenDrawer({
   environment: Environment
 }) {
   const [search, setSearch] = useState("")
-  const [activeTab, setActiveTab] = useState<"outbound" | "inbound" | "verifiers">("outbound")
+  const [activeTab, setActiveTab] = useState<TokenTab>(TokenTab.Outbound)
 
   // Get verifiers for the current network
   const verifiers = getVerifiersByNetwork({
@@ -82,8 +88,8 @@ function TokenDrawer({
   // Build lane configurations for fetching rate limits
   const laneConfigs = useMemo(() => {
     return Object.keys(destinationLanes).map((destinationChain) => ({
-      source: activeTab === "outbound" ? network.key : destinationChain,
-      destination: activeTab === "outbound" ? destinationChain : network.key,
+      source: activeTab === TokenTab.Outbound ? network.key : destinationChain,
+      destination: activeTab === TokenTab.Outbound ? destinationChain : network.key,
     }))
   }, [destinationLanes, network.key, activeTab])
 
@@ -163,23 +169,23 @@ function TokenDrawer({
               tabs={[
                 {
                   name: "Outbound lanes",
-                  key: "outbound",
+                  key: TokenTab.Outbound,
                 },
                 {
                   name: "Inbound lanes",
-                  key: "inbound",
+                  key: TokenTab.Inbound,
                 },
                 {
                   name: "Verifiers",
-                  key: "verifiers",
+                  key: TokenTab.Verifiers,
                 },
               ]}
-              onChange={(key) => setActiveTab(key as "outbound" | "inbound" | "verifiers")}
+              onChange={(key) => setActiveTab(key as TokenTab)}
             />
           </div>
           <TableSearchInput search={search} setSearch={setSearch} />
         </div>
-        {activeTab === "verifiers" ? (
+        {activeTab === TokenTab.Verifiers ? (
           <div className="ccip-table__wrapper">
             <table className="ccip-table">
               <thead>
@@ -242,7 +248,7 @@ function TokenDrawer({
             <table className="ccip-table">
               <thead>
                 <tr>
-                  <th>{activeTab === "inbound" ? "Source" : "Destination"} network</th>
+                  <th>{activeTab === TokenTab.Inbound ? "Source" : "Destination"} network</th>
                   <th>
                     Rate limit capacity
                     <Tooltip
@@ -303,18 +309,16 @@ function TokenDrawer({
                     if (!laneData || !networkDetails) return null
 
                     // Get rate limit data for this lane
-                    const source = activeTab === "outbound" ? network.key : destinationChain
-                    const destination = activeTab === "outbound" ? destinationChain : network.key
+                    const source = activeTab === TokenTab.Outbound ? network.key : destinationChain
+                    const destination = activeTab === TokenTab.Outbound ? destinationChain : network.key
                     const laneKey = `${source}-${destination}`
                     const laneRateLimits = rateLimitsMap[laneKey]
                     const tokenRateLimits = laneRateLimits?.[token.id]
 
-                    const direction = activeTab === "outbound" ? "out" : "in"
+                    const direction = activeTab === TokenTab.Outbound ? "out" : "in"
 
                     // Get standard and FTF rate limits
-                    const allLimits = tokenRateLimits
-                      ? realtimeDataService.getAllRateLimitsForDirection(tokenRateLimits, direction)
-                      : { standard: null, ftf: null }
+                    const allLimits = realtimeDataService.getAllRateLimitsForDirection(tokenRateLimits, direction)
 
                     // Token is paused if standard rate limit capacity is 0
                     const tokenPaused = allLimits.standard?.capacity === "0"
@@ -337,7 +341,7 @@ function TokenDrawer({
                                     logo: networkDetails?.logo || "",
                                     key: destinationChain,
                                   }}
-                                  inOutbound={activeTab === "outbound" ? LaneFilter.Outbound : LaneFilter.Inbound}
+                                  inOutbound={activeTab === TokenTab.Outbound ? LaneFilter.Outbound : LaneFilter.Inbound}
                                   explorer={network.explorer}
                                 />
                               ))
@@ -374,7 +378,7 @@ function TokenDrawer({
                           <RateLimitCell isLoading={isLoadingRateLimits} rateLimit={allLimits.ftf} type="rate" />
                         </td>
                         <td>
-                          {activeTab === "outbound"
+                          {activeTab === TokenTab.Outbound
                             ? determineTokenMechanism(network.tokenPoolType, destinationPoolType)
                             : determineTokenMechanism(destinationPoolType, network.tokenPoolType)}
                         </td>
@@ -397,7 +401,7 @@ function TokenDrawer({
           </div>
         )}
 
-        {activeTab !== "verifiers" && (
+        {activeTab !== TokenTab.Verifiers && (
           <div className="ccip-table__notFound">
             {laneRows?.filter(
               ({ networkDetails }) => networkDetails && networkDetails.name.toLowerCase().includes(search.toLowerCase())

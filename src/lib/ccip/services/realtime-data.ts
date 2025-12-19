@@ -219,17 +219,21 @@ export class RealtimeDataService {
   /**
    * Gets both standard and FTF rate limits for a specific token and direction
    *
-   * @param tokenRateLimits - Token rate limits containing standard and custom entries
+   * @param tokenRateLimits - Token rate limits containing standard and custom entries (can be null/undefined)
    * @param direction - Direction ("in" for inbound, "out" for outbound)
    * @returns Object containing both standard and FTF rate limits
    */
   getAllRateLimitsForDirection(
-    tokenRateLimits: TokenRateLimits,
+    tokenRateLimits: TokenRateLimits | null | undefined,
     direction: "in" | "out"
   ): {
     standard: RateLimiterConfig | null
     ftf: RateLimiterConfig | null
   } {
+    if (!tokenRateLimits) {
+      return { standard: null, ftf: null }
+    }
+
     const standardLimit =
       tokenRateLimits.standard && !this.isRateLimiterUnavailable(tokenRateLimits.standard)
         ? tokenRateLimits.standard[direction] || null

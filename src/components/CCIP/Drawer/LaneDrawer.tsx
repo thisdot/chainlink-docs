@@ -202,9 +202,7 @@ function LaneDrawer({
                     const direction = inOutbound === LaneFilter.Outbound ? "out" : "in"
 
                     // Get standard and FTF rate limits
-                    const allLimits = tokenRateLimits
-                      ? realtimeDataService.getAllRateLimitsForDirection(tokenRateLimits, direction)
-                      : { standard: null, ftf: null }
+                    const allLimits = realtimeDataService.getAllRateLimitsForDirection(tokenRateLimits, direction)
 
                     // Token is paused if standard rate limit capacity is 0
                     const tokenPaused = allLimits.standard?.capacity === "0"

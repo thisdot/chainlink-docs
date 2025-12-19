@@ -75,6 +75,18 @@ function TokenDrawer({
     version: Version.V1_2_0,
   })
 
+  // Filter verifiers based on search
+  const filteredVerifiers = useMemo(() => {
+    if (!search) return verifiers
+    const searchLower = search.toLowerCase()
+    return verifiers.filter(
+      (verifier) =>
+        verifier.name.toLowerCase().includes(searchLower) ||
+        verifier.address.toLowerCase().includes(searchLower) ||
+        verifier.type.toLowerCase().includes(searchLower)
+    )
+  }, [verifiers, search])
+
   type LaneRow = {
     networkDetails: {
       name: string
@@ -204,17 +216,7 @@ function TokenDrawer({
                     </td>
                   </tr>
                 ) : (
-                  verifiers
-                    .filter((verifier) => {
-                      if (!search) return true
-                      const searchLower = search.toLowerCase()
-                      return (
-                        verifier.name.toLowerCase().includes(searchLower) ||
-                        verifier.address.toLowerCase().includes(searchLower) ||
-                        verifier.type.toLowerCase().includes(searchLower)
-                      )
-                    })
-                    .map((verifier) => (
+                  filteredVerifiers.map((verifier) => (
                       <tr key={verifier.address}>
                         <td>
                           <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>

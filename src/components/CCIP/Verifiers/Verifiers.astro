@@ -35,6 +35,12 @@ const uniqueVerifiers = getAllUniqueVerifiers({
 
 const searchLanes = getSearchLanes({ environment })
 
+const allTokens = uniqueVerifiers.map((verifier) => ({
+  id: verifier.id,
+  totalNetworks: verifier.totalNetworks,
+  logo: verifier.logo,
+}))
+
 // Generate dynamic metadata for verifiers page
 const environmentText = environment === Environment.Mainnet ? "Mainnet" : "Testnet"
 const verifiersMetadata = {
@@ -70,12 +76,9 @@ const canonicalForJsonLd = `${DOCS_BASE_URL}${currentPath}`
 >
   <ChainHero
     chains={networks}
-    tokens={uniqueVerifiers.map((verifier) => ({
-      id: verifier.id,
-      totalNetworks: verifier.totalNetworks,
-      logo: verifier.logo,
-    }))}
+    tokens={allTokens}
     lanes={searchLanes}
+    verifiers={uniqueVerifiers}
     environment={environment}
     breadcrumbItems={[
       {

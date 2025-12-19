@@ -78,13 +78,7 @@ const directoryStructuredData = generateDirectoryStructuredData(environment, net
     environment={environment}
     client:visible
     lanes={searchLanes}
-    verifiers={allVerifiers.map((verifier) => ({
-      id: verifier.id,
-      name: verifier.name,
-      type: verifier.type,
-      logo: verifier.logo,
-      totalNetworks: verifier.totalNetworks,
-    }))}
+    verifiers={allVerifiers}
   />
   <section class="layout">
     <div>

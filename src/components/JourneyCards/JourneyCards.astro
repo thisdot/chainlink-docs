@@ -1,6 +1,6 @@
 ---
-import { Tag, Typography } from "@chainlink/blocks"
-import { JourneyTabGrid } from "./JourneyTabGrid"
+import { JourneyCardsDesktop } from "./JourneyCardsDesktop.tsx"
+import { JourneyTabGrid } from "./JourneyTabGrid.tsx"
 
 const columns = [
   {
@@ -106,37 +106,7 @@ const tabs = columns.map((column) => ({
 
 <section>
   <section class="desktop">
-    <Typography variant="h4" className="section-title">Start your Chainlink journey</Typography>
-    <div class="journey-cards">
-      {
-        columns.map((column) => (
-          <div class="journey-column">
-            <header class="column-header">
-              <Typography variant="h5" className="column-title">
-                {column.title}
-              </Typography>
-            </header>
-            {column.items.map((item) => (
-              <a href={item.href} class="journey-card">
-                <div class="card-content">
-                  <Typography variant="body-semi">{item.title}</Typography>
-                  <Typography variant="body-s" color="muted">
-                    {item.description}
-                  </Typography>
-                </div>
-
-                <footer class="journey-footer">
-                  <Tag size="sm" className="footer-tag">
-                    <Typography variant="code-s">{item.badge}</Typography>
-                  </Tag>
-                  <img src="/assets/icons/upper-right-arrow.svg" class="footer-icon" />
-                </footer>
-              </a>
-            ))}
-          </div>
-        ))
-      }
-    </div>
+    <JourneyCardsDesktop columns={columns} client:load />
   </section>
   <section class="mobile">
     <JourneyTabGrid header="Start your Chainlink journey" tabs={tabs} client:only="react" />

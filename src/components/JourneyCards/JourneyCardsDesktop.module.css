@@ -1,0 +1,125 @@
+.container {
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-10x);
+  gap: var(--space-4x);
+  flex-wrap: wrap;
+}
+
+.sectionTitle {
+  font-size: 28px;
+  margin: 0;
+}
+
+.filterWrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2x);
+  min-width: 200px;
+}
+
+.filterSelect {
+  min-width: 200px;
+}
+
+.journeyCards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.journeyColumn {
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid var(--border);
+}
+
+.journeyCard {
+  gap: var(--space-6x);
+  padding: var(--space-6x);
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  transition: background-color 0.2s ease;
+}
+
+.journeyCard:hover {
+  background-color: var(--muted);
+}
+
+.journeyCard:hover .footerTag {
+  background-color: var(--background) !important;
+}
+
+.journeyCard:hover .footerIcon {
+  opacity: 1;
+}
+
+.cardContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2x);
+  margin-bottom: var(--space-8x);
+}
+
+.journeyFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.footerTag {
+  text-transform: uppercase;
+}
+
+.footerIcon {
+  height: 12px;
+  width: 12px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.columnHeader {
+  padding: var(--space-2x) var(--space-6x);
+  border-left: 3px solid var(--brand);
+}
+
+.columnTitle {
+  font-size: 22px;
+  line-height: 26px;
+  margin: 0;
+}
+
+.noResults {
+  padding: var(--space-10x);
+  text-align: center;
+}
+
+@media screen and (min-width: 62em) {
+  .sectionTitle {
+    font-size: 32px;
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .filterWrapper {
+    width: 100%;
+  }
+
+  .filterSelect {
+    width: 100%;
+  }
+
+  .journeyCards {
+    grid-template-columns: 1fr;
+  }
+}

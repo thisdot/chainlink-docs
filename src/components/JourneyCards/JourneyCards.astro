@@ -164,6 +164,8 @@ const tabs = columns.map((column) => ({
   }
 
   .journey-card {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
     gap: var(--space-6x);
     padding: var(--space-6x);
   }
@@ -188,7 +190,10 @@ const tabs = columns.map((column) => ({
     display: flex;
     flex-direction: column;
     gap: var(--space-2x);
-    margin-bottom: var(--space-8x);
+  }
+
+  .card-content > :last-child {
+    min-height: 3em;
   }
 
   .journey-footer {

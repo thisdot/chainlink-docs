@@ -24,6 +24,10 @@ export const ChainAwareTabGrid = ({ tabs, header, columns = 3 }: ChainAwareTabGr
 
   const displayTab = activeTab || tabs[0]
 
+  if (!displayTab) {
+    return null
+  }
+
   return (
     <div className={styles.tabGridWrapper}>
       <header className={styles.gridHeader}>

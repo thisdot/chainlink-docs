@@ -243,7 +243,6 @@ function TokenDrawer({
                           contractUrl={getExplorerAddressUrl(network.explorer, network.chainType)(verifier.address)}
                           address={verifier.address}
                           endLength={4}
-                          urlClass="token_details_address"
                         />
                       </td>
                       <td>

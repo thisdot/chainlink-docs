@@ -63,6 +63,7 @@ function TokenDetailsHero({ network, token }: TokenDetailsHeroProps) {
                 endLength={4}
                 contractUrl={getExplorerAddressUrl(network?.explorer, network?.chainType)(token.address)}
                 address={token.address}
+                urlClass="token_details_address"
               />
             </div>
           </div>
@@ -77,6 +78,7 @@ function TokenDetailsHero({ network, token }: TokenDetailsHeroProps) {
                 endLength={4}
                 contractUrl={getExplorerAddressUrl(network?.explorer, network?.chainType)(token.poolAddress)}
                 address={token.poolAddress}
+                urlClass="token_details_address"
               />
             </div>
           </div>

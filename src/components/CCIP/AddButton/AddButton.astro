@@ -8,7 +8,7 @@ export interface Props {
 const { href, text, urlClass } = Astro.props
 ---
 
-<a class={`add-button ${urlClass}`} href={href}>
+<a class={`add-button ${urlClass || ""}`} href={href}>
   <img src="/assets/icons/add.svg" alt="Add" class="add-button-icon" />
   {text}
 </a>

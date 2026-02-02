@@ -20,22 +20,16 @@
   display: flex;
   align-items: center;
   gap: var(--space-2x);
-  min-width: 200px;
 }
 
-.filterSelect {
-  min-width: 200px;
-}
-
-.journeyCards {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-}
-
-.journeyColumn {
+.journeyRows {
   display: flex;
   flex-direction: column;
-  border-left: 1px solid var(--border);
+}
+
+.journeyRow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
 }
 
 .journeyCard {
@@ -45,6 +39,7 @@
   text-decoration: none;
   color: inherit;
   transition: background-color 0.2s ease;
+  border-left: 1px solid var(--border);
 }
 
 .journeyCard:hover {
@@ -115,11 +110,7 @@
     width: 100%;
   }
 
-  .filterSelect {
-    width: 100%;
-  }
-
-  .journeyCards {
+  .journeyRow {
     grid-template-columns: 1fr;
   }
 }

@@ -1,6 +1,7 @@
 import { useState, useMemo } from "react"
-import { SimpleSelect, Typography, Tag } from "@chainlink/blocks"
+import { Typography, Tag } from "@chainlink/blocks"
 import styles from "./JourneyCardsDesktop.module.css"
+import { ProductFilterDropdown } from "./ProductFilterDropdown.tsx"
 
 export interface JourneyItem {
   title: string
@@ -52,11 +53,12 @@ function validateBadge(badge: string): boolean {
 }
 
 export const JourneyCardsDesktop = ({ columns }: JourneyCardsDesktopProps) => {
-  const [selectedFilter, setSelectedFilter] = useState<ProductFilterValue>("all")
+  const [selectedFilters, setSelectedFilters] = useState<ProductFilterValue[]>(["all"])
 
-  // Filter columns based on selected product
+  // Filter columns based on selected products
   const filteredColumns = useMemo(() => {
-    if (selectedFilter === "all") {
+    // If "all" is selected or no filters selected, show all items
+    if (selectedFilters.includes("all") || selectedFilters.length === 0) {
       return columns
     }
 
@@ -69,20 +71,22 @@ export const JourneyCardsDesktop = ({ columns }: JourneyCardsDesktopProps) => {
             console.warn(`Invalid badge value: ${item.badge}`)
             return false
           }
-          return item.badge.toLowerCase() === selectedFilter.toLowerCase()
+          // Show item if it matches ANY of the selected filters (OR logic)
+          return selectedFilters.some((filter) => item.badge.toLowerCase() === filter.toLowerCase())
         }),
       }))
       .filter((column) => column.items.length > 0) // Hide columns with no matching cards
-  }, [columns, selectedFilter])
+  }, [columns, selectedFilters])
 
-  const handleFilterChange = (value: string) => {
-    // Validate filter value
-    if (!PRODUCT_FILTERS.some((f) => f.value === value)) {
-      console.error(`Invalid filter value: ${value}`)
-      return
-    }
-    setSelectedFilter(value as ProductFilterValue)
-  }
+  // Transform columns to rows (row-based layout)
+  const rows = useMemo(() => {
+    if (filteredColumns.length === 0) return []
+
+    const maxItems = Math.max(...filteredColumns.map((col) => col.items.length))
+    return Array.from({ length: maxItems }, (_, rowIndex) => ({
+      items: filteredColumns.map((col) => col.items[rowIndex]).filter(Boolean),
+    }))
+  }, [filteredColumns])
 
   return (
     <div className={styles.container}>
@@ -91,47 +95,48 @@ export const JourneyCardsDesktop = ({ columns }: JourneyCardsDesktopProps) => {
           Start your Chainlink journey
         </Typography>
         <div className={styles.filterWrapper}>
-          <SimpleSelect
+          <ProductFilterDropdown
+            selectedFilters={selectedFilters}
+            onFiltersChange={setSelectedFilters}
             options={PRODUCT_FILTERS}
-            value={selectedFilter}
-            onValueChange={handleFilterChange}
-            placeholder="Filter by product"
-            className={styles.filterSelect}
-            size="default"
           />
         </div>
       </div>
 
-      <div className={styles.journeyCards}>
-        {filteredColumns.map((column) => (
-          <div key={column.title} className={styles.journeyColumn}>
-            <header className={styles.columnHeader}>
-              <Typography variant="h5" className={styles.columnTitle}>
-                {column.title}
-              </Typography>
-            </header>
-            {column.items.map((item) => (
-              <a key={item.title} href={item.href} className={styles.journeyCard}>
-                <div className={styles.cardContent}>
-                  <Typography variant="body-semi">{item.title}</Typography>
-                  <Typography variant="body-s" color="muted">
-                    {item.description}
-                  </Typography>
-                </div>
-
-                <footer className={styles.journeyFooter}>
-                  <Tag size="sm" className={styles.footerTag}>
-                    <Typography variant="code-s">{item.badge}</Typography>
-                  </Tag>
-                  <img src="/assets/icons/upper-right-arrow.svg" className={styles.footerIcon} alt="" />
-                </footer>
-              </a>
+      {filteredColumns.length > 0 ? (
+        <div className={styles.journeyRows}>
+          <div className={styles.journeyRow}>
+            {filteredColumns.map((column) => (
+              <header key={column.title} className={styles.columnHeader}>
+                <Typography variant="h5" className={styles.columnTitle}>
+                  {column.title}
+                </Typography>
+              </header>
             ))}
           </div>
-        ))}
-      </div>
+          {rows.map((row, i) => (
+            <div key={i} className={styles.journeyRow}>
+              {row.items.map((item, j) => (
+                <a key={j} href={item.href} className={styles.journeyCard}>
+                  <div className={styles.cardContent}>
+                    <Typography variant="body-semi">{item.title}</Typography>
+                    <Typography variant="body-s" color="muted">
+                      {item.description}
+                    </Typography>
+                  </div>
 
-      {filteredColumns.length === 0 && (
+                  <footer className={styles.journeyFooter}>
+                    <Tag size="sm" className={styles.footerTag}>
+                      <Typography variant="code-s">{item.badge}</Typography>
+                    </Tag>
+                    <img src="/assets/icons/upper-right-arrow.svg" className={styles.footerIcon} alt="" />
+                  </footer>
+                </a>
+              ))}
+            </div>
+          ))}
+        </div>
+      ) : (
         <div className={styles.noResults}>
           <Typography variant="body" color="muted">
             No journey cards match the selected filter.

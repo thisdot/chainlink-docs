@@ -84,6 +84,7 @@ export const JourneyCardsDesktop = ({ columns }: JourneyCardsDesktopProps) => {
 
     const maxItems = Math.max(...filteredColumns.map((col) => col.items.length))
     return Array.from({ length: maxItems }, (_, rowIndex) => ({
+      id: `row-${rowIndex}`,
       items: filteredColumns.map((col) => col.items[rowIndex]).filter(Boolean),
     }))
   }, [filteredColumns])
@@ -114,10 +115,10 @@ export const JourneyCardsDesktop = ({ columns }: JourneyCardsDesktopProps) => {
               </header>
             ))}
           </div>
-          {rows.map((row, i) => (
-            <div key={i} className={styles.journeyRow}>
-              {row.items.map((item, j) => (
-                <a key={j} href={item.href} className={styles.journeyCard}>
+          {rows.map((row) => (
+            <div key={row.id} className={styles.journeyRow}>
+              {row.items.map((item) => (
+                <a key={item.href} href={item.href} className={styles.journeyCard}>
                   <div className={styles.cardContent}>
                     <Typography variant="body-semi">{item.title}</Typography>
                     <Typography variant="body-s" color="muted">

@@ -1,6 +1,7 @@
-import { useState, useMemo } from "react"
+import { useState, useMemo, useEffect } from "react"
 import styles from "./JourneyTabGrid.module.css"
-import { Tabs, TabsContent, TabsList, TabsTrigger, Typography, Tag, SimpleSelect } from "@chainlink/blocks"
+import { Tabs, TabsContent, TabsList, TabsTrigger, Typography, Tag } from "@chainlink/blocks"
+import { ProductFilterDropdown } from "./ProductFilterDropdown.tsx"
 
 export interface JourneyItem {
   title: string
@@ -53,11 +54,13 @@ function validateBadge(badge: string): boolean {
 }
 
 export const JourneyTabGrid = ({ tabs, header }: JourneyTabGridProps) => {
-  const [selectedFilter, setSelectedFilter] = useState<ProductFilterValue>("all")
+  const [selectedFilters, setSelectedFilters] = useState<string[]>(["all"])
+  const [activeTab, setActiveTab] = useState<string | undefined>()
 
-  // Filter tabs based on selected product
+  // Filter tabs based on selected products
   const filteredTabs = useMemo(() => {
-    if (selectedFilter === "all") {
+    // If "all" is selected or no filters selected, show all items
+    if (selectedFilters.includes("all") || selectedFilters.length === 0) {
       return tabs
     }
 
@@ -71,24 +74,20 @@ export const JourneyTabGrid = ({ tabs, header }: JourneyTabGridProps) => {
             console.warn(`Invalid badge value: ${item.badge}`)
             return false
           }
-          return item.badge.toLowerCase() === selectedFilter.toLowerCase()
+          // Show item if it matches ANY of the selected filters (OR logic)
+          return selectedFilters.some((filter) => item.badge!.toLowerCase() === filter.toLowerCase())
         }),
       }))
       .filter((tab) => tab.items.length > 0) // Hide tabs with no matching items
-  }, [tabs, selectedFilter])
+  }, [tabs, selectedFilters])
 
-  const handleFilterChange = (value: string) => {
-    // Validate filter value
-    const isValid = PRODUCT_FILTERS.some((f) => f.value === value)
-    if (!isValid) {
-      console.error(`Invalid filter value: ${value}`)
-      return
-    }
-    setSelectedFilter(value as ProductFilterValue)
-  }
+  // Reset activeTab when filteredTabs changes
+  useEffect(() => {
+    setActiveTab(filteredTabs[0]?.name)
+  }, [filteredTabs])
 
   return (
-    <Tabs defaultValue={filteredTabs[0]?.name} className={styles.tabGridWrapper}>
+    <Tabs value={activeTab} onValueChange={setActiveTab} className={styles.tabGridWrapper}>
       <header className={styles.gridHeader}>
         <Typography
           variant="h2"
@@ -99,12 +98,10 @@ export const JourneyTabGrid = ({ tabs, header }: JourneyTabGridProps) => {
           {header}
         </Typography>
         <div style={{ marginTop: "var(--space-4x)", width: "100%" }}>
-          <SimpleSelect
+          <ProductFilterDropdown
+            selectedFilters={selectedFilters}
+            onFiltersChange={setSelectedFilters}
             options={PRODUCT_FILTERS}
-            value={selectedFilter}
-            onValueChange={handleFilterChange}
-            placeholder="Filter by product"
-            size="default"
           />
         </div>
         {filteredTabs.length > 0 && (
@@ -123,8 +120,8 @@ export const JourneyTabGrid = ({ tabs, header }: JourneyTabGridProps) => {
           <TabsContent key={tab.name} value={tab.name}>
             <div className={styles.gridContent}>
               <div className={styles.journeyGrid}>
-                {tab.items.map((item, index) => (
-                  <a key={`${item.title}-${index}`} href={item.link} className={styles.journeyCard}>
+                {tab.items.map((item) => (
+                  <a key={item.link} href={item.link} className={styles.journeyCard}>
                     <div className={styles.cardContent}>
                       <Typography variant="body-semi">{item.title}</Typography>
                       <Typography variant="body-s" color="muted">

@@ -1,6 +1,7 @@
-import { useState, useEffect, useRef } from "react"
+import { useState, useRef } from "react"
 import styles from "./ProductFilterDropdown.module.css"
 import { Typography } from "@chainlink/blocks"
+import { useClickOutside } from "~/hooks/useClickOutside.tsx"
 
 export interface ProductFilterOption {
   label: string
@@ -17,22 +18,7 @@ export const ProductFilterDropdown = ({ selectedFilters, onFiltersChange, option
   const [isOpen, setIsOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
 
-  // Close dropdown when clicking outside
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setIsOpen(false)
-      }
-    }
-
-    if (isOpen) {
-      document.addEventListener("mousedown", handleClickOutside)
-    }
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside)
-    }
-  }, [isOpen])
+  useClickOutside(dropdownRef, () => setIsOpen(false), { enabled: isOpen })
 
   const handleCheckboxChange = (value: string) => {
     if (value === "all") {

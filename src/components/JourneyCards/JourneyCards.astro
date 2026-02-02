@@ -122,84 +122,6 @@ const tabs = columns.map((column) => ({
     display: block;
   }
 
-  .journey-cards {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  .journey-column {
-    display: flex;
-    flex-direction: column;
-    border-left: 1px solid var(--border);
-  }
-
-  .journey-card {
-    gap: var(--space-6x);
-    padding: var(--space-6x);
-  }
-
-  .footer-tag {
-    text-transform: uppercase;
-  }
-
-  .journey-card:hover {
-    background-color: var(--muted);
-
-    .footer-tag {
-      background-color: var(--background) !important;
-    }
-
-    .footer-icon {
-      opacity: 1;
-    }
-  }
-
-  .card-content {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-2x);
-    margin-bottom: var(--space-8x);
-  }
-
-  .journey-footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .section-title {
-    font-size: 28px;
-    margin-bottom: var(--space-10x);
-  }
-
-  .footer {
-    padding-top: var(--space-1x);
-  }
-  .footer-icon {
-    height: 12px;
-    width: 12px;
-    opacity: 0;
-  }
-
-  .card-badge {
-    display: inline-flex;
-    align-items: center;
-    padding: var(--space-1x) var(--space-2x);
-    background-color: var(--gray-100);
-    border-radius: 4px;
-    font-size: 11px;
-    font-weight: 500;
-    text-transform: uppercase;
-    color: var(--gray-600);
-    letter-spacing: 0.5px;
-    align-self: flex-start;
-  }
-
-  .column-header {
-    padding: var(--space-2x) var(--space-6x);
-    border-left: 3px solid var(--brand);
-  }
-
   @media (min-width: 769px) {
     .desktop {
       display: block;
@@ -207,22 +129,6 @@ const tabs = columns.map((column) => ({
 
     .mobile {
       display: none;
-    }
-
-    .column-title {
-      font-size: 22px;
-      line-height: 26px;
-    }
-
-    .journey-card h4 {
-      font-size: 16px;
-      line-height: 22px;
-    }
-  }
-
-  @media screen and (min-width: 62em) {
-    .section-title {
-      font-size: 32px;
     }
   }
 </style>

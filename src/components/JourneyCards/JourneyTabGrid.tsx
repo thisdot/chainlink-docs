@@ -34,8 +34,6 @@ const PRODUCT_FILTERS = [
   { label: "VRF", value: "vrf" },
 ]
 
-type ProductFilterValue = (typeof PRODUCT_FILTERS)[number]["value"]
-
 // Validate badge values against expected product types
 const VALID_BADGE_VALUES = new Set([
   "automation",

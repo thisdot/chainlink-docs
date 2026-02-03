@@ -86,7 +86,13 @@ export const JourneyCardsDesktop = ({ columns }: JourneyCardsDesktopProps) => {
   const rows = useMemo(() => {
     if (filteredColumns.length === 0) return []
 
-    const startIndex = currentPage * ITEMS_PER_PAGE
+    const maxItems = Math.max(...filteredColumns.map((col) => col.items.length))
+    const maxPage = Math.max(0, Math.ceil(maxItems / ITEMS_PER_PAGE) - 1)
+
+    // Clamp currentPage to valid bounds to prevent flash of empty content
+    const validPage = Math.min(currentPage, maxPage)
+
+    const startIndex = validPage * ITEMS_PER_PAGE
     const endIndex = startIndex + ITEMS_PER_PAGE
 
     // Slice items from each column based on current page
@@ -95,8 +101,8 @@ export const JourneyCardsDesktop = ({ columns }: JourneyCardsDesktopProps) => {
       items: col.items.slice(startIndex, endIndex),
     }))
 
-    const maxItems = Math.max(...paginatedColumns.map((col) => col.items.length))
-    return Array.from({ length: maxItems }, (_, rowIndex) => ({
+    const maxPaginatedItems = Math.max(...paginatedColumns.map((col) => col.items.length))
+    return Array.from({ length: maxPaginatedItems }, (_, rowIndex) => ({
       id: `row-${rowIndex}`,
       items: paginatedColumns.map((col) => col.items[rowIndex]).filter(Boolean),
     }))

@@ -121,9 +121,15 @@
   transition: all 0.2s ease;
 }
 
+.paginationButton svg {
+  display: block;
+  flex-shrink: 0;
+}
+
 .paginationButton:hover:not(:disabled) {
   background-color: var(--muted);
   border-color: var(--brand);
+  color: var(--brand);
 }
 
 .paginationButton:disabled {

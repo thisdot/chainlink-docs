@@ -58,7 +58,6 @@ const ITEMS_PER_PAGE = 4
 export const JourneyCardsDesktop = ({ columns }: JourneyCardsDesktopProps) => {
   const [selectedFilters, setSelectedFilters] = useState<ProductFilterValue[]>(["all"])
   const [currentPage, setCurrentPage] = useState(0)
-  
 
   // Filter columns based on selected products
   const filteredColumns = useMemo(() => {
@@ -89,36 +88,36 @@ export const JourneyCardsDesktop = ({ columns }: JourneyCardsDesktopProps) => {
 
     const startIndex = currentPage * ITEMS_PER_PAGE
     const endIndex = startIndex + ITEMS_PER_PAGE
-    
+
     // Slice items from each column based on current page
     const paginatedColumns = filteredColumns.map((col) => ({
       ...col,
       items: col.items.slice(startIndex, endIndex),
     }))
-    
+
     const maxItems = Math.max(...paginatedColumns.map((col) => col.items.length))
     return Array.from({ length: maxItems }, (_, rowIndex) => ({
       id: `row-${rowIndex}`,
       items: paginatedColumns.map((col) => col.items[rowIndex]).filter(Boolean),
     }))
   }, [filteredColumns, currentPage])
-  
+
   // Calculate total pages based on max items across all columns
   const totalPages = useMemo(() => {
     if (filteredColumns.length === 0) return 0
     const maxItems = Math.max(...filteredColumns.map((col) => col.items.length))
     return Math.ceil(maxItems / ITEMS_PER_PAGE)
   }, [filteredColumns])
-  
+
   // Reset pagination when filters change
   useEffect(() => {
     setCurrentPage(0)
   }, [filteredColumns])
-  
+
   const handlePreviousPage = () => {
     setCurrentPage((prev) => Math.max(0, prev - 1))
   }
-  
+
   const handleNextPage = () => {
     setCurrentPage((prev) => Math.min(totalPages - 1, prev + 1))
   }
@@ -170,7 +169,7 @@ export const JourneyCardsDesktop = ({ columns }: JourneyCardsDesktopProps) => {
               ))}
             </div>
           ))}
-          
+
           <PaginationControls
             currentPage={currentPage}
             totalPages={totalPages}

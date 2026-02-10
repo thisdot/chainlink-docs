@@ -1,5 +1,4 @@
 import "../Tables/Table.css"
-import { drawerContentStore, drawerWidthStore, DrawerWidth } from "../Drawer/drawerStore.ts"
 import TokenDetailsHero from "../ChainHero/TokenDetailsHero.tsx"
 import {
   Environment,
@@ -7,7 +6,6 @@ import {
   getNetwork,
   SupportedTokenConfig,
   Version,
-  LaneFilter,
   determineTokenMechanism,
   PoolType,
   getTokenData,
@@ -19,7 +17,6 @@ import { useState, useMemo } from "react"
 import { ChainType, ExplorerInfo, SupportedChain } from "~/config/index.ts"
 import { getExplorerAddressUrl } from "~/features/utils/index.ts"
 import Address from "~/components/AddressReact.tsx"
-import LaneDrawer from "../Drawer/LaneDrawer.tsx"
 import TableSearchInput from "../Tables/TableSearchInput.tsx"
 import Tabs from "../Tables/Tabs.tsx"
 import { Tooltip } from "~/features/common/Tooltip/Tooltip.tsx"

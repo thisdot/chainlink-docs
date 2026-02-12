@@ -312,7 +312,6 @@
 }
 
 .ccip-table__row--paused:hover {
-  opacity: 0.8;
   background-color: var(--gray-100);
 }
 

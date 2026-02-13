@@ -594,7 +594,13 @@ export const getChainsOfToken = ({ token, filter }: { token: string; filter: Env
   })()
 
   // Get all valid chains for the given token
-  return Object.entries(tokensData[token])
+  const tokenData = tokensData[token]
+  if (!tokenData) {
+    console.warn(`No token data found for ${token} in ${filter} environment`)
+    return []
+  }
+
+  return Object.entries(tokenData)
     .filter(([, tokenData]) => tokenData.pool && tokenData.pool.type !== "feeTokenOnly")
     .filter(([chain]) => {
       const lanes = getAllTokenLanes({ token, environment: filter })
@@ -618,6 +624,11 @@ export const getAllNetworkLanes = async ({
   })
 
   const allLanes = lanesReferenceData[chain]
+
+  // Handle chains with no outbound lanes (e.g., newly added chains)
+  if (!allLanes) {
+    return []
+  }
 
   const lanesData: {
     name: string

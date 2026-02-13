@@ -10,38 +10,38 @@
   width: 15% !important;
 }
 
-/* Column width specifications for main accordion table only */
-.ccip-table thead th:nth-child(1) {
+/* Column width specifications for lanes accordion table in drawer only */
+.ccip-table__drawer-container .ccip-table thead th:nth-child(1) {
   /* Destination/Source network */
   width: 25%;
 }
 
-.ccip-table thead th:nth-child(2) {
+.ccip-table__drawer-container .ccip-table thead th:nth-child(2) {
   /* Mechanism */
   width: 15%;
 }
 
-.ccip-table thead th:nth-child(3) {
+.ccip-table__drawer-container .ccip-table thead th:nth-child(3) {
   /* Rate limit capacity */
   width: 15%;
 }
 
-.ccip-table thead th:nth-child(4) {
+.ccip-table__drawer-container .ccip-table thead th:nth-child(4) {
   /* Rate limit refill rate */
   width: 15%;
 }
 
-.ccip-table thead th:nth-child(5) {
+.ccip-table__drawer-container .ccip-table thead th:nth-child(5) {
   /* FTF Rate limit capacity */
   width: 15%;
 }
 
-.ccip-table thead th:nth-child(6) {
+.ccip-table__drawer-container .ccip-table thead th:nth-child(6) {
   /* FTF Rate limit refill rate */
   width: 15%;
 }
 
-.ccip-table thead th:nth-child(7) {
+.ccip-table__drawer-container .ccip-table thead th:nth-child(7) {
   /* Verifiers */
   width: 10%;
   text-align: center !important;
@@ -76,10 +76,15 @@
   background-color: transparent;
   color: var(--gray-700);
   align-content: baseline;
+  padding-left: 0;
 }
 
-.ccip-table thead th:first-child {
+.ccip-table__drawer-container .ccip-table thead th:first-child:not(.ccip-table__verifier-name-header) {
   padding-left: var(--space-6x);
+}
+
+.ccip-table__verifier-name-header {
+  padding-left: 0 !important;
 }
 
 .ccip-table tbody td {
@@ -383,8 +388,8 @@
   pointer-events: none;
 }
 
-/* Align verifiers column content to the right - main table only */
-.ccip-table:not(.ccip-table--verifiers) tbody td:nth-child(7) {
+/* Align verifiers column content to the right - drawer lanes table only */
+.ccip-table__drawer-container .ccip-table:not(.ccip-table--verifiers) tbody td:nth-child(7) {
   text-align: right;
 }
 
@@ -467,4 +472,13 @@
 .ccip-table__paused-badge {
   margin-left: var(--space-2x);
   font-size: 12px;
+}
+
+.ccip-table__header-sublabel {
+  font-size: 0.875em;
+  margin-top: var(--space-1x);
+  display: block;
+  color: var(--muted-more-foreground, #9fa7b2);
+  font-weight: 600;
+  line-height: 22px;
 }

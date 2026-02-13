@@ -228,12 +228,16 @@ function LaneDrawer({
                   <td>
                     {inOutbound === LaneFilter.Outbound
                       ? determineTokenMechanism(
-                          (token.data[sourceNetwork.key].pool?.type || token.data[sourceNetwork.key].poolType) as PoolType,
-                          (token.data[destinationNetwork.key].pool?.type || token.data[destinationNetwork.key].poolType) as PoolType
+                          (token.data[sourceNetwork.key].pool?.type ||
+                            token.data[sourceNetwork.key].poolType) as PoolType,
+                          (token.data[destinationNetwork.key].pool?.type ||
+                            token.data[destinationNetwork.key].poolType) as PoolType
                         )
                       : determineTokenMechanism(
-                          (token.data[destinationNetwork.key].pool?.type || token.data[destinationNetwork.key].poolType) as PoolType,
-                          (token.data[sourceNetwork.key].pool?.type || token.data[sourceNetwork.key].poolType) as PoolType
+                          (token.data[destinationNetwork.key].pool?.type ||
+                            token.data[destinationNetwork.key].poolType) as PoolType,
+                          (token.data[sourceNetwork.key].pool?.type ||
+                            token.data[sourceNetwork.key].poolType) as PoolType
                         )}
                   </td>
 

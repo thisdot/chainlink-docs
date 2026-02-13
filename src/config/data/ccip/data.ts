@@ -16,6 +16,7 @@ import {
   VerifiersConfig,
   Verifier,
   VerifierType,
+  PoolType,
 } from "./types.ts"
 import { determineTokenMechanism } from "./utils.ts"
 import { ExplorerInfo, SupportedChain, ChainType } from "@config/types.ts"
@@ -318,8 +319,9 @@ export const getTokenMechanism = (params: {
   const tokenConfig = tokensReferenceData[params.token]
   const sourceChainPoolInfo = tokenConfig[sourceChainRdd]
   const destinationChainPoolInfo = tokenConfig[destinationChainRdd]
-  const sourceChainPoolType = sourceChainPoolInfo.pool.type
-  const destinationChainPoolType = destinationChainPoolInfo.pool.type
+  const sourceChainPoolType = (sourceChainPoolInfo.pool?.type || sourceChainPoolInfo.poolType) as PoolType
+  const destinationChainPoolType = (destinationChainPoolInfo.pool?.type ||
+    destinationChainPoolInfo.poolType) as PoolType
   const tokenMechanism = determineTokenMechanism(sourceChainPoolType, destinationChainPoolType)
   return tokenMechanism
 }

@@ -76,6 +76,7 @@ function LaneDrawer({
         sourceAddress={sourceNetworkDetails?.chainSelector || ""}
         destinationAddress={destinationNetworkDetails?.chainSelector || ""}
         inOutbound={inOutbound}
+        inDrawer={true}
       />
 
       <div className="ccip-table__drawer-container">

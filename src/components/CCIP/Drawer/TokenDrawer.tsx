@@ -182,6 +182,7 @@ function TokenDrawer({
           explorer: network.explorer,
           chainType: network.chainType,
         }}
+        inDrawer={true}
       />
       <div className="ccip-table__drawer-container">
         <div className="ccip-table__filters">

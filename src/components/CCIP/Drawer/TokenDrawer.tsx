@@ -184,7 +184,7 @@ function TokenDrawer({
         }}
         inDrawer={true}
       />
-      <div className="ccip-table__drawer-container">
+      <div className="ccip-table__drawer-container ccip-table__drawer-container--token">
         <div className="ccip-table__filters">
           <div>
             <Tabs

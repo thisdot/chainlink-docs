@@ -11,40 +11,81 @@
 }
 
 /* Column width specifications for lanes accordion table in drawer only */
-.ccip-table__drawer-container .ccip-table thead th:nth-child(1) {
-  /* Destination/Source network */
+.ccip-table__drawer-container--token .ccip-table thead th:nth-child(1) {
+  /* Destination/Source network in TokenDrawer */
   width: 25%;
 }
 
-.ccip-table__drawer-container .ccip-table thead th:nth-child(2) {
-  /* Mechanism */
+.ccip-table__drawer-container--lane .ccip-table thead th:nth-child(1) {
+  /* Ticker column in LaneDrawer */
+  width: 100px;
+}
+
+.ccip-table__drawer-container--token .ccip-table thead th:nth-child(2) {
+  /* Mechanism in TokenDrawer */
   width: 15%;
 }
 
-.ccip-table__drawer-container .ccip-table thead th:nth-child(3) {
-  /* Rate limit capacity */
+.ccip-table__drawer-container--token .ccip-table thead th:nth-child(3) {
+  /* Rate limit capacity in TokenDrawer */
   width: 15%;
 }
 
-.ccip-table__drawer-container .ccip-table thead th:nth-child(4) {
-  /* Rate limit refill rate */
+.ccip-table__drawer-container--token .ccip-table thead th:nth-child(4) {
+  /* Rate limit refill rate in TokenDrawer */
   width: 15%;
 }
 
-.ccip-table__drawer-container .ccip-table thead th:nth-child(5) {
-  /* FTF Rate limit capacity */
+.ccip-table__drawer-container--token .ccip-table thead th:nth-child(5) {
+  /* FTF Rate limit capacity in TokenDrawer */
   width: 15%;
 }
 
-.ccip-table__drawer-container .ccip-table thead th:nth-child(6) {
-  /* FTF Rate limit refill rate */
+.ccip-table__drawer-container--token .ccip-table thead th:nth-child(6) {
+  /* FTF Rate limit refill rate in TokenDrawer */
   width: 15%;
 }
 
-.ccip-table__drawer-container .ccip-table thead th:nth-child(7) {
-  /* Verifiers */
+.ccip-table__drawer-container--lane .ccip-table thead th:nth-child(2) {
+  /* Source token address in LaneDrawer */
+  width: 150px;
+}
+
+.ccip-table__drawer-container--lane .ccip-table thead th:nth-child(3) {
+  /* Decimals in LaneDrawer */
+  width: 80px;
+}
+
+.ccip-table__drawer-container--lane .ccip-table thead th:nth-child(4) {
+  /* Mechanism in LaneDrawer */
+  width: 100px;
+}
+
+.ccip-table__drawer-container--lane .ccip-table thead th:nth-child(5) {
+  /* Rate limit capacity in LaneDrawer */
+  width: 150px;
+}
+
+.ccip-table__drawer-container--lane .ccip-table thead th:nth-child(6) {
+  /* Rate limit refill rate in LaneDrawer */
+  width: 180px;
+}
+
+.ccip-table__drawer-container--lane .ccip-table thead th:nth-child(8) {
+  /* FTF Rate limit refill rate in LaneDrawer (8th column) */
+  width: 180px;
+}
+
+.ccip-table__drawer-container--token .ccip-table thead th:nth-child(7) {
+  /* Verifiers column in TokenDrawer */
   width: 10%;
   text-align: right !important;
+}
+
+.ccip-table__drawer-container--lane .ccip-table thead th:nth-child(7) {
+  /* FTF Rate limit capacity column in LaneDrawer */
+  width: 15%;
+  text-align: left;
 }
 
 .ccip-table tbody tr:first-child {

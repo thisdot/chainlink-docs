@@ -44,7 +44,7 @@
 .ccip-table__drawer-container .ccip-table thead th:nth-child(7) {
   /* Verifiers */
   width: 10%;
-  text-align: center !important;
+  text-align: right !important;
 }
 
 .ccip-table tbody tr:first-child {

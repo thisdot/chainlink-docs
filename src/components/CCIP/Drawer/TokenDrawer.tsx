@@ -11,7 +11,6 @@ import {
   getTokenData,
   LaneConfig,
   getVerifiersByNetwork,
-  getVerifierTypeDisplay,
 } from "~/config/data/ccip/index.ts"
 import { useState, useMemo } from "react"
 import { ChainType, ExplorerInfo, SupportedChain } from "~/config/index.ts"
@@ -28,7 +27,6 @@ import { Typography } from "@chainlink/blocks"
 enum TokenTab {
   Outbound = "outbound",
   Inbound = "inbound",
-  Verifiers = "verifiers",
 }
 
 function TokenDrawer({
@@ -76,25 +74,6 @@ function TokenDrawer({
     }
     setExpandedRows(newExpandedRows)
   }
-
-  // Get verifiers for the current network
-  const verifiers = getVerifiersByNetwork({
-    networkId: network.key,
-    environment,
-    version: Version.V1_2_0,
-  })
-
-  // Filter verifiers based on search
-  const filteredVerifiers = useMemo(() => {
-    if (!search) return verifiers
-    const searchLower = search.toLowerCase()
-    return verifiers.filter(
-      (verifier) =>
-        verifier.name.toLowerCase().includes(searchLower) ||
-        verifier.address.toLowerCase().includes(searchLower) ||
-        verifier.type.toLowerCase().includes(searchLower)
-    )
-  }, [verifiers, search])
 
   type LaneRow = {
     networkDetails: {
@@ -197,77 +176,13 @@ function TokenDrawer({
                   name: "Inbound lanes",
                   key: TokenTab.Inbound,
                 },
-                {
-                  name: "Verifiers",
-                  key: TokenTab.Verifiers,
-                },
               ]}
               onChange={(key) => setActiveTab(key as TokenTab)}
             />
           </div>
           <TableSearchInput search={search} setSearch={setSearch} />
         </div>
-        {activeTab === TokenTab.Verifiers ? (
-          <div className="ccip-table__wrapper">
-            <table className="ccip-table">
-              <thead>
-                <tr>
-                  <th className="ccip-table__verifier-name-header">
-                    <Typography variant="body-semi-s">Verifier name</Typography>
-                  </th>
-                  <th>
-                    <Typography variant="body-semi-s">Verifier address</Typography>
-                  </th>
-                  <th>
-                    <Typography variant="body-semi-s">Verifier type</Typography>
-                  </th>
-                  <th>
-                    <Typography variant="body-semi-s">Threshold amount</Typography>
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {verifiers.length === 0 ? (
-                  <tr>
-                    <td colSpan={4} style={{ textAlign: "center", padding: "20px", verticalAlign: "middle" }}>
-                      No verifiers found for this network.
-                    </td>
-                  </tr>
-                ) : (
-                  filteredVerifiers.map((verifier) => (
-                    <tr key={verifier.address}>
-                      <td>
-                        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                          <img
-                            src={verifier.logo}
-                            alt={`${verifier.name} logo`}
-                            className="ccip-table__logo"
-                            style={{ width: "24px", height: "24px" }}
-                          />
-                          <Typography variant="body">{verifier.name}</Typography>
-                        </div>
-                      </td>
-                      <td>
-                        <Address
-                          contractUrl={getExplorerAddressUrl(network.explorer, network.chainType)(verifier.address)}
-                          address={verifier.address}
-                          endLength={4}
-                        />
-                      </td>
-                      <td>
-                        <Typography variant="body">{getVerifierTypeDisplay(verifier.type)}</Typography>
-                      </td>
-                      <td>
-                        <Typography variant="body">N/A</Typography>
-                      </td>
-                    </tr>
-                  ))
-                )}
-              </tbody>
-            </table>
-          </div>
-        ) : (
-          <div className="ccip-table__wrapper">
+        <div className="ccip-table__wrapper">
             <table className="ccip-table">
               <thead>
                 <tr>
@@ -550,15 +465,12 @@ function TokenDrawer({
               </tbody>
             </table>
           </div>
-        )}
 
-        {activeTab !== TokenTab.Verifiers && (
-          <div className="ccip-table__notFound">
-            {laneRows?.filter(
-              ({ networkDetails }) => networkDetails && networkDetails.name.toLowerCase().includes(search.toLowerCase())
-            ).length === 0 && <>No lanes found</>}
-          </div>
-        )}
+        <div className="ccip-table__notFound">
+          {laneRows?.filter(
+            ({ networkDetails }) => networkDetails && networkDetails.name.toLowerCase().includes(search.toLowerCase())
+          ).length === 0 && <>No lanes found</>}
+        </div>
       </div>
     </div>
   )

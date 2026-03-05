@@ -24,6 +24,7 @@ interface TableProps {
     tokenDecimals: number
     tokenAddress: string
     tokenPoolType: PoolType
+    tokenPoolRawType: string
     tokenPoolAddress: string
     tokenPoolVersion: string
     explorer: ExplorerInfo

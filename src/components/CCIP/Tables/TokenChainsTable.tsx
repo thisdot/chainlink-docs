@@ -1,7 +1,7 @@
 import Address from "~/components/AddressReact.tsx"
 import "./Table.css"
 import { drawerContentStore, DrawerWidth, drawerWidthStore } from "../Drawer/drawerStore.ts"
-import { Environment, SupportedTokenConfig, tokenPoolDisplay, PoolType } from "~/config/data/ccip/index.ts"
+import { Environment, SupportedTokenConfig, PoolType } from "~/config/data/ccip/index.ts"
 import { areAllLanesPaused } from "~/config/data/ccip/utils.ts"
 import { ChainType, ExplorerInfo } from "~/config/types.ts"
 import TableSearchInput from "./TableSearchInput.tsx"
@@ -140,7 +140,7 @@ function TokenChainsTable({ networks, token, lanes, environment }: TableProps) {
                         endLength={4}
                       />
                     </td>
-                    <td>{tokenPoolDisplay(network.tokenPoolType)}</td>
+                    <td>{network.tokenPoolRawType}</td>
                     <td data-clipboard-type="token-pool">
                       <Address
                         contractUrl={getExplorerAddressUrl(

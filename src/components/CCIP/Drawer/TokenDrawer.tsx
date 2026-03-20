@@ -24,6 +24,11 @@ import { RateLimitCell } from "~/components/CCIP/RateLimitCell.tsx"
 import { realtimeDataService } from "~/lib/ccip/services/realtime-data-instance.ts"
 import { Typography } from "@chainlink/blocks"
 
+// ─── Feature flag ────────────────────────────────────────────────────────────
+// Set to `true` once the backend is ready to re-enable the Verifiers accordion.
+const SHOW_VERIFIERS_ACCORDION = false
+// ─────────────────────────────────────────────────────────────────────────────
+
 enum TokenTab {
   Outbound = "outbound",
   Inbound = "inbound",
@@ -248,7 +253,7 @@ function TokenDrawer({
                   <div>FTF Rate limit refill rate</div>
                   <span className="ccip-table__header-sublabel">(Tokens/sec)</span>
                 </th>
-                <th>Verifiers</th>
+                {SHOW_VERIFIERS_ACCORDION && <th>Verifiers</th>}
               </tr>
             </thead>
             <tbody>
@@ -275,31 +280,41 @@ function TokenDrawer({
                   // Token is paused if standard rate limit capacity is 0
                   const tokenPaused = allLimits.standard?.capacity === "0"
 
-                  // Get verifiers for the destination network
-                  const destinationVerifiers = getVerifiersByNetwork({
-                    networkId: destinationChain,
-                    environment,
-                    version: Version.V1_2_0,
-                  })
+                  // Get verifiers for the destination network (safe fallback to empty array)
+                  const destinationVerifiers = SHOW_VERIFIERS_ACCORDION
+                    ? (getVerifiersByNetwork({
+                        networkId: destinationChain,
+                        environment,
+                        version: Version.V1_2_0,
+                      }) ?? [])
+                    : []
 
-                  const isExpanded = expandedRows.has(networkDetails.name)
+                  const isExpanded = SHOW_VERIFIERS_ACCORDION && expandedRows.has(networkDetails.name)
 
                   return (
                     <>
                       <tr
                         key={networkDetails.name}
-                        className={`ccip-table__accordion-row ${tokenPaused ? "ccip-table__row--paused" : ""} ${isExpanded ? "ccip-table__accordion-row--expanded" : ""}`}
-                        onClick={() => toggleRowExpansion(networkDetails.name)}
-                        role="button"
-                        tabIndex={0}
-                        aria-expanded={isExpanded}
-                        aria-label={`${isExpanded ? "Hide" : "Show"} verifiers for ${networkDetails?.name}`}
-                        onKeyDown={(e) => {
-                          if (e.key === "Enter" || e.key === " ") {
-                            e.preventDefault()
-                            toggleRowExpansion(networkDetails.name)
-                          }
-                        }}
+                        className={`${SHOW_VERIFIERS_ACCORDION ? "ccip-table__accordion-row" : ""} ${tokenPaused ? "ccip-table__row--paused" : ""} ${isExpanded ? "ccip-table__accordion-row--expanded" : ""}`}
+                        onClick={SHOW_VERIFIERS_ACCORDION ? () => toggleRowExpansion(networkDetails.name) : undefined}
+                        role={SHOW_VERIFIERS_ACCORDION ? "button" : undefined}
+                        tabIndex={SHOW_VERIFIERS_ACCORDION ? 0 : undefined}
+                        aria-expanded={SHOW_VERIFIERS_ACCORDION ? isExpanded : undefined}
+                        aria-label={
+                          SHOW_VERIFIERS_ACCORDION
+                            ? `${isExpanded ? "Hide" : "Show"} verifiers for ${networkDetails?.name}`
+                            : undefined
+                        }
+                        onKeyDown={
+                          SHOW_VERIFIERS_ACCORDION
+                            ? (e) => {
+                                if (e.key === "Enter" || e.key === " ") {
+                                  e.preventDefault()
+                                  toggleRowExpansion(networkDetails.name)
+                                }
+                              }
+                            : undefined
+                        }
                       >
                         <td>
                           <div
@@ -339,28 +354,30 @@ function TokenDrawer({
                         <td>
                           <RateLimitCell isLoading={isLoadingRateLimits} rateLimit={allLimits.ftf} type="rate" />
                         </td>
-                        <td>
-                          <div className="ccip-table__verifier-toggle">
-                            <svg
-                              className={`ccip-table__expand-icon ${isExpanded ? "ccip-table__expand-icon--expanded" : ""}`}
-                              width="16"
-                              height="16"
-                              viewBox="0 0 16 16"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M4 6L8 10L12 6"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                              />
-                            </svg>
-                          </div>
-                        </td>
+                        {SHOW_VERIFIERS_ACCORDION && (
+                          <td>
+                            <div className="ccip-table__verifier-toggle">
+                              <svg
+                                className={`ccip-table__expand-icon ${isExpanded ? "ccip-table__expand-icon--expanded" : ""}`}
+                                width="16"
+                                height="16"
+                                viewBox="0 0 16 16"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M4 6L8 10L12 6"
+                                  stroke="currentColor"
+                                  strokeWidth="2"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                />
+                              </svg>
+                            </div>
+                          </td>
+                        )}
                       </tr>
-                      {isExpanded && (
+                      {SHOW_VERIFIERS_ACCORDION && isExpanded && (
                         <tr className="ccip-table__verifier-row">
                           <td colSpan={7} style={{ padding: 0 }}>
                             <div className="ccip-table__verifier-content">

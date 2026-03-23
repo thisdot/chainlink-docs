@@ -278,11 +278,11 @@ function TokenDrawer({
 
                   // Get verifiers for the destination network (safe fallback to empty array)
                   const destinationVerifiers = SHOW_VERIFIERS_ACCORDION
-                    ? (getVerifiersByNetwork({
+                    ? getVerifiersByNetwork({
                         networkId: destinationChain,
                         environment,
                         version: Version.V1_2_0,
-                      }) ?? [])
+                      })
                     : []
 
                   const isExpanded = SHOW_VERIFIERS_ACCORDION && expandedRows.has(networkDetails.name)

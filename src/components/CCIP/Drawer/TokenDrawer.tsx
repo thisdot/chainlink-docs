@@ -12,7 +12,7 @@ import {
   LaneConfig,
   getVerifiersByNetwork,
 } from "~/config/data/ccip/index.ts"
-import { useState, useMemo } from "react"
+import { useState, useMemo, Fragment } from "react"
 import { ChainType, ExplorerInfo, SupportedChain } from "~/config/index.ts"
 import { getExplorerAddressUrl } from "~/features/utils/index.ts"
 import Address from "~/components/AddressReact.tsx"
@@ -24,10 +24,8 @@ import { RateLimitCell } from "~/components/CCIP/RateLimitCell.tsx"
 import { realtimeDataService } from "~/lib/ccip/services/realtime-data-instance.ts"
 import { Typography } from "@chainlink/blocks"
 
-// ─── Feature flag ────────────────────────────────────────────────────────────
-// Set to `true` once the backend is ready to re-enable the Verifiers accordion.
-const SHOW_VERIFIERS_ACCORDION = false
-// ─────────────────────────────────────────────────────────────────────────────
+// Feature flag: set to `true` once the backend is ready to re-enable the Verifiers accordion.
+const SHOW_VERIFIERS_ACCORDION = true
 
 enum TokenTab {
   Outbound = "outbound",
@@ -292,9 +290,8 @@ function TokenDrawer({
                   const isExpanded = SHOW_VERIFIERS_ACCORDION && expandedRows.has(networkDetails.name)
 
                   return (
-                    <>
+                    <Fragment key={networkDetails.name}>
                       <tr
-                        key={networkDetails.name}
                         className={`${SHOW_VERIFIERS_ACCORDION ? "ccip-table__accordion-row" : ""} ${tokenPaused ? "ccip-table__row--paused" : ""} ${isExpanded ? "ccip-table__accordion-row--expanded" : ""}`}
                         onClick={SHOW_VERIFIERS_ACCORDION ? () => toggleRowExpansion(networkDetails.name) : undefined}
                         role={SHOW_VERIFIERS_ACCORDION ? "button" : undefined}
@@ -450,7 +447,7 @@ function TokenDrawer({
                           </td>
                         </tr>
                       )}
-                    </>
+                    </Fragment>
                   )
                 })}
             </tbody>

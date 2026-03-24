@@ -1,3 +1,10 @@
+// AI AGENT NOTE: This is a temporary component used while SHOW_VERIFIERS_ACCORDION = false in TokenDrawer.tsx.
+// It mirrors the row layout of NetworkLaneRow.tsx without the accordion/verifiers functionality.
+// Any UI changes to the row layout (columns, styling, network name cell, rate limit cells, etc.) must also be
+// applied to NetworkLaneRow.tsx to keep both variants in sync.
+//
+// When the Verifiers sub-table feature is fully released, this file should be deleted entirely.
+
 import type { RateLimiterConfig } from "~/lib/ccip/types/index.ts"
 import { RateLimitCell } from "~/components/CCIP/RateLimitCell.tsx"
 

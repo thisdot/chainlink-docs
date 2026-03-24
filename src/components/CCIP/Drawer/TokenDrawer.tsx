@@ -20,7 +20,7 @@ import { Tooltip } from "~/features/common/Tooltip/Tooltip.tsx"
 import { useMultiLaneRateLimits } from "~/hooks/useMultiLaneRateLimits.ts"
 import { realtimeDataService } from "~/lib/ccip/services/realtime-data-instance.ts"
 import { NetworkLaneRow } from "./NetworkLaneRow.tsx"
-import { VerifiersAccordionRow } from "./VerifiersAccordionRow.tsx"
+import { NetworkLaneRowNoVerifiers } from "./NetworkLaneRowNoVerifiers.tsx"
 
 // Feature flag: set to `true` once the backend is ready to re-enable the Verifiers accordion.
 const SHOW_VERIFIERS_ACCORDION = false
@@ -287,30 +287,33 @@ function TokenDrawer({
 
                   const isExpanded = SHOW_VERIFIERS_ACCORDION && expandedRows.has(networkDetails.name)
 
-                  return (
-                    <Fragment key={networkDetails.name}>
-                      <NetworkLaneRow
-                        networkDetails={networkDetails}
-                        tokenPaused={tokenPaused}
-                        isExpanded={isExpanded}
-                        showAccordion={SHOW_VERIFIERS_ACCORDION}
-                        onToggle={() => toggleRowExpansion(networkDetails.name)}
-                        mechanism={
-                          activeTab === TokenTab.Outbound
-                            ? determineTokenMechanism(network.tokenPoolType, destinationPoolType)
-                            : determineTokenMechanism(destinationPoolType, network.tokenPoolType)
-                        }
-                        allLimits={allLimits}
-                        isLoadingRateLimits={isLoadingRateLimits}
-                      />
-                      {SHOW_VERIFIERS_ACCORDION && isExpanded && (
-                        <VerifiersAccordionRow
-                          destinationVerifiers={destinationVerifiers}
-                          explorer={network.explorer}
-                          chainType={network.chainType}
-                        />
-                      )}
-                    </Fragment>
+                  const mechanism =
+                    activeTab === TokenTab.Outbound
+                      ? determineTokenMechanism(network.tokenPoolType, destinationPoolType)
+                      : determineTokenMechanism(destinationPoolType, network.tokenPoolType)
+
+                  return SHOW_VERIFIERS_ACCORDION ? (
+                    <NetworkLaneRow
+                      key={networkDetails.name}
+                      networkDetails={networkDetails}
+                      tokenPaused={tokenPaused}
+                      isExpanded={isExpanded}
+                      onToggle={() => toggleRowExpansion(networkDetails.name)}
+                      mechanism={mechanism}
+                      allLimits={allLimits}
+                      isLoadingRateLimits={isLoadingRateLimits}
+                      destinationVerifiers={destinationVerifiers}
+                      explorer={network.explorer}
+                      chainType={network.chainType}
+                    />
+                  ) : (
+                    <NetworkLaneRowNoVerifiers
+                      networkDetails={networkDetails}
+                      tokenPaused={tokenPaused}
+                      mechanism={mechanism}
+                      allLimits={allLimits}
+                      isLoadingRateLimits={isLoadingRateLimits}
+                    />
                   )
                 })}
             </tbody>

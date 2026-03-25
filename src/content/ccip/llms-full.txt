@@ -8582,7 +8582,7 @@ const tokensList: Token[] = [
         [polygonAmoy.id]: '0xcab0EF91Bee323d1A617c0a027eE753aFd6997E4',
         [sepolia.id]: '0xFd57b4ddBf88a4e07fF4e34C487b99af2Fe82a05'
     },
-    logoURL: 'https://smartcontract.imgix.net/tokens/ccip-bnm.webp?auto=compress%2Cformat',
+    logoURL: 'https://d2f70xi62kby8n.cloudfront.net/tokens/ccip-bnm.webp?auto=compress%2Cformat',
     tags: ['chainlink', 'default']
   },
   {
@@ -8591,7 +8591,7 @@ const tokensList: Token[] = [
       [optimismSepolia.id]: '0x044a6B4b561af69D2319A2f4be5Ec327a6975D0a',
       [sepolia.id]: '0x466D489b6d36E7E3b824ef491C225F5830E81cC1'
     },
-    logoURL: 'https://smartcontract.imgix.net/tokens/ccip-lnm.webp?auto=compress%2Cformat',
+    logoURL: 'https://d2f70xi62kby8n.cloudfront.net/tokens/ccip-lnm.webp?auto=compress%2Cformat',
     tags: ['chainlink', 'default']
   }
 ];

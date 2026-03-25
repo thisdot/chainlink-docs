@@ -1,4 +1,5 @@
 import "../Tables/Table.css"
+import { drawerContentStore } from "../Drawer/drawerStore.ts"
 import TokenDetailsHero from "../ChainHero/TokenDetailsHero.tsx"
 import {
   Environment,
@@ -6,14 +7,16 @@ import {
   getNetwork,
   SupportedTokenConfig,
   Version,
+  LaneFilter,
   determineTokenMechanism,
   PoolType,
   getTokenData,
   LaneConfig,
   getVerifiersByNetwork,
 } from "~/config/data/ccip/index.ts"
-import { useState, useMemo, Fragment } from "react"
+import { useState, useMemo } from "react"
 import { ChainType, ExplorerInfo, SupportedChain } from "~/config/index.ts"
+import LaneDrawer from "../Drawer/LaneDrawer.tsx"
 import TableSearchInput from "../Tables/TableSearchInput.tsx"
 import Tabs from "../Tables/Tabs.tsx"
 import { Tooltip } from "~/features/common/Tooltip/Tooltip.tsx"
@@ -24,11 +27,6 @@ import { NetworkLaneRowNoVerifiers } from "./NetworkLaneRowNoVerifiers.tsx"
 
 // Feature flag: set to `true` once the backend is ready to re-enable the Verifiers accordion.
 const SHOW_VERIFIERS_ACCORDION = false
-
-enum TokenTab {
-  Outbound = "outbound",
-  Inbound = "inbound",
-}
 
 function TokenDrawer({
   token,
@@ -64,7 +62,7 @@ function TokenDrawer({
   environment: Environment
 }) {
   const [search, setSearch] = useState("")
-  const [activeTab, setActiveTab] = useState<TokenTab>(TokenTab.Outbound)
+  const [inOutbound, setInOutbound] = useState<LaneFilter>(LaneFilter.Outbound)
   const [expandedRows, setExpandedRows] = useState<Set<string>>(new Set())
 
   const toggleRowExpansion = (networkName: string) => {
@@ -90,10 +88,10 @@ function TokenDrawer({
   // Build lane configurations for fetching rate limits
   const laneConfigs = useMemo(() => {
     return Object.keys(destinationLanes).map((destinationChain) => ({
-      source: activeTab === TokenTab.Outbound ? network.key : destinationChain,
-      destination: activeTab === TokenTab.Outbound ? destinationChain : network.key,
+      source: inOutbound === LaneFilter.Outbound ? network.key : destinationChain,
+      destination: inOutbound === LaneFilter.Outbound ? destinationChain : network.key,
     }))
-  }, [destinationLanes, network.key, activeTab])
+  }, [destinationLanes, network.key, inOutbound])
 
   // Fetch rate limits for all lanes using custom hook
   const { rateLimitsMap, isLoading: isLoadingRateLimits } = useMultiLaneRateLimits(laneConfigs, environment)
@@ -114,7 +112,7 @@ function TokenDrawer({
         console.error(`No token data found for ${token.id} on ${network.key} -> ${destinationChain}`)
         return null
       }
-      const destinationPoolType = destinationTokenData.pool?.type || destinationTokenData.poolType
+      const destinationPoolType = destinationTokenData.pool?.type
       if (!destinationPoolType) {
         console.error(`No pool type found for ${token.id} on ${network.key} -> ${destinationChain}`)
         return null
@@ -154,7 +152,6 @@ function TokenDrawer({
           logo: network.tokenLogo,
           decimals: network.tokenDecimals,
           address: network.tokenAddress,
-          poolType: network.tokenPoolType,
           poolRawType: network.tokenPoolRawType,
           poolAddress: network.tokenPoolAddress,
         }}
@@ -166,21 +163,21 @@ function TokenDrawer({
         }}
         inDrawer={true}
       />
-      <div className="ccip-table__drawer-container ccip-table__drawer-container--token">
+      <div className="ccip-table__drawer-container">
         <div className="ccip-table__filters">
           <div>
             <Tabs
               tabs={[
                 {
                   name: "Outbound lanes",
-                  key: TokenTab.Outbound,
+                  key: LaneFilter.Outbound,
                 },
                 {
                   name: "Inbound lanes",
-                  key: TokenTab.Inbound,
+                  key: LaneFilter.Inbound,
                 },
               ]}
-              onChange={(key) => setActiveTab(key as TokenTab)}
+              onChange={(key) => setInOutbound(key as LaneFilter)}
             />
           </div>
           <TableSearchInput search={search} setSearch={setSearch} />
@@ -189,22 +186,7 @@ function TokenDrawer({
           <table className="ccip-table">
             <thead>
               <tr>
-                <th>{activeTab === TokenTab.Inbound ? "Source" : "Destination"} network</th>
-                <th>
-                  Mechanism
-                  <Tooltip
-                    label=""
-                    tip="Token handling mechanism: Lock & Mint, Burn & Mint, Lock & Unlock, Burn & Unlock."
-                    labelStyle={{
-                      marginRight: "5px",
-                    }}
-                    style={{
-                      display: "inline-block",
-                      verticalAlign: "middle",
-                      marginBottom: "2px",
-                    }}
-                  />
-                </th>
+                <th>{inOutbound === LaneFilter.Inbound ? "Source" : "Destination"} network</th>
                 <th>
                   <div>
                     Rate limit capacity
@@ -242,12 +224,19 @@ function TokenDrawer({
                   <span className="ccip-table__header-sublabel">(Tokens/sec)</span>
                 </th>
                 <th>
-                  <div>FTF Rate limit capacity</div>
-                  <span className="ccip-table__header-sublabel">(Tokens)</span>
-                </th>
-                <th>
-                  <div>FTF Rate limit refill rate</div>
-                  <span className="ccip-table__header-sublabel">(Tokens/sec)</span>
+                  Mechanism
+                  <Tooltip
+                    label=""
+                    tip="Token handling mechanism: Lock & Mint, Burn & Mint, Lock & Unlock, Burn & Unlock."
+                    labelStyle={{
+                      marginRight: "5px",
+                    }}
+                    style={{
+                      display: "inline-block",
+                      verticalAlign: "middle",
+                      marginBottom: "2px",
+                    }}
+                  />
                 </th>
                 {SHOW_VERIFIERS_ACCORDION && <th>Verifiers</th>}
               </tr>
@@ -262,13 +251,13 @@ function TokenDrawer({
                   if (!laneData || !networkDetails) return null
 
                   // Get rate limit data for this lane
-                  const source = activeTab === TokenTab.Outbound ? network.key : destinationChain
-                  const destination = activeTab === TokenTab.Outbound ? destinationChain : network.key
+                  const source = inOutbound === LaneFilter.Outbound ? network.key : destinationChain
+                  const destination = inOutbound === LaneFilter.Outbound ? destinationChain : network.key
                   const laneKey = `${source}-${destination}`
                   const laneRateLimits = rateLimitsMap[laneKey]
                   const tokenRateLimits = laneRateLimits?.[token.id]
 
-                  const direction = activeTab === TokenTab.Outbound ? "out" : "in"
+                  const direction = inOutbound === LaneFilter.Outbound ? "out" : "in"
 
                   // Get standard and FTF rate limits
                   const allLimits = realtimeDataService.getAllRateLimitsForDirection(tokenRateLimits, direction)
@@ -288,9 +277,26 @@ function TokenDrawer({
                   const isExpanded = SHOW_VERIFIERS_ACCORDION && expandedRows.has(networkDetails.name)
 
                   const mechanism =
-                    activeTab === TokenTab.Outbound
+                    inOutbound === LaneFilter.Outbound
                       ? determineTokenMechanism(network.tokenPoolType, destinationPoolType)
                       : determineTokenMechanism(destinationPoolType, network.tokenPoolType)
+
+                  const onNetworkClick = () => {
+                    drawerContentStore.set(() => (
+                      <LaneDrawer
+                        environment={environment}
+                        lane={laneData}
+                        sourceNetwork={network}
+                        destinationNetwork={{
+                          name: networkDetails?.name || "",
+                          logo: networkDetails?.logo || "",
+                          key: destinationChain,
+                        }}
+                        inOutbound={inOutbound}
+                        explorer={network.explorer}
+                      />
+                    ))
+                  }
 
                   return SHOW_VERIFIERS_ACCORDION ? (
                     <NetworkLaneRow
@@ -299,6 +305,7 @@ function TokenDrawer({
                       tokenPaused={tokenPaused}
                       isExpanded={isExpanded}
                       onToggle={() => toggleRowExpansion(networkDetails.name)}
+                      onNetworkClick={onNetworkClick}
                       mechanism={mechanism}
                       allLimits={allLimits}
                       isLoadingRateLimits={isLoadingRateLimits}
@@ -308,11 +315,13 @@ function TokenDrawer({
                     />
                   ) : (
                     <NetworkLaneRowNoVerifiers
+                      key={networkDetails.name}
                       networkDetails={networkDetails}
                       tokenPaused={tokenPaused}
                       mechanism={mechanism}
                       allLimits={allLimits}
                       isLoadingRateLimits={isLoadingRateLimits}
+                      onNetworkClick={onNetworkClick}
                     />
                   )
                 })}

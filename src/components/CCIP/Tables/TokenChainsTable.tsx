@@ -1,6 +1,6 @@
 import Address from "~/components/AddressReact.tsx"
 import "./Table.css"
-import { drawerContentStore, DrawerWidth, drawerWidthStore } from "../Drawer/drawerStore.ts"
+import { drawerContentStore } from "../Drawer/drawerStore.ts"
 import { Environment, SupportedTokenConfig, PoolType } from "~/config/data/ccip/index.ts"
 import { areAllLanesPaused } from "~/config/data/ccip/utils.ts"
 import { ChainType, ExplorerInfo } from "~/config/types.ts"
@@ -8,8 +8,6 @@ import TableSearchInput from "./TableSearchInput.tsx"
 import { useState } from "react"
 import { getExplorerAddressUrl, fallbackTokenIconUrl } from "~/features/utils/index.ts"
 import TokenDrawer from "../Drawer/TokenDrawer.tsx"
-import { Tooltip } from "~/features/common/Tooltip/Tooltip.tsx"
-import { useTokenFinality } from "~/hooks/useTokenFinality.ts"
 
 interface TableProps {
   networks: {
@@ -45,10 +43,6 @@ interface TableProps {
 
 function TokenChainsTable({ networks, token, lanes, environment }: TableProps) {
   const [search, setSearch] = useState("")
-
-  // Fetch finality data using custom hook
-  const { finalityData, isLoading: loading } = useTokenFinality(token.id, environment, "internal_id")
-
   return (
     <>
       <div className="ccip-table__filters">
@@ -87,7 +81,6 @@ function TokenChainsTable({ networks, token, lanes, environment }: TableProps) {
                         type="button"
                         className={`ccip-table__network-name ${allLanesPaused ? "ccip-table__network-name--paused" : ""}`}
                         onClick={() => {
-                          drawerWidthStore.set(DrawerWidth.Wide)
                           drawerContentStore.set(() => (
                             <TokenDrawer
                               token={token}
@@ -137,10 +130,10 @@ function TokenChainsTable({ networks, token, lanes, environment }: TableProps) {
                       <Address
                         contractUrl={getExplorerAddressUrl(network.explorer, network.chainType)(network.tokenAddress)}
                         address={network.tokenAddress}
-                        endLength={4}
+                        endLength={6}
                       />
                     </td>
-                    <td>{network.tokenPoolRawType}</td>
+                    <td>{network.tokenPoolRawType ?? "—"}</td>
                     <td data-clipboard-type="token-pool">
                       <Address
                         contractUrl={getExplorerAddressUrl(
@@ -148,43 +141,20 @@ function TokenChainsTable({ networks, token, lanes, environment }: TableProps) {
                           network.chainType
                         )(network.tokenPoolAddress)}
                         address={network.tokenPoolAddress}
-                        endLength={4}
+                        endLength={6}
                       />
                     </td>
                     <td>{network.tokenPoolVersion}</td>
                     <td>
-                      {loading ? (
-                        "-"
-                      ) : finalityData[network.key] ? (
-                        finalityData[network.key].hasCustomFinality === null ? (
-                          <Tooltip
-                            label="N/A"
-                            tip="Custom finality data is currently unavailable. You can find the custom finality settings by reading the Token Pool contract directly on the relevant blockchain."
-                            labelStyle={{ marginRight: "5px" }}
-                            style={{ display: "inline-block", verticalAlign: "middle" }}
-                          />
-                        ) : finalityData[network.key].hasCustomFinality ? (
-                          "Yes"
-                        ) : (
-                          "No"
-                        )
-                      ) : (
-                        <Tooltip
-                          label="N/A"
-                          tip="Custom finality data is currently unavailable. You can find the custom finality settings by reading the Token Pool contract directly on the relevant blockchain."
-                          labelStyle={{ marginRight: "5px" }}
-                          style={{ display: "inline-block", verticalAlign: "middle" }}
-                        />
-                      )}
+                      {/* TODO: Fetch from API - GET /api/ccip/v1/tokens/{tokenCanonicalSymbol}/finality?environment={environment}
+                          Custom finality is derived from minBlockConfirmation > 0
+                          Display: "Yes" | "No" | "N/A" (with tooltip for unavailable) */}
+                      -
                     </td>
                     <td>
-                      {loading
-                        ? "-"
-                        : finalityData[network.key]
-                          ? finalityData[network.key].minBlockConfirmation === null
-                            ? "-"
-                            : finalityData[network.key].minBlockConfirmation
-                          : "-"}
+                      {/* TODO: Fetch from API - GET /api/ccip/v1/tokens/{tokenCanonicalSymbol}/finality?environment={environment}
+                          Display minBlockConfirmation value or "-" if custom finality is disabled/unavailable */}
+                      -
                     </td>
                   </tr>
                 )

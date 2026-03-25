@@ -16,11 +16,11 @@ import {
   VerifiersConfig,
   Verifier,
   VerifierType,
-  PoolType,
 } from "./types.ts"
 import { determineTokenMechanism } from "./utils.ts"
 import { ExplorerInfo, SupportedChain, ChainType } from "@config/types.ts"
-import { NETWORK_ICON_PATH, VERIFIER_ICON_PATH } from "@config/cdn.ts"
+import { VERIFIER_LOGOS_PATH, NETWORK_ICON_PATH } from "@config/cdn.ts"
+import { normalizeTechnologyName } from "@features/utils/networkIcons.ts"
 import {
   directoryToSupportedChain,
   getChainIcon,
@@ -32,7 +32,6 @@ import {
   getTokenIconUrl,
   getNativeCurrency,
 } from "@features/utils/index.ts"
-import { normalizeTechnologyName } from "@features/utils/networkIcons.ts"
 
 // For mainnet
 import chainsMainnetv120 from "@config/data/ccip/v1_2_0/mainnet/chains.json" with { type: "json" }
@@ -319,9 +318,9 @@ export const getTokenMechanism = (params: {
   const tokenConfig = tokensReferenceData[params.token]
   const sourceChainPoolInfo = tokenConfig[sourceChainRdd]
   const destinationChainPoolInfo = tokenConfig[destinationChainRdd]
-  const sourceChainPoolType = (sourceChainPoolInfo.pool?.type || sourceChainPoolInfo.poolType) as PoolType
-  const destinationChainPoolType = (destinationChainPoolInfo.pool?.type ||
-    destinationChainPoolInfo.poolType) as PoolType
+  const sourceChainPoolType = sourceChainPoolInfo.pool?.type
+  const destinationChainPoolType = destinationChainPoolInfo.pool?.type
+  if (!sourceChainPoolType || !destinationChainPoolType) return undefined
   const tokenMechanism = determineTokenMechanism(sourceChainPoolType, destinationChainPoolType)
   return tokenMechanism
 }
@@ -474,11 +473,10 @@ export const getTokensOfChain = ({ chain, filter }: { chain: string; filter: Env
     throw new Error(`Invalid environment: ${filter}`)
   }
 
-  // Filter tokens that satisfy the conditions
+  // Filter tokens that satisfy the conditions; API returns only transferable tokens (exclude feeTokenOnly)
   return Object.keys(tokensData).filter((token) => {
     const tokenData = tokensData[token]
-    // Check if tokenData for the given chain exists and isn't 'feeTokenOnly'
-    if (tokenData[chain] && tokenData[chain].pool && tokenData[chain].pool.type !== "feeTokenOnly") {
+    if (tokenData[chain] && tokenData[chain].pool?.type !== "feeTokenOnly") {
       const lanes = getAllTokenLanes({ token, environment: filter })
       // Ensure there is at least one lane and that the lane exists for the given chain
       return Object.keys(lanes).length > 0 && lanes[chain] && Object.keys(lanes[chain]).length > 0
@@ -595,15 +593,9 @@ export const getChainsOfToken = ({ token, filter }: { token: string; filter: Env
     }
   })()
 
-  // Get all valid chains for the given token
-  const tokenData = tokensData[token]
-  if (!tokenData) {
-    console.warn(`No token data found for ${token} in ${filter} environment`)
-    return []
-  }
-
-  return Object.entries(tokenData)
-    .filter(([, tokenData]) => tokenData.pool && tokenData.pool.type !== "feeTokenOnly")
+  // Get all valid chains for the given token; API returns only transferable tokens (exclude feeTokenOnly)
+  return Object.entries(tokensData[token])
+    .filter(([, tokenData]) => tokenData.pool?.type !== "feeTokenOnly")
     .filter(([chain]) => {
       const lanes = getAllTokenLanes({ token, environment: filter })
       return Object.keys(lanes).length > 0 && lanes[chain] && Object.keys(lanes[chain]).length > 0
@@ -626,11 +618,6 @@ export const getAllNetworkLanes = async ({
   })
 
   const allLanes = lanesReferenceData[chain]
-
-  // Handle chains with no outbound lanes (e.g., newly added chains)
-  if (!allLanes) {
-    return []
-  }
 
   const lanesData: {
     name: string
@@ -866,14 +853,10 @@ export const loadVerifiersData = ({ environment, version }: { environment: Envir
  * Get logo URL for a verifier by ID
  * Uses CloudFront CDN, same infrastructure as token icons
  */
-export const getVerifierIconUrl = (verifierId: string): string => {
-  return `${VERIFIER_ICON_PATH}/${verifierId}.svg`
+export const getVerifierLogoUrl = (verifierId: string): string => {
+  return `${VERIFIER_LOGOS_PATH}/${verifierId}.svg`
 }
 
-/**
- * Get logo URL for a network by ID
- * Uses CloudFront CDN, same infrastructure as token icons
- */
 export const getNetworkIconUrl = (networkName: string | undefined): string | undefined => {
   if (!networkName) {
     return
@@ -915,7 +898,7 @@ export const getAllVerifiers = ({
         ...metadata,
         network: networkId,
         address,
-        logo: getVerifierIconUrl(metadata.id),
+        logo: getVerifierLogoUrl(metadata.id),
       })
     }
   }
@@ -953,7 +936,7 @@ export const getVerifiersByNetwork = ({
       ...metadata,
       network: networkId,
       address,
-      logo: getVerifierIconUrl(metadata.id),
+      logo: getVerifierLogoUrl(metadata.id),
     })
   }
 
@@ -1022,7 +1005,7 @@ export const getVerifier = ({
     ...metadata,
     network: networkId,
     address,
-    logo: getVerifierIconUrl(metadata.id),
+    logo: getVerifierLogoUrl(metadata.id),
   }
 }
 

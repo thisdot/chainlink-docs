@@ -5,13 +5,13 @@ import {
   getAllNetworks,
   getAllSupportedTokens,
   getAllTokenLanes,
-  getAllUniqueVerifiers,
   getChainsOfToken,
   getSearchLanes,
   getTokenData,
   Version,
   Environment,
 } from "~/config/data/ccip"
+import { fetchPoolDataForTokenAllChains } from "~/lib/ccip/graphql/services/enrichment-data-service.ts"
 import ChainHero from "~/components/CCIP/ChainHero/ChainHero"
 import Table from "~/components/CCIP/Tables/TokenChainsTable"
 import {
@@ -69,6 +69,8 @@ const data = getTokenData({
   tokenId: token,
 })
 
+const tokenPoolData = await fetchPoolDataForTokenAllChains(environment as Environment, token)
+
 const tokenLanes = getAllTokenLanes({
   environment,
   version: Version.V1_2_0,
@@ -76,11 +78,6 @@ const tokenLanes = getAllTokenLanes({
 })
 
 const searchLanes = getSearchLanes({ environment })
-
-const allVerifiers = getAllUniqueVerifiers({
-  environment,
-  version: Version.V1_2_0,
-})
 
 // Generate dynamic metadata for this specific token
 const environmentText = environment === Environment.Mainnet ? "Mainnet" : "Testnet"
@@ -123,7 +120,6 @@ const tokenStructuredData = generateTokenStructuredData(token, environment, chai
     tokens={allTokens}
     client:load
     lanes={searchLanes}
-    verifiers={allVerifiers}
     token={{
       id: token,
       name: data[firstSupportedChain]?.name || "",
@@ -157,10 +153,10 @@ const tokenStructuredData = generateTokenStructuredData(token, environment, chai
               tokenSymbol: data[key]?.symbol ?? "",
               tokenDecimals: data[key]?.decimals ?? 0,
               tokenAddress: data[key]?.tokenAddress ?? "",
-              tokenPoolType: data[key]?.pool?.type,
-              tokenPoolRawType: data[key]?.pool?.rawType || "",
-              tokenPoolAddress: data[key]?.pool?.address ?? data[key]?.poolAddress ?? "",
-              tokenPoolVersion: data[key]?.pool?.version ?? "",
+              tokenPoolType: tokenPoolData[key]?.type ?? data[key]?.pool?.type,
+              tokenPoolRawType: tokenPoolData[key]?.rawType ?? data[key]?.pool?.rawType ?? "",
+              tokenPoolAddress: tokenPoolData[key]?.address ?? data[key]?.pool?.address ?? "",
+              tokenPoolVersion: tokenPoolData[key]?.version ?? data[key]?.pool?.version ?? "",
               explorer: explorer,
               chainType: chainType,
             }
@@ -180,8 +176,9 @@ const tokenStructuredData = generateTokenStructuredData(token, environment, chai
 
 <style scoped="false">
   .layout {
-    margin: 0 auto;
-    padding: var(--space-6x);
+    --doc-padding: var(--space-6x);
+    margin: var(--space-8x) auto;
+    padding: var(--doc-padding);
   }
 
   .layout h2 {
@@ -213,13 +210,8 @@ const tokenStructuredData = generateTokenStructuredData(token, environment, chai
 
   @media (min-width: 50em) {
     .layout {
-      max-width: 1500px;
-    }
-  }
-
-  @media (min-width: 992px) {
-    .layout {
-      padding: var(--space-10x) var(--space-8x);
+      max-width: min(calc(1440px - 2 * var(--space-16x)), calc(100% - 2 * var(--space-16x)));
+      padding: 0;
     }
   }
 </style>

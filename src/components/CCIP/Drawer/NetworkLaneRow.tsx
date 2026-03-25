@@ -19,6 +19,7 @@ export interface NetworkLaneRowProps {
   tokenPaused: boolean
   isExpanded: boolean
   onToggle: () => void
+  onNetworkClick: () => void
   mechanism: string
   allLimits: { standard: RateLimiterConfig | null; ftf: RateLimiterConfig | null }
   isLoadingRateLimits: boolean
@@ -32,6 +33,7 @@ export function NetworkLaneRow({
   tokenPaused,
   isExpanded,
   onToggle,
+  onNetworkClick,
   mechanism,
   allLimits,
   isLoadingRateLimits,
@@ -56,7 +58,15 @@ export function NetworkLaneRow({
         }}
       >
         <td>
-          <div className={`ccip-table__network-name ${tokenPaused ? "ccip-table__network-name--paused" : ""}`}>
+          <button
+            type="button"
+            className={`ccip-table__network-name ${tokenPaused ? "ccip-table__network-name--paused" : ""}`}
+            onClick={(e) => {
+              e.stopPropagation()
+              onNetworkClick()
+            }}
+            aria-label={`View lane details for ${networkDetails.name}`}
+          >
             <img
               src={networkDetails.logo}
               alt={`${networkDetails.name} blockchain logo`}
@@ -68,21 +78,15 @@ export function NetworkLaneRow({
                 ⏸️
               </span>
             )}
-          </div>
+          </button>
         </td>
-        <td>{mechanism}</td>
         <td>
           <RateLimitCell isLoading={isLoadingRateLimits} rateLimit={allLimits.standard} type="capacity" />
         </td>
         <td>
           <RateLimitCell isLoading={isLoadingRateLimits} rateLimit={allLimits.standard} type="rate" />
         </td>
-        <td>
-          <RateLimitCell isLoading={isLoadingRateLimits} rateLimit={allLimits.ftf} type="capacity" />
-        </td>
-        <td>
-          <RateLimitCell isLoading={isLoadingRateLimits} rateLimit={allLimits.ftf} type="rate" />
-        </td>
+        <td>{mechanism}</td>
         <td>
           <div className="ccip-table__verifier-toggle">
             <svg

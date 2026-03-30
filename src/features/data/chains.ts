@@ -3,7 +3,7 @@ import { ChainMetadata } from "./api/index.ts"
 // Cross-networks
 export const POR_MVR_FEEDS_URL = "https://reference-data-directory.vercel.app/por-data-feeds.json"
 
-type ChainTags = ("default" | "smartData" | "rates" | "streams" | "usGovernmentMacroeconomicData")[]
+type ChainTags = ("default" | "smartData" | "rates" | "streams" | "usGovernmentMacroeconomicData" | "tokenizedEquity")[]
 export interface ChainNetwork {
   name: string
   explorerUrl: string
@@ -254,7 +254,7 @@ export const CHAINS: Chain[] = [
     title: "Data Feeds",
     img: "/assets/chains/ethereum.svg",
     networkStatusUrl: "https://ethstats.dev/",
-    tags: ["default", "smartData", "rates", "usGovernmentMacroeconomicData"],
+    tags: ["default", "smartData", "rates", "usGovernmentMacroeconomicData", "tokenizedEquity"],
     supportedFeatures: ["vrfSubscription", "vrfDirectFunding", "feeds"],
     networks: [
       {
@@ -264,7 +264,7 @@ export const CHAINS: Chain[] = [
         rddUrl: "https://reference-data-directory.vercel.app/feeds-mainnet.json",
         rddBundleUrl: "https://reference-data-directory.vercel.app/bundle-proxies-mainnet.json",
         queryString: "ethereum-mainnet",
-        tags: ["smartData", "usGovernmentMacroeconomicData"],
+        tags: ["smartData", "usGovernmentMacroeconomicData", "tokenizedEquity"],
       },
       {
         name: "Sepolia Testnet",
@@ -454,12 +454,30 @@ export const CHAINS: Chain[] = [
     ],
   },
   {
+    page: "MegaETH",
+    label: "MegaETH",
+    title: "MegaETH Data Feeds",
+    img: "/assets/chains/megaeth.svg",
+    networkStatusUrl: "https://uptime.megaeth.com/",
+    tags: ["default"],
+    supportedFeatures: ["feeds"],
+    networks: [
+      {
+        name: "MegaETH Mainnet (Private)",
+        explorerUrl: "https://megaeth.blockscout.com/address/%s",
+        networkType: "mainnet",
+        rddUrl: "https://reference-data-directory.vercel.app/feeds-megaeth-mainnet.json",
+        queryString: "megaeth-mainnet",
+      },
+    ],
+  },
+  {
     page: "monad",
     title: "Monad Data Feeds",
     label: "Monad",
     img: "/assets/chains/monad.svg",
-    networkStatusUrl: "",
-    tags: ["default"],
+    networkStatusUrl: "https://monadvision.com/",
+    tags: ["default", "smartData"],
     supportedFeatures: ["feeds"],
     networks: [
       {
@@ -781,14 +799,14 @@ export const CHAINS: Chain[] = [
         name: "TRON Mainnet",
         explorerUrl: "https://tronscan.org/#/address/%s",
         networkType: "mainnet",
-        rddUrl: "https://docs.chain.link/files/json/feeds-tron-mainnet.json",
+        rddUrl: "https://reference-data-directory.vercel.app/feeds-tron-mainnet.json",
         queryString: "tron-mainnet",
       },
       {
         name: "TRON Nile Testnet",
         explorerUrl: "https://nile.tronscan.org/#/address/%s",
         networkType: "testnet",
-        rddUrl: "https://docs.chain.link/files/json/feeds-tron-testnet.json",
+        rddUrl: "https://reference-data-directory.vercel.app/feeds-tron-testnet-nile.json",
         queryString: "tron-testnet",
       },
     ],
@@ -802,6 +820,13 @@ export const CHAINS: Chain[] = [
     tags: ["default"],
     supportedFeatures: ["feeds"],
     networks: [
+      {
+        name: "Unichain Mainnet",
+        explorerUrl: "https://uniscan.xyz/address/%s",
+        networkType: "mainnet",
+        rddUrl: "https://reference-data-directory.vercel.app/feeds-ethereum-mainnet-unichain-1.json",
+        queryString: "unichain-mainnet",
+      },
       {
         name: "Unichain Sepolia",
         explorerUrl: "https://sepolia.uniscan.xyz/address/%s",
@@ -996,6 +1021,13 @@ export const ALL_CHAINS: Chain[] = [
         networkType: "mainnet",
         rddUrl: "https://reference-data-directory.vercel.app/feeds-ethereum-mainnet-polygon-zkevm-1.json",
         queryString: "polygon-zkevm-mainnet",
+      },
+      {
+        name: "Ronin Mainnet",
+        explorerUrl: "https://app.roninchain.com/address/%s",
+        networkType: "mainnet",
+        rddUrl: "https://reference-data-directory.vercel.app/feeds-ronin-mainnet.json",
+        queryString: "ronin-mainnet",
       },
       {
         name: "Solana Mainnet",

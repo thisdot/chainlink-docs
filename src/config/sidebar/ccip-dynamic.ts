@@ -253,6 +253,57 @@ export const CCIP_SIDEBAR_CONTENT: SectionEntry[] = [
         url: "ccip/concepts/manual-execution",
         // Universal
       },
+      // NEW: Rate Limit Management folder + children (Universal)
+      {
+        title: "Rate Limit Management",
+        children: [
+          {
+            title: "Overview",
+            url: "ccip/concepts/rate-limit-management/overview",
+            // Universal
+          },
+          {
+            title: "How Rate Limits Work",
+            url: "ccip/concepts/rate-limit-management/how-rate-limits-work",
+            // Universal
+          },
+          {
+            title: "Prerequisites and Permissions",
+            url: "ccip/concepts/rate-limit-management/prerequisites-and-permissions",
+            // Universal
+          },
+          {
+            title: "Inspect Current Rate Limits",
+            url: "ccip/concepts/rate-limit-management/inspect-current-rate-limits",
+            // Universal
+          },
+          {
+            title: "Token Units and Decimals",
+            url: "ccip/concepts/rate-limit-management/token-units-and-decimals",
+            // Universal
+          },
+          {
+            title: "Update Rate Limits",
+            url: "ccip/concepts/rate-limit-management/update-rate-limits",
+            // Universal
+          },
+          {
+            title: "Emergency Actions",
+            url: "ccip/concepts/rate-limit-management/emergency-actions",
+            // Universal
+          },
+          {
+            title: "Common Scenarios",
+            url: "ccip/concepts/rate-limit-management/common-scenarios",
+            // Universal
+          },
+          {
+            title: "Executing with a Multisig",
+            url: "ccip/concepts/rate-limit-management/executing-with-a-multisig",
+            // Universal
+          },
+        ],
+      },
       {
         title: "Best Practices",
         url: "ccip/concepts/best-practices/evm",
@@ -279,6 +330,11 @@ export const CCIP_SIDEBAR_CONTENT: SectionEntry[] = [
         // Universal
       },
       {
+        title: "CCIP API, SDK & CLI",
+        url: "ccip/tutorials/offchain",
+        // Universal - supports all chain families
+      },
+      {
         title: "Transfer Tokens",
         url: "ccip/tutorials/evm/transfer-tokens-from-contract",
         chainTypes: ["evm"],
@@ -297,50 +353,6 @@ export const CCIP_SIDEBAR_CONTENT: SectionEntry[] = [
         title: "Using the Token Manager",
         url: "ccip/tutorials/evm/token-manager",
         chainTypes: ["evm"],
-      },
-      {
-        title: "Using the CCIP JavaScript SDK",
-        url: "ccip/ccip-javascript-sdk",
-        chainTypes: ["evm"],
-      },
-      {
-        title: "Offchain",
-        url: "ccip/tutorials/evm/offchain",
-        chainTypes: ["evm"],
-        children: [
-          {
-            title: "Transfer Tokens between EOAs",
-            url: "ccip/tutorials/evm/offchain/transfer-tokens-from-eoa",
-            chainTypes: ["evm"],
-          },
-          {
-            title: "Checking CCIP Message Status",
-            url: "ccip/tutorials/evm/offchain/get-status-offchain",
-            chainTypes: ["evm"],
-          },
-          {
-            title: "Using CCIP CLI",
-            url: "ccip/tutorials/evm/offchain/ccip-tools",
-            chainTypes: ["evm"],
-            children: [
-              {
-                title: "Transfer Tokens between EOAs",
-                url: "ccip/tutorials/evm/offchain/ccip-tools/transfer-tokens-from-eoa",
-                chainTypes: ["evm"],
-              },
-              {
-                title: "Checking CCIP Message Status",
-                url: "ccip/tutorials/evm/offchain/ccip-tools/get-status-offchain",
-                chainTypes: ["evm"],
-              },
-              {
-                title: "Get Supported Tokens",
-                url: "ccip/tutorials/evm/offchain/ccip-tools/get-supported-tokens",
-                chainTypes: ["evm"],
-              },
-            ],
-          },
-        ],
       },
       {
         title: "Cross-Chain Token (CCT)",
@@ -603,7 +615,7 @@ export const CCIP_SIDEBAR_CONTENT: SectionEntry[] = [
         ],
       },
       {
-        title: "API Reference",
+        title: "Solidity Interfaces & Contracts",
         url: "ccip/api-reference/evm",
         chainTypes: ["evm"],
         children: [
@@ -650,7 +662,7 @@ export const CCIP_SIDEBAR_CONTENT: SectionEntry[] = [
         ],
       },
       {
-        title: "API Reference",
+        title: "SVM Program Interfaces",
         url: "ccip/api-reference/svm",
         chainTypes: ["solana"],
         children: [
@@ -664,7 +676,7 @@ export const CCIP_SIDEBAR_CONTENT: SectionEntry[] = [
         ],
       },
       {
-        title: "API Reference",
+        title: "Move Modules Interface",
         url: "ccip/api-reference/aptos",
         chainTypes: ["aptos"],
         children: [
@@ -678,13 +690,8 @@ export const CCIP_SIDEBAR_CONTENT: SectionEntry[] = [
         ],
       },
       {
-        title: "SDK",
-        url: "ccip/tools-resources/sdk",
-        chainTypes: ["evm"],
-      },
-      {
-        title: "CLI",
-        url: "ccip/tools-resources/cli",
+        title: "CCIP API, SDK & CLI",
+        url: "https://docs.chain.link/ccip/tools",
         // Universal
       },
       {

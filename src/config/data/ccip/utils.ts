@@ -2,7 +2,7 @@ import { SupportedChain } from "~/config/types.ts"
 import { chainToTechnology } from "~/config/chains.ts"
 import { NetworkFeeStructure, PoolType, TokenMechanism, LaneSpecificFeeKey, RateLimiterConfig } from "./types.ts"
 import { networkFees } from "./data.ts"
-import { commify } from "~/utils/index.js"
+import { commify } from "~/utils/number.ts"
 import { formatUnits } from "ethers"
 
 // Define valid pool type combinations and their corresponding mechanisms
@@ -29,17 +29,6 @@ export const determineTokenMechanism = (
   // Look up the mechanism based on pool type combination
   const key = `${sourcePoolType}:${destinationPoolType}`
   return POOL_MECHANISM_MAP[key] ?? TokenMechanism.Unsupported
-}
-
-export const tokenPoolDisplay = (poolType?: PoolType) => {
-  const poolTypeMapping: Record<PoolType, string> = {
-    lockRelease: "Lock/Release",
-    burnMint: "Burn/Mint",
-    usdc: "Burn/Mint",
-    feeTokenOnly: "Fee Token Only",
-  }
-
-  return poolType ? (poolTypeMapping[poolType] ?? "Unsupported") : "Unsupported"
 }
 
 export const calculateNetworkFeesForTokenMechanismDirect = (

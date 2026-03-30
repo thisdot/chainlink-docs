@@ -12,6 +12,7 @@ import fs from "fs"
 import path from "path"
 import fetch from "node-fetch"
 import prettier from "prettier"
+import { TOKEN_ICONS_PATH } from "../../config/cdn.js"
 
 // Network endpoints mapping for different blockchain networks
 // Each endpoint provides a JSON file containing feed definitions for that network
@@ -40,15 +41,17 @@ const NETWORK_ENDPOINTS: Record<string, string> = {
   aptos: "https://docs.chain.link/files/json/feeds-aptos-mainnet.json",
   sonic: "https://reference-data-directory.vercel.app/feeds-sonic-mainnet.json",
   mantle: "https://reference-data-directory.vercel.app/feeds-ethereum-mainnet-mantle-1.json",
+  unichain: "https://reference-data-directory.vercel.app/feeds-ethereum-mainnet-unichain-1.json",
   xlayer: "https://reference-data-directory.vercel.app/feeds-ethereum-mainnet-xlayer-1.json",
   ronin: "https://reference-data-directory.vercel.app/feeds-ronin-mainnet.json",
-  tron: "https://docs.chain.link/files/json/feeds-tron-mainnet.json",
+  tron: "https://reference-data-directory.vercel.app/feeds-tron-mainnet.json",
   botanix: "https://reference-data-directory.vercel.app/feeds-bitcoin-mainnet-botanix.json",
   monad: "https://reference-data-directory.vercel.app/feeds-monad-testnet.json",
   polygonkatana: "https://reference-data-directory.vercel.app/feeds-polygon-mainnet-katana.json",
   bob: "https://reference-data-directory.vercel.app/feeds-bitcoin-mainnet-bob-1.json",
   plasma: "https://reference-data-directory.vercel.app/feeds-plasma-mainnet.json",
   hyperevm: "https://reference-data-directory.vercel.app/feeds-hyperliquid-mainnet.json",
+  megaeth: "https://reference-data-directory.vercel.app/feeds-megaeth-mainnet.json",
 }
 
 // Path to the baseline JSON file that contains known feed IDs
@@ -79,7 +82,7 @@ interface DataItem {
  * @returns URL to the asset's icon image
  */
 function buildIconUrl(baseAsset: string): string {
-  return `https://d2f70xi62kby8n.cloudfront.net/tokens/${baseAsset.toLowerCase()}.webp`
+  return `${TOKEN_ICONS_PATH}/${baseAsset.toLowerCase()}.webp`
 }
 
 /**
@@ -98,6 +101,23 @@ function buildFeedUrl(item: DataItem): string {
   if (item.deliveryChannelCode === "DS") {
     const base = (item.baseAsset || "BASE").toLowerCase()
     const quote = (item.quoteAsset || "QUOTE").toLowerCase()
+
+    // Equity streams have multiple hour-variant feeds for the same asset
+    // (regularhoursequityprice, overnighthoursequityprice, extendedhoursequityprice,
+    // equityprice-timestamped). Their URLs include the variant suffix to distinguish them.
+    // Pattern in feedID: {network}-{base}-{quote}-streams-{variant}-mainnet-production
+    const EQUITY_STREAM_VARIANTS = [
+      "regularhoursequityprice",
+      "overnighthoursequityprice",
+      "extendedhoursequityprice",
+      "equityprice-timestamped",
+    ]
+    const feedIdLower = item.feedID.toLowerCase()
+    const matchedVariant = EQUITY_STREAM_VARIANTS.find((v) => feedIdLower.includes(`-streams-${v}-`))
+    if (matchedVariant) {
+      return `https://data.chain.link/streams/${base}-${quote}-${matchedVariant}-streams`
+    }
+
     return `https://data.chain.link/streams/${base}-${quote}`
   }
 

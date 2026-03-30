@@ -45,7 +45,7 @@ In this tutorial, you'll learn how to use the [Data Streams SDK](/data-streams/r
 ## Requirements
 
 - **Rust**: Make sure you have Rust installed. You can install Rust by following the instructions on the official [Rust website](https://www.rust-lang.org/tools/install).
-- **API Credentials**: Access to Data Streams requires API credentials. If you haven't already, [contact us](https://chainlinkcommunity.typeform.com/datastreams?typeform-source=docs.chain.link#ref_id=docs) to request mainnet or testnet access.
+- **API Credentials**: Access to Data Streams requires API credentials. If you haven't already, [contact us](https://chain.link/contact?ref_id=datastreams) to request mainnet or testnet access.
 
 ## Tutorial
 
@@ -231,11 +231,11 @@ In this tutorial, you'll learn how to use the [Data Streams SDK](/data-streams/r
    ).build()?;
    ```
 
-   This configuration also specifies the `rest_url`, which is the base URL for the API, along with the WebSocket endpoint [for subscribing to a streamed data report](rust-sdk-stream). In this example, both are set to the testnet URLs for Data Streams.
+   This configuration also specifies the `rest_url`, which is the base URL for the API, along with the WebSocket endpoint for subscribing to a streamed data report. In this example, both are set to the testnet URLs for Data Streams.
 
    See the [Rust SDK Reference](/data-streams/reference/data-streams-api/rust-sdk#configuration-reference) page for more configuration options.
 
-1. Subscribe to a [testnet crypto stream](/data-streams/crypto-streams?page=1&testnetPage=1#testnet-crypto-streams). The below example executes the application, subscribing to the `ETH/USD` crypto stream:
+1. Subscribe to a [testnet crypto stream](/data-streams/crypto-streams#testnet-crypto-streams). The below example executes the application, subscribing to the `ETH/USD` crypto stream:
 
    ```bash
    cargo run -- 0x000359843a543ee2fe414dc14c7e7920ef10f4372990b79d6361cdc0dd1ba782

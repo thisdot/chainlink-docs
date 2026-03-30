@@ -1,13 +1,15 @@
 import Address from "~/components/AddressReact.tsx"
 import "./Table.css"
-import { drawerContentStore } from "../Drawer/drawerStore.ts"
-import { Environment, SupportedTokenConfig, tokenPoolDisplay, PoolType } from "~/config/data/ccip/index.ts"
+import { drawerContentStore, DrawerWidth, drawerWidthStore } from "../Drawer/drawerStore.ts"
+import { Environment, SupportedTokenConfig, PoolType } from "~/config/data/ccip/index.ts"
 import { areAllLanesPaused } from "~/config/data/ccip/utils.ts"
 import { ChainType, ExplorerInfo } from "~/config/types.ts"
 import TableSearchInput from "./TableSearchInput.tsx"
 import { useState } from "react"
 import { getExplorerAddressUrl, fallbackTokenIconUrl } from "~/features/utils/index.ts"
 import TokenDrawer from "../Drawer/TokenDrawer.tsx"
+import { Tooltip } from "~/features/common/Tooltip/Tooltip.tsx"
+import { useTokenFinality } from "~/hooks/useTokenFinality.ts"
 
 interface TableProps {
   networks: {
@@ -22,7 +24,9 @@ interface TableProps {
     tokenDecimals: number
     tokenAddress: string
     tokenPoolType: PoolType
+    tokenPoolRawType: string
     tokenPoolAddress: string
+    tokenPoolVersion: string
     explorer: ExplorerInfo
   }[]
   token: {
@@ -41,6 +45,16 @@ interface TableProps {
 
 function TokenChainsTable({ networks, token, lanes, environment }: TableProps) {
   const [search, setSearch] = useState("")
+
+  // Build pool type map from GraphQL-enriched networks data for use in TokenDrawer
+  const poolTypesByChain = networks.reduce<Record<string, PoolType>>((acc, n) => {
+    if (n.tokenPoolType) acc[n.key] = n.tokenPoolType
+    return acc
+  }, {})
+
+  // Fetch finality data using custom hook
+  const { finalityData, isLoading: loading } = useTokenFinality(token.id, environment, "internalId")
+
   return (
     <>
       <div className="ccip-table__filters">
@@ -60,6 +74,9 @@ function TokenChainsTable({ networks, token, lanes, environment }: TableProps) {
               <th>Token address</th>
               <th>Token pool type</th>
               <th>Token pool address</th>
+              <th>Pool version</th>
+              <th>Custom finality</th>
+              <th>Min Blocks required</th>
             </tr>
           </thead>
           <tbody>
@@ -76,12 +93,14 @@ function TokenChainsTable({ networks, token, lanes, environment }: TableProps) {
                         type="button"
                         className={`ccip-table__network-name ${allLanesPaused ? "ccip-table__network-name--paused" : ""}`}
                         onClick={() => {
+                          drawerWidthStore.set(DrawerWidth.Wide)
                           drawerContentStore.set(() => (
                             <TokenDrawer
                               token={token}
                               network={network}
                               destinationLanes={lanes[network.key]}
                               environment={environment}
+                              poolTypesByChain={poolTypesByChain}
                             />
                           ))
                         }}
@@ -125,10 +144,10 @@ function TokenChainsTable({ networks, token, lanes, environment }: TableProps) {
                       <Address
                         contractUrl={getExplorerAddressUrl(network.explorer, network.chainType)(network.tokenAddress)}
                         address={network.tokenAddress}
-                        endLength={6}
+                        endLength={4}
                       />
                     </td>
-                    <td>{tokenPoolDisplay(network.tokenPoolType)}</td>
+                    <td>{network.tokenPoolRawType ?? "—"}</td>
                     <td data-clipboard-type="token-pool">
                       <Address
                         contractUrl={getExplorerAddressUrl(
@@ -136,8 +155,43 @@ function TokenChainsTable({ networks, token, lanes, environment }: TableProps) {
                           network.chainType
                         )(network.tokenPoolAddress)}
                         address={network.tokenPoolAddress}
-                        endLength={6}
+                        endLength={4}
                       />
+                    </td>
+                    <td>{network.tokenPoolVersion}</td>
+                    <td>
+                      {loading ? (
+                        "-"
+                      ) : finalityData[network.key] ? (
+                        finalityData[network.key].hasCustomFinality === null ? (
+                          <Tooltip
+                            label="N/A"
+                            tip="Custom finality data is currently unavailable. You can find the custom finality settings by reading the Token Pool contract directly on the relevant blockchain."
+                            labelStyle={{ marginRight: "5px" }}
+                            style={{ display: "inline-block", verticalAlign: "middle" }}
+                          />
+                        ) : finalityData[network.key].hasCustomFinality ? (
+                          "Yes"
+                        ) : (
+                          "No"
+                        )
+                      ) : (
+                        <Tooltip
+                          label="N/A"
+                          tip="Custom finality data is currently unavailable. You can find the custom finality settings by reading the Token Pool contract directly on the relevant blockchain."
+                          labelStyle={{ marginRight: "5px" }}
+                          style={{ display: "inline-block", verticalAlign: "middle" }}
+                        />
+                      )}
+                    </td>
+                    <td>
+                      {loading
+                        ? "-"
+                        : finalityData[network.key]
+                          ? finalityData[network.key].minBlockConfirmation === null
+                            ? "-"
+                            : finalityData[network.key].minBlockConfirmation
+                          : "-"}
                     </td>
                   </tr>
                 )

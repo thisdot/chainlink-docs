@@ -12,6 +12,7 @@ import { LLM_SECTIONS_CONFIG, SUPPORTED_LLM_SECTIONS, type LlmsSectionConfig } f
 import { SIDEBAR } from "../config/sidebar.js"
 import type { SectionEntry, SectionContent } from "../config/sidebar.js"
 import fsSync from "fs"
+import { stripHighlightComments, unescapeMarkdown } from "../lib/markdown/index.js"
 
 interface MdxJsxAttribute {
   name: string
@@ -85,7 +86,7 @@ async function main() {
           const lastModified = getIsoStringOrUndefined(fmLastModified)
 
           const cleaned = await transformMarkdown(body, absFile, lang)
-          const cleanedPlain = unescapeForPlainText(cleaned)
+          const cleanedPlain = unescapeMarkdown(cleaned)
 
           const headerLines = [
             `# ${title}`,
@@ -138,7 +139,7 @@ async function main() {
         const lastModified = getIsoStringOrUndefined(fmLastModified)
 
         const cleaned = await transformMarkdown(body, absFile)
-        const cleanedPlain = unescapeForPlainText(cleaned)
+        const cleanedPlain = unescapeMarkdown(cleaned)
 
         const headerLines = [
           `# ${title}`,
@@ -455,10 +456,7 @@ async function transformMarkdown(markdown: string, mdxAbsPath: string, targetLan
                         let codeContent = fsSync.readFileSync(codeAbsPath, "utf-8")
 
                         // Strip highlighter comments
-                        codeContent = codeContent
-                          .split("\n")
-                          .map((line) => line.replace(/\s*\/\/\s*highlight-(line|start|end)/, ""))
-                          .join("\n")
+                        codeContent = stripHighlightComments(codeContent)
 
                         // Infer language from file extension
                         const fileExt = path.extname(codeAbsPath).slice(1)
@@ -506,10 +504,7 @@ async function transformMarkdown(markdown: string, mdxAbsPath: string, targetLan
                 const codeAbsPath = path.resolve(path.dirname(mdxAbsPath), importPath)
                 let codeContent = fsSync.readFileSync(codeAbsPath, "utf-8")
                 // Strip highlighter comments
-                codeContent = codeContent
-                  .split("\n")
-                  .map((line) => line.replace(/\s*\/\/\s*highlight-(line|start|end)/, ""))
-                  .join("\n")
+                codeContent = stripHighlightComments(codeContent)
                 const langAttr = (node as MdxJsxNode).attributes?.find((a) => a.name === "lang")
                 const titleAttr = (node as MdxJsxNode).attributes?.find((a) => a.name === "title")
                 const newNodes: Node[] = []
@@ -583,6 +578,53 @@ async function transformMarkdown(markdown: string, mdxAbsPath: string, targetLan
           }
         }
 
+        // Handle CodeSample component - inline the code from public/{src}
+        if (
+          parent &&
+          typeof index === "number" &&
+          node.type === "mdxJsxFlowElement" &&
+          (node as MdxJsxNode).name === "CodeSample"
+        ) {
+          try {
+            const srcAttr = (node as MdxJsxNode).attributes?.find((a) => a.name === "src")
+            const langAttr = (node as MdxJsxNode).attributes?.find((a) => a.name === "lang")
+
+            if (srcAttr?.value) {
+              const srcValue = typeof srcAttr.value === "string" ? srcAttr.value : undefined
+
+              if (srcValue) {
+                const publicDir = path.resolve(process.cwd(), "public")
+                const codePath = path.join(publicDir, srcValue)
+
+                if (fsSync.existsSync(codePath)) {
+                  let codeContent = fsSync.readFileSync(codePath, "utf-8")
+
+                  // Strip highlighter comments
+                  codeContent = stripHighlightComments(codeContent)
+
+                  // Determine language from lang attribute or file extension
+                  let lang = typeof langAttr?.value === "string" ? langAttr.value : undefined
+                  if (!lang) {
+                    const ext = path.extname(codePath).slice(1)
+                    lang = ext || "text"
+                  }
+
+                  // Replace with code block
+                  parent.children[index] = {
+                    type: "code",
+                    lang,
+                    value: codeContent.trim(),
+                  } as Literal
+
+                  return
+                }
+              }
+            }
+          } catch (e) {
+            console.warn(`Failed to process CodeSample in ${mdxAbsPath}:`, e)
+          }
+        }
+
         // Handle CopyText inline component - extract the text attribute
         if (
           parent &&
@@ -642,28 +684,6 @@ async function transformMarkdown(markdown: string, mdxAbsPath: string, targetLan
 
   const file = await processor.process(preprocessedMarkdown)
   return String(file)
-}
-
-function unescapeForPlainText(s: string): string {
-  let inFence = false
-  return s
-    .split("\n")
-    .map((line) => {
-      const trimmed = line.trim()
-      if (trimmed.startsWith("```") || trimmed.startsWith("~~~")) {
-        inFence = !inFence
-        return line
-      }
-      if (inFence) return line
-      return line
-        .replace(/\\_/g, "_")
-        .replace(/\\\[/g, "[")
-        .replace(/\\\]/g, "]")
-        .replace(/\\\(/g, "(")
-        .replace(/\\\)/g, ")")
-    })
-    .filter((line) => line.trim() !== "{/* prettier-ignore */}")
-    .join("\n")
 }
 
 async function writeReports(report: Report) {

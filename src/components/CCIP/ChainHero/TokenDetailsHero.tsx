@@ -1,9 +1,8 @@
 import Address from "~/components/AddressReact.tsx"
 import { getExplorerAddressUrl, fallbackTokenIconUrl } from "~/features/utils/index.ts"
-import { PoolType } from "~/config/data/ccip/types.ts"
-import { tokenPoolDisplay } from "~/config/data/ccip/utils.ts"
 import "./ChainHero.css"
 import { ExplorerInfo, ChainType } from "~/config/types.ts"
+import { getNetworkIconUrl } from "~/config/data/ccip/data.ts"
 
 interface TokenDetailsHeroProps {
   network: {
@@ -19,18 +18,19 @@ interface TokenDetailsHeroProps {
     logo: string
     decimals: number
     address: string
-    poolType: PoolType
+    poolRawType: string
     poolAddress: string
   }
+  inDrawer?: boolean
 }
 
-function TokenDetailsHero({ network, token }: TokenDetailsHeroProps) {
+function TokenDetailsHero({ network, token, inDrawer = false }: TokenDetailsHeroProps) {
   return (
-    <section className="ccip-chain-hero">
+    <section className={`ccip-chain-hero ${inDrawer ? "ccip-chain-hero--drawer" : ""}`}>
       <div className="ccip-chain-hero__content">
         <div className="ccip-chain-hero__heading">
           <div className="ccip-chain-hero__heading__images">
-            <img src={network?.logo} alt="" />
+            <img src={getNetworkIconUrl(network.name)} alt="" />
             <img
               src={token?.logo}
               alt=""
@@ -67,7 +67,7 @@ function TokenDetailsHero({ network, token }: TokenDetailsHeroProps) {
           </div>
           <div className="ccip-chain-hero__details__item">
             <div className="ccip-chain-hero__details__label">Token pool type</div>
-            <div className="ccip-chain-hero__details__value">{tokenPoolDisplay(token.poolType)}</div>
+            <div className="ccip-chain-hero__details__value">{token.poolRawType ?? "—"}</div>
           </div>
           <div className="ccip-chain-hero__details__item">
             <div className="ccip-chain-hero__details__label">Token pool address</div>

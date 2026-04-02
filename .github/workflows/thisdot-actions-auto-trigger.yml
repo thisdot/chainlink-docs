@@ -1,0 +1,94 @@
+name: This Dot Labs Github Actions Auto Trigger
+
+on:
+  push:
+    branches: [main]
+    paths: ['src/**']
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Generate GitHub App token
+        id: app-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.THIS_DOT_GITHUB_APP_ID }}
+          private-key: ${{ secrets.THIS_DOT_GITHUB_APP_PRIVATE_KEY }}
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Get changed files
+        id: changed-files
+        run: |
+          echo "Getting changed files in data folder..."
+          CHANGED_FILES=$(git diff --name-only HEAD~1 HEAD | grep '^data/' | jq -R -s -c 'split("\n")[:-1]')
+          echo "Changed files: $CHANGED_FILES"
+          echo "files=$CHANGED_FILES" >> $GITHUB_OUTPUT
+
+      - name: Display dispatch payload
+        if: steps.changed-files.outputs.files != '[]'
+        run: |
+          echo "Changed Files: ${{ steps.changed-files.outputs.files }}"
+
+      - name: Trigger CMS Repo Github Action - cms_automation
+        if: steps.changed-files.outputs.files != '[]'
+        env:
+          FILES: ${{ steps.changed-files.outputs.files }}
+        run: |
+          echo "Triggering repo-b notification..."
+
+          PAYLOAD=$(jq -n \
+            --arg files "$FILES" \
+            '{ref: "main", inputs: {changed_files: $files}}')
+
+          RESPONSE=$(curl -s -w "\n%{http_code}" -X POST \
+            -H "Authorization: Bearer ${{ steps.app-token.outputs.token }}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            -H "Content-Type: application/json" \
+            https://api.github.com/repos/thisdot/chainlink-webflow-cms-api/actions/workflows/cms_automation_1.yml/dispatches \
+            -d "$PAYLOAD")
+
+          HTTP_CODE=$(echo "$RESPONSE" | tail -n1)
+          RESPONSE_BODY=$(echo "$RESPONSE" | head -n -1)
+
+          echo "HTTP Status Code: $HTTP_CODE"
+          echo "Response Body: $RESPONSE_BODY"
+
+          if [ "$HTTP_CODE" -eq 204 ]; then
+            echo "✅ Dispatch sent successfully!"
+          else
+            echo "❌ Dispatch failed with status code: $HTTP_CODE"
+            echo "Response: $RESPONSE_BODY"
+            exit 1
+          fi
+
+          RESPONSE=$(curl -s -w "\n%{http_code}" -X POST \
+            -H "Authorization: Bearer ${{ steps.app-token.outputs.token }}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            -H "Content-Type: application/json" \
+            https://api.github.com/repos/thisdot/chainlink-webflow-cms-api/actions/workflows/update_algolia_json.yml/dispatches \
+            -d "$PAYLOAD")
+
+          HTTP_CODE=$(echo "$RESPONSE" | tail -n1)
+          RESPONSE_BODY=$(echo "$RESPONSE" | head -n -1)
+
+          echo "HTTP Status Code: $HTTP_CODE"
+          echo "Response Body: $RESPONSE_BODY"
+
+          if [ "$HTTP_CODE" -eq 204 ]; then
+            echo "✅ Dispatch sent successfully!"
+          else
+            echo "❌ Dispatch failed with status code: $HTTP_CODE"
+            echo "Response: $RESPONSE_BODY"
+            exit 1
+          fi
+
+      - name: No changes detected
+        if: steps.changed-files.outputs.files == '[]'
+        run: |
+          echo "ℹ️ No changes detected in data folder. Skipping dispatch."

@@ -27,8 +27,8 @@ jobs:
       - name: Get changed files
         id: changed-files
         run: |
-          echo "Getting changed files in data folder..."
-          CHANGED_FILES=$(git diff --name-only HEAD~1 HEAD | grep '^data/' | jq -R -s -c 'split("\n")[:-1]')
+          echo "Getting changed files in SRC folder..."
+          CHANGED_FILES=$(git diff --name-only HEAD~1 HEAD | grep '^src/' | jq -R -s -c 'split("\n")[:-1]')
           echo "Changed files: $CHANGED_FILES"
           echo "files=$CHANGED_FILES" >> $GITHUB_OUTPUT
 
@@ -93,4 +93,4 @@ jobs:
       - name: No changes detected
         if: steps.changed-files.outputs.files == '[]'
         run: |
-          echo "ℹ️ No changes detected in data folder. Skipping dispatch."
+          echo "ℹ️ No changes detected in SRC folder. Skipping dispatch."

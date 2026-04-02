@@ -1,4 +1,4 @@
-// Mock chain data for tests
+// Mock chains data for tests
 export const mockChainConfig = {
   "ethereum-mainnet": {
     armProxy: {

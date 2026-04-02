@@ -16,6 +16,8 @@ jobs:
         with:
           app-id: ${{ secrets.THIS_DOT_GITHUB_APP_ID }}
           private-key: ${{ secrets.THIS_DOT_GITHUB_APP_PRIVATE_KEY }}
+          owner: "thisdot"
+          repositories: "chainlink-webflow-cms-api"
 
       - name: Checkout code
         uses: actions/checkout@v4

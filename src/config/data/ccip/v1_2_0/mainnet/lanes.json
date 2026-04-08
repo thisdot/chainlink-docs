@@ -308,7 +308,7 @@
         "enforceOutOfOrder": false,
         "version": "1.6.0"
       },
-      "supportedTokens": ["brBTC", "LINK", "uniBTC"]
+      "supportedTokens": ["LINK", "brBTC", "uniBTC"]
     },
     "plasma-mainnet": {
       "offRamp": {
@@ -411,13 +411,13 @@
         "LBTC",
         "LEND",
         "NXPC",
-        "savBTC",
-        "savUSD",
         "SHIB",
         "SolvBTC",
         "TREE",
-        "xSolvBTC",
-        "YBTC.B"
+        "YBTC.B",
+        "savBTC",
+        "savUSD",
+        "xSolvBTC"
       ]
     },
     "core-mainnet": {
@@ -459,15 +459,15 @@
         "BOLD",
         "GHO",
         "LEND",
-        "savUSD",
         "SDY",
         "SHIB",
         "SILO",
         "SolvBTC",
-        "tETH",
         "USDC",
         "USDM",
         "VRTX",
+        "savUSD",
+        "tETH",
         "wstLINK",
         "xSILO",
         "xSolvBTC"
@@ -490,15 +490,15 @@
         "GHO",
         "LBTC",
         "LEND",
-        "Memento",
         "MYST",
+        "Memento",
         "ORNG",
         "SHIB",
         "SolvBTC",
-        "tETH",
         "USDC",
         "USDM",
         "VRTX",
+        "tETH",
         "wstLINK",
         "xSolvBTC"
       ]
@@ -526,6 +526,7 @@
         "version": "1.6.0"
       },
       "supportedTokens": [
+        "SolvBTC",
         "avBTC",
         "avBTCx",
         "avETH",
@@ -535,7 +536,6 @@
         "savBTC",
         "savETH",
         "savUSD",
-        "SolvBTC",
         "xSolvBTC"
       ]
     },
@@ -634,12 +634,6 @@
         "version": "1.5.0"
       },
       "supportedTokens": [
-        "avBTC",
-        "avBTCx",
-        "avETH",
-        "avETHx",
-        "avUSD",
-        "avUSDx",
         "BETS",
         "BOLD",
         "BONE",
@@ -651,25 +645,31 @@
         "LBTC",
         "LEASH",
         "LEND",
-        "Memento",
         "MYST",
-        "oXAUT",
-        "savBTC",
-        "savETH",
-        "savUSD",
+        "Memento",
         "SDY",
         "SHIB",
         "SILO",
         "SolvBTC",
-        "tETH",
         "TREE",
         "USDC",
         "USDM",
+        "YBTC.B",
+        "avBTC",
+        "avBTCx",
+        "avETH",
+        "avETHx",
+        "avUSD",
+        "avUSDx",
+        "oXAUT",
+        "savBTC",
+        "savETH",
+        "savUSD",
+        "tETH",
         "wstLINK",
         "wstPOL",
         "xSILO",
-        "xSolvBTC",
-        "YBTC.B"
+        "xSolvBTC"
       ]
     },
     "matic-mainnet": {
@@ -888,7 +888,7 @@
         "enforceOutOfOrder": false,
         "version": "1.5.0"
       },
-      "supportedTokens": ["beraBTC", "BR", "savUSD", "SolvBTC", "SolvBTC.BERA", "xSolvBTC"]
+      "supportedTokens": ["BR", "SolvBTC", "SolvBTC.BERA", "beraBTC", "savUSD", "xSolvBTC"]
     },
     "corn-mainnet": {
       "offRamp": {
@@ -912,7 +912,7 @@
         "enforceOutOfOrder": false,
         "version": "1.5.0"
       },
-      "supportedTokens": ["BOLD", "DOLO", "savUSD", "sDOLA"]
+      "supportedTokens": ["BOLD", "DOLO", "sDOLA", "savUSD"]
     },
     "ethereum-mainnet-base-1": {
       "offRamp": {
@@ -975,14 +975,14 @@
       "supportedTokens": [
         "BOLD",
         "BR",
-        "brBTC",
         "DOLO",
         "LBTC",
-        "pufETH",
-        "savUSD",
-        "sDOLA",
         "SolvBTC",
         "SolvBTC.BERA",
+        "brBTC",
+        "pufETH",
+        "sDOLA",
+        "savUSD",
         "uniBTC",
         "xSolvBTC"
       ]
@@ -1010,6 +1010,17 @@
         "version": "1.6.0"
       },
       "supportedTokens": []
+    },
+    "megaeth-mainnet": {
+      "offRamp": {
+        "address": "0x02A4D69cFfeC00Fbf7F3B60c93e3529Dfc58894d",
+        "version": "1.6.0"
+      },
+      "onRamp": {
+        "address": "0xc23071a8AE83671f37bdA1DaDBC745a9780f632A",
+        "enforceOutOfOrder": false,
+        "version": "1.6.0"
+      }
     },
     "monad-mainnet": {
       "offRamp": {
@@ -1157,7 +1168,7 @@
         "enforceOutOfOrder": false,
         "version": "1.5.0"
       },
-      "supportedTokens": ["BTR", "uniBTC", "USDC", "USDT", "WETH", "wstETH", "YBTC.B"]
+      "supportedTokens": ["BTR", "USDC", "USDT", "WETH", "YBTC.B", "uniBTC", "wstETH"]
     },
     "plasma-mainnet": {
       "offRamp": {
@@ -1315,7 +1326,7 @@
         "enforceOutOfOrder": false,
         "version": "1.5.0"
       },
-      "supportedTokens": ["BOB", "SolvBTC", "SolvBTC.BERA", "uniBTC", "USDC", "USDT", "xSolvBTC"]
+      "supportedTokens": ["BOB", "SolvBTC", "SolvBTC.BERA", "USDC", "USDT", "uniBTC", "xSolvBTC"]
     },
     "matic-mainnet": {
       "offRamp": {
@@ -1510,13 +1521,13 @@
         "LBTC",
         "LEND",
         "NXPC",
-        "savBTC",
-        "savUSD",
         "SHIB",
         "SolvBTC",
         "TREE",
-        "xSolvBTC",
-        "YBTC.B"
+        "YBTC.B",
+        "savBTC",
+        "savUSD",
+        "xSolvBTC"
       ]
     },
     "berachain-mainnet": {
@@ -1529,7 +1540,7 @@
         "enforceOutOfOrder": false,
         "version": "1.5.0"
       },
-      "supportedTokens": ["beraBTC", "BR", "savUSD", "SolvBTC", "SolvBTC.BERA", "xSolvBTC"]
+      "supportedTokens": ["BR", "SolvBTC", "SolvBTC.BERA", "beraBTC", "savUSD", "xSolvBTC"]
     },
     "binance-smart-chain-mainnet-opbnb-1": {
       "offRamp": {
@@ -1621,18 +1632,18 @@
         "IXT",
         "LAND",
         "LEND",
-        "mBTC",
         "RDP",
-        "savUSD",
         "SDT",
-        "SolvBTC",
         "STABLE",
+        "SolvBTC",
         "USDFI",
         "VSN",
         "W0G",
         "WECO",
         "WMTX",
         "WSDM",
+        "mBTC",
+        "savUSD",
         "wUSDx",
         "xSolvBTC"
       ]
@@ -1671,10 +1682,10 @@
         "W0G",
         "WHY",
         "WMTX",
+        "ZYPTO",
         "wUSDx",
         "xGold",
-        "xSolvBTC",
-        "ZYPTO"
+        "xSolvBTC"
       ]
     },
     "ethereum-mainnet-blast-1": {
@@ -1723,7 +1734,7 @@
         "enforceOutOfOrder": true,
         "version": "1.5.0"
       },
-      "supportedTokens": ["AISTR", "savBTC", "savUSD", "SolvBTC", "TURTLE", "xSolvBTC"]
+      "supportedTokens": ["AISTR", "SolvBTC", "TURTLE", "savBTC", "savUSD", "xSolvBTC"]
     },
     "ethereum-mainnet-mantle-1": {
       "offRamp": {
@@ -1854,7 +1865,6 @@
         "BOB",
         "BONE",
         "BR",
-        "brBTC",
         "BTR",
         "CHEX",
         "DOBO",
@@ -1867,33 +1877,26 @@
         "LBTC",
         "LEASH",
         "LEND",
-        "mBTC",
-        "mwBETH",
         "POWER",
         "RAIN",
         "RIZE",
         "SAS",
-        "savBTC",
-        "savUSD",
         "SDT",
         "SHIB",
         "SKYA",
+        "STABLE",
         "SolvBTC",
         "SolvBTC.BERA",
-        "STABLE",
-        "sUSD1+",
-        "syrupUSDT",
         "TRADE",
         "TREE",
         "TURBO",
         "TURTLE",
-        "uniBTC",
         "UNIO",
         "USD0",
         "USD1",
-        "USDf",
         "USDFI",
         "USDO",
+        "USDf",
         "USUAL",
         "VOOI",
         "VSN",
@@ -1903,10 +1906,18 @@
         "WLFI",
         "WMTX",
         "WSDM",
+        "ZYPTO",
+        "brBTC",
+        "mBTC",
+        "mwBETH",
+        "sUSD1+",
+        "savBTC",
+        "savUSD",
+        "syrupUSDT",
+        "uniBTC",
         "wUSDx",
         "xGold",
-        "xSolvBTC",
-        "ZYPTO"
+        "xSolvBTC"
       ]
     },
     "matic-mainnet": {
@@ -1928,8 +1939,8 @@
         "METO",
         "RAIN",
         "RIZE",
-        "SolvBTC",
         "SWCH",
+        "SolvBTC",
         "THE",
         "TRADE",
         "WECO",
@@ -1972,7 +1983,7 @@
         "enforceOutOfOrder": false,
         "version": "1.6.0"
       },
-      "supportedTokens": ["LBTC", "NXPC", "W0G"]
+      "supportedTokens": ["BANK", "LBTC", "NXPC", "W0G"]
     },
     "plasma-mainnet": {
       "offRamp": {
@@ -2035,7 +2046,6 @@
       "supportedTokens": [
         "$PAAL",
         "BR",
-        "elizaOS",
         "FHE",
         "ILMT",
         "KNET",
@@ -2048,6 +2058,7 @@
         "WLFI",
         "WMTX",
         "XLAB",
+        "elizaOS",
         "xSolvBTC"
       ]
     },
@@ -2465,6 +2476,28 @@
       },
       "supportedTokens": []
     },
+    "megaeth-mainnet": {
+      "offRamp": {
+        "address": "0x4e2C866885b65F67E7A2b8382ECF0164BB19Aa00",
+        "version": "1.6.0"
+      },
+      "onRamp": {
+        "address": "0x6525923279256B8a86c1C01cF5955eB00C39B048",
+        "enforceOutOfOrder": false,
+        "version": "1.6.0"
+      }
+    },
+    "monad-mainnet": {
+      "offRamp": {
+        "address": "0x4e2C866885b65F67E7A2b8382ECF0164BB19Aa00",
+        "version": "1.6.0"
+      },
+      "onRamp": {
+        "address": "0x6525923279256B8a86c1C01cF5955eB00C39B048",
+        "enforceOutOfOrder": false,
+        "version": "1.6.0"
+      }
+    },
     "polygon-mainnet-katana": {
       "offRamp": {
         "address": "0x4e2C866885b65F67E7A2b8382ECF0164BB19Aa00",
@@ -2486,8 +2519,7 @@
         "address": "0x6525923279256B8a86c1C01cF5955eB00C39B048",
         "enforceOutOfOrder": false,
         "version": "1.6.0"
-      },
-      "supportedTokens": []
+      }
     },
     "stable-mainnet": {
       "offRamp": {
@@ -2498,8 +2530,7 @@
         "address": "0x6525923279256B8a86c1C01cF5955eB00C39B048",
         "enforceOutOfOrder": false,
         "version": "1.6.0"
-      },
-      "supportedTokens": []
+      }
     },
     "tac-mainnet": {
       "offRamp": {
@@ -2510,8 +2541,7 @@
         "address": "0x6525923279256B8a86c1C01cF5955eB00C39B048",
         "enforceOutOfOrder": false,
         "version": "1.6.0"
-      },
-      "supportedTokens": []
+      }
     }
   },
   "cronos-mainnet": {
@@ -2540,6 +2570,20 @@
         "version": "1.5.0"
       },
       "supportedTokens": []
+    }
+  },
+  "edge-mainnet": {
+    "mainnet": {
+      "offRamp": {
+        "address": "0xb0B4b5847E35033766d5B49CD9C0fC40F459321F",
+        "version": "1.6.0"
+      },
+      "onRamp": {
+        "address": "0xa132F089492CcE5f1D79483a9e4552f37266ed01",
+        "enforceOutOfOrder": false,
+        "version": "1.6.0"
+      },
+      "supportedTokens": ["LINK"]
     }
   },
   "edge-mainnet": {
@@ -2634,15 +2678,15 @@
         "BOLD",
         "GHO",
         "LEND",
-        "savUSD",
         "SDY",
         "SHIB",
         "SILO",
         "SolvBTC",
-        "tETH",
         "USDC",
         "USDM",
         "VRTX",
+        "savUSD",
+        "tETH",
         "wstLINK",
         "xSILO",
         "xSolvBTC"
@@ -2658,7 +2702,7 @@
         "enforceOutOfOrder": false,
         "version": "1.5.0"
       },
-      "supportedTokens": ["BOLD", "DOLO", "savUSD", "sDOLA"]
+      "supportedTokens": ["BOLD", "DOLO", "sDOLA", "savUSD"]
     },
     "bitcoin-mainnet-bob-1": {
       "offRamp": {
@@ -2690,18 +2734,18 @@
         "IXT",
         "LAND",
         "LEND",
-        "mBTC",
         "RDP",
-        "savUSD",
         "SDT",
-        "SolvBTC",
         "STABLE",
+        "SolvBTC",
         "USDFI",
         "VSN",
         "W0G",
         "WECO",
         "WMTX",
         "WSDM",
+        "mBTC",
+        "savUSD",
         "wUSDx",
         "xSolvBTC"
       ]
@@ -2756,15 +2800,12 @@
         "APU",
         "BETS",
         "BOLD",
-        "clBTC",
         "DOBO",
         "DPI",
-        "dsETH",
         "EARNM",
         "ECOP",
         "FLUID",
         "GHO",
-        "hyETH",
         "IBTC",
         "IXT",
         "LDY",
@@ -2773,14 +2814,7 @@
         "NUON",
         "OVER",
         "SDL",
-        "sDOLA",
-        "sINV",
         "SolvBTC",
-        "stTAO",
-        "suBTC",
-        "suETH",
-        "suUSD",
-        "tETH",
         "USD+",
         "USDC",
         "USDM",
@@ -2789,12 +2823,22 @@
         "WETH",
         "WHSK",
         "WMTX",
-        "wOETH",
         "WOLF",
-        "wstLINK",
-        "wUSDx",
-        "xSolvBTC",
         "ZUN",
+        "clBTC",
+        "dsETH",
+        "hyETH",
+        "sDOLA",
+        "sINV",
+        "stTAO",
+        "suBTC",
+        "suETH",
+        "suUSD",
+        "tETH",
+        "wOETH",
+        "wUSDx",
+        "wstLINK",
+        "xSolvBTC",
         "zunETH",
         "zunUSD"
       ]
@@ -2845,7 +2889,7 @@
         "enforceOutOfOrder": false,
         "version": "1.6.0"
       },
-      "supportedTokens": ["savUSD", "SolvBTC", "xrETH", "xRPL", "xSolvBTC"]
+      "supportedTokens": ["SolvBTC", "savUSD", "xRPL", "xSolvBTC", "xrETH"]
     },
     "ethereum-mainnet-mantle-1": {
       "offRamp": {
@@ -2884,18 +2928,18 @@
       "supportedTokens": [
         "BETS",
         "BOLD",
-        "clBTC",
         "IBTC",
         "MILO",
         "OVER",
         "SD",
-        "sDOLA",
-        "stTAO",
         "USDC",
         "USDM",
         "WETH",
-        "wUSDx",
         "ZUN",
+        "clBTC",
+        "sDOLA",
+        "stTAO",
+        "wUSDx",
         "zunETH",
         "zunUSD"
       ]
@@ -2987,52 +3031,32 @@
         "BETS",
         "BOLD",
         "BONE",
-        "clBTC",
         "DFX",
         "DOBO",
         "DOLO",
         "DPI",
-        "dsETH",
         "EARNM",
         "ECOP",
-        "egETH",
         "ETHx",
         "FLUID",
         "GHO",
-        "hyETH",
         "IBTC",
         "IXT",
         "LDY",
         "LEASH",
         "LEND",
-        "mBTC",
-        "mDLP",
-        "mmETH",
-        "mstETH",
-        "mswETH",
         "MVI",
         "NPC",
         "NUON",
         "OVER",
-        "pufETH",
-        "savUSD",
         "SD",
         "SDL",
-        "sDOLA",
         "SDT",
         "SDY",
         "SHIB",
         "SILO",
-        "sINV",
-        "SolvBTC",
         "STABLE",
-        "stTAO",
-        "suBTC",
-        "suETH",
-        "suUSD",
-        "syrupUSDC",
-        "tETH",
-        "uniBTC",
+        "SolvBTC",
         "USD+",
         "USDC",
         "USDFI",
@@ -3043,16 +3067,36 @@
         "WETH",
         "WFRAGSOL",
         "WMTX",
-        "wOETH",
         "WOLF",
         "WSDM",
-        "wstLINK",
+        "ZUN",
+        "clBTC",
+        "dsETH",
+        "egETH",
+        "hyETH",
+        "mBTC",
+        "mDLP",
+        "mmETH",
+        "mstETH",
+        "mswETH",
+        "pufETH",
+        "sDOLA",
+        "sINV",
+        "savUSD",
+        "stTAO",
+        "suBTC",
+        "suETH",
+        "suUSD",
+        "syrupUSDC",
+        "tETH",
+        "uniBTC",
+        "wOETH",
         "wUSDx",
-        "xrETH",
+        "wstLINK",
         "xRPL",
         "xSILO",
         "xSolvBTC",
-        "ZUN",
+        "xrETH",
         "zunETH",
         "zunUSD"
       ]
@@ -3178,7 +3222,7 @@
         "enforceOutOfOrder": false,
         "version": "1.5.0"
       },
-      "supportedTokens": ["BOLD", "mBTC", "SILO", "VRTX", "wUSDx", "xSILO"]
+      "supportedTokens": ["BOLD", "SILO", "VRTX", "mBTC", "wUSDx", "xSILO"]
     },
     "stable-mainnet": {
       "offRamp": {
@@ -3271,15 +3315,15 @@
         "GHO",
         "LBTC",
         "LEND",
-        "Memento",
         "MYST",
+        "Memento",
         "ORNG",
         "SHIB",
         "SolvBTC",
-        "tETH",
         "USDC",
         "USDM",
         "VRTX",
+        "tETH",
         "wstLINK",
         "xSolvBTC"
       ]
@@ -3354,10 +3398,10 @@
         "W0G",
         "WHY",
         "WMTX",
+        "ZYPTO",
         "wUSDx",
         "xGold",
-        "xSolvBTC",
-        "ZYPTO"
+        "xSolvBTC"
       ]
     },
     "celo-mainnet": {
@@ -3410,15 +3454,12 @@
         "APU",
         "BETS",
         "BOLD",
-        "clBTC",
         "DOBO",
         "DPI",
-        "dsETH",
         "EARNM",
         "ECOP",
         "FLUID",
         "GHO",
-        "hyETH",
         "IBTC",
         "IXT",
         "LDY",
@@ -3427,14 +3468,7 @@
         "NUON",
         "OVER",
         "SDL",
-        "sDOLA",
-        "sINV",
         "SolvBTC",
-        "stTAO",
-        "suBTC",
-        "suETH",
-        "suUSD",
-        "tETH",
         "USD+",
         "USDC",
         "USDM",
@@ -3443,12 +3477,22 @@
         "WETH",
         "WHSK",
         "WMTX",
-        "wOETH",
         "WOLF",
-        "wstLINK",
-        "wUSDx",
-        "xSolvBTC",
         "ZUN",
+        "clBTC",
+        "dsETH",
+        "hyETH",
+        "sDOLA",
+        "sINV",
+        "stTAO",
+        "suBTC",
+        "suETH",
+        "suUSD",
+        "tETH",
+        "wOETH",
+        "wUSDx",
+        "wstLINK",
+        "xSolvBTC",
         "zunETH",
         "zunUSD"
       ]
@@ -3538,19 +3582,19 @@
       "supportedTokens": [
         "BETS",
         "BOLD",
-        "clBTC",
         "CRTV",
         "IBTC",
         "OVER",
-        "sDOLA",
-        "sINV",
-        "stTAO",
         "USDC",
         "USDM",
         "USDT",
         "WETH",
-        "wUSDx",
         "ZUN",
+        "clBTC",
+        "sDOLA",
+        "sINV",
+        "stTAO",
+        "wUSDx",
         "zunETH",
         "zunUSD"
       ]
@@ -3670,20 +3714,16 @@
         "BOLD",
         "BONE",
         "BR",
-        "brBTC",
         "BYTES",
         "CHEX",
-        "clBTC",
         "DIP",
         "DOBO",
         "DPI",
-        "dsETH",
         "EARNM",
         "ECOP",
         "FLUID",
         "GEN",
         "GHO",
-        "hyETH",
         "IBTC",
         "IXT",
         "JASMY",
@@ -3694,59 +3734,63 @@
         "LINK",
         "LsETH",
         "MEEM",
-        "Memento",
         "MVI",
         "MYST",
+        "Memento",
         "NEIRO",
         "NUON",
         "OVER",
-        "oXAUT",
         "RAIN",
         "RIZE",
         "SAS",
         "SDL",
-        "sDOLA",
         "SHIB",
-        "sINV",
         "SKYA",
-        "SolvBTC",
         "STABUL",
-        "stTAO",
-        "suBTC",
-        "suETH",
-        "suUSD",
         "SXT",
-        "syrupUSDC",
-        "tETH",
+        "SolvBTC",
         "TRADE",
-        "uniBTC",
         "UNIO",
         "USD+",
         "USD0",
         "USDC",
-        "USDf",
-        "USDi",
         "USDM",
         "USDO",
         "USDT",
+        "USDf",
+        "USDi",
         "USUAL",
         "W0G",
         "WETH",
         "WMTX",
-        "wOETH",
         "WOLF",
         "WPROS",
-        "wstLINK",
+        "XSWAP",
+        "ZUN",
+        "ZYPTO",
+        "ZeUSD",
+        "brBTC",
+        "clBTC",
+        "dsETH",
+        "hyETH",
+        "oXAUT",
+        "sDOLA",
+        "sINV",
+        "stTAO",
+        "suBTC",
+        "suETH",
+        "suUSD",
+        "syrupUSDC",
+        "tETH",
+        "uniBTC",
+        "wOETH",
         "wUSDx",
+        "wstLINK",
         "xGold",
         "xSolvBTC",
-        "XSWAP",
         "zBTC",
-        "ZeUSD",
-        "ZUN",
         "zunETH",
-        "zunUSD",
-        "ZYPTO"
+        "zunUSD"
       ]
     },
     "matic-mainnet": {
@@ -3771,16 +3815,16 @@
         "QUICK",
         "RAIN",
         "RIZE",
-        "SolvBTC",
         "STABUL",
+        "SolvBTC",
         "TRADE",
         "USDC",
         "USDM",
+        "XTFBRICK1",
+        "XTFCLOBOND",
         "wstLINK",
         "xGold",
-        "xSolvBTC",
-        "XTFBRICK1",
-        "XTFCLOBOND"
+        "xSolvBTC"
       ]
     },
     "megaeth-mainnet": {
@@ -3817,7 +3861,7 @@
         "enforceOutOfOrder": false,
         "version": "1.6.0"
       },
-      "supportedTokens": ["cbBTC", "LBTC", "W0G"]
+      "supportedTokens": ["LBTC", "W0G", "cbBTC"]
     },
     "pharos-mainnet": {
       "offRamp": {
@@ -3903,16 +3947,16 @@
       },
       "supportedTokens": [
         "$PAAL",
-        "elizaOS",
         "FLUID",
         "LINK",
         "MEW",
         "MICHI",
-        "pippin",
         "USDC",
         "W0G",
         "WMTX",
         "YNE",
+        "elizaOS",
+        "pippin",
         "zBTC"
       ]
     },
@@ -4256,7 +4300,7 @@
         "enforceOutOfOrder": false,
         "version": "1.5.0"
       },
-      "supportedTokens": ["brBTC", "GHO", "SolvBTC", "syrupUSDC", "syrupUSDT", "uniBTC", "wstETH", "xSolvBTC", "YBTC.B"]
+      "supportedTokens": ["GHO", "SolvBTC", "YBTC.B", "brBTC", "syrupUSDC", "syrupUSDT", "uniBTC", "wstETH", "xSolvBTC"]
     },
     "matic-mainnet": {
       "offRamp": {
@@ -4367,6 +4411,7 @@
         "version": "1.6.0"
       },
       "supportedTokens": [
+        "SolvBTC",
         "avBTC",
         "avBTCx",
         "avETH",
@@ -4376,7 +4421,6 @@
         "savBTC",
         "savETH",
         "savUSD",
-        "SolvBTC",
         "xSolvBTC"
       ]
     },
@@ -4402,7 +4446,7 @@
         "enforceOutOfOrder": false,
         "version": "1.5.0"
       },
-      "supportedTokens": ["AISTR", "savBTC", "savUSD", "SolvBTC", "TURTLE", "xSolvBTC"]
+      "supportedTokens": ["AISTR", "SolvBTC", "TURTLE", "savBTC", "savUSD", "xSolvBTC"]
     },
     "ethereum-mainnet-arbitrum-1": {
       "offRamp": {
@@ -4414,7 +4458,7 @@
         "enforceOutOfOrder": false,
         "version": "1.6.0"
       },
-      "supportedTokens": ["savUSD", "SolvBTC", "xrETH", "xRPL", "xSolvBTC"]
+      "supportedTokens": ["SolvBTC", "savUSD", "xRPL", "xSolvBTC", "xrETH"]
     },
     "ethereum-mainnet-base-1": {
       "offRamp": {
@@ -4500,26 +4544,26 @@
       },
       "supportedTokens": [
         "AISTR",
+        "BONE",
+        "LEASH",
+        "LsETH",
+        "SHIB",
+        "SolvBTC",
+        "TURTLE",
+        "WETH",
         "avBTC",
         "avBTCx",
         "avETH",
         "avETHx",
         "avUSD",
         "avUSDx",
-        "BONE",
-        "LEASH",
-        "LsETH",
         "rsETH",
         "savBTC",
         "savETH",
         "savUSD",
-        "SHIB",
-        "SolvBTC",
-        "TURTLE",
-        "WETH",
-        "xrETH",
         "xRPL",
-        "xSolvBTC"
+        "xSolvBTC",
+        "xrETH"
       ]
     },
     "matic-mainnet": {
@@ -4666,7 +4710,7 @@
         "enforceOutOfOrder": false,
         "version": "1.6.0"
       },
-      "supportedTokens": ["BONE", "GHO", "LEASH", "SHIB", "syrupUSDT", "uniBTC", "USD1", "VOOI"]
+      "supportedTokens": ["BONE", "GHO", "LEASH", "SHIB", "USD1", "VOOI", "syrupUSDT", "uniBTC"]
     },
     "plasma-mainnet": {
       "offRamp": {
@@ -4764,7 +4808,7 @@
         "enforceOutOfOrder": false,
         "version": "1.5.0"
       },
-      "supportedTokens": ["BONE", "LEASH", "LINK", "sDAI", "SHIB", "uniBTC", "wUSDx"]
+      "supportedTokens": ["BONE", "LEASH", "LINK", "SHIB", "sDAI", "uniBTC", "wUSDx"]
     },
     "sonic-mainnet": {
       "offRamp": {
@@ -4853,18 +4897,18 @@
       "supportedTokens": [
         "BETS",
         "BOLD",
-        "clBTC",
         "IBTC",
         "MILO",
         "OVER",
         "SD",
-        "sDOLA",
-        "stTAO",
         "USDC",
         "USDM",
         "WETH",
-        "wUSDx",
         "ZUN",
+        "clBTC",
+        "sDOLA",
+        "stTAO",
+        "wUSDx",
         "zunETH",
         "zunUSD"
       ]
@@ -4882,19 +4926,19 @@
       "supportedTokens": [
         "BETS",
         "BOLD",
-        "clBTC",
         "CRTV",
         "IBTC",
         "OVER",
-        "sDOLA",
-        "sINV",
-        "stTAO",
         "USDC",
         "USDM",
         "USDT",
         "WETH",
-        "wUSDx",
         "ZUN",
+        "clBTC",
+        "sDOLA",
+        "sINV",
+        "stTAO",
+        "wUSDx",
         "zunETH",
         "zunUSD"
       ]
@@ -4985,24 +5029,24 @@
         "BETS",
         "BOLD",
         "BONE",
-        "clBTC",
         "ETHx",
         "IBTC",
         "LEASH",
         "OVER",
-        "rsETH",
         "SD",
-        "sDOLA",
         "SHIB",
-        "sINV",
-        "stTAO",
-        "uniBTC",
         "USDC",
         "USDM",
         "USDT",
         "WETH",
-        "wUSDx",
         "ZUN",
+        "clBTC",
+        "rsETH",
+        "sDOLA",
+        "sINV",
+        "stTAO",
+        "uniBTC",
+        "wUSDx",
         "zunETH",
         "zunUSD"
       ]
@@ -5253,7 +5297,7 @@
         "enforceOutOfOrder": false,
         "version": "1.5.0"
       },
-      "supportedTokens": ["BETS", "ECOP", "uniBTC", "USDC"]
+      "supportedTokens": ["BETS", "ECOP", "USDC", "uniBTC"]
     },
     "matic-mainnet": {
       "offRamp": {
@@ -5339,7 +5383,7 @@
         "enforceOutOfOrder": false,
         "version": "1.5.0"
       },
-      "supportedTokens": ["oXAUT", "WLD"]
+      "supportedTokens": ["WLD", "oXAUT"]
     },
     "solana-mainnet": {
       "offRamp": {
@@ -5461,7 +5505,7 @@
         "enforceOutOfOrder": false,
         "version": "1.6.0"
       },
-      "supportedTokens": ["brBTC", "GHO", "uniBTC", "USD1"]
+      "supportedTokens": ["GHO", "USD1", "brBTC", "uniBTC"]
     },
     "plasma-mainnet": {
       "offRamp": {
@@ -5535,7 +5579,7 @@
         "enforceOutOfOrder": false,
         "version": "1.5.0"
       },
-      "supportedTokens": ["BONE", "LEASH", "mBTC", "rsETH", "SHIB"]
+      "supportedTokens": ["BONE", "LEASH", "SHIB", "mBTC", "rsETH"]
     }
   },
   "ethereum-mainnet-zksync-1": {
@@ -5754,8 +5798,7 @@
         "address": "0xD4D2841Ac332075833AE86eb49ce7aF9f353cd21",
         "enforceOutOfOrder": false,
         "version": "1.6.0"
-      },
-      "supportedTokens": []
+      }
     },
     "monad-mainnet": {
       "offRamp": {
@@ -6005,7 +6048,7 @@
         "enforceOutOfOrder": true,
         "version": "1.6.0"
       },
-      "supportedTokens": ["BOLD", "brBTC", "kHYPE", "SolvBTC", "uniBTC", "VSN", "xGold", "xSolvBTC"]
+      "supportedTokens": ["BOLD", "SolvBTC", "VSN", "brBTC", "kHYPE", "uniBTC", "xGold", "xSolvBTC"]
     },
     "solana-mainnet": {
       "offRamp": {
@@ -6042,8 +6085,7 @@
         "address": "0x9b04018b5285FF16F3967Af108Bdc72423d547cC",
         "enforceOutOfOrder": false,
         "version": "1.6.0"
-      },
-      "supportedTokens": []
+      }
     },
     "pharos-mainnet": {
       "offRamp": {
@@ -6054,8 +6096,7 @@
         "address": "0x9b04018b5285FF16F3967Af108Bdc72423d547cC",
         "enforceOutOfOrder": false,
         "version": "1.6.0"
-      },
-      "supportedTokens": []
+      }
     }
   },
   "kaia-mainnet": {
@@ -6231,7 +6272,7 @@
         "enforceOutOfOrder": true,
         "version": "1.6.0"
       },
-      "supportedTokens": ["brBTC", "LINK", "uniBTC"]
+      "supportedTokens": ["LINK", "brBTC", "uniBTC"]
     },
     "avalanche-mainnet": {
       "offRamp": {
@@ -6244,12 +6285,6 @@
         "version": "1.5.0"
       },
       "supportedTokens": [
-        "avBTC",
-        "avBTCx",
-        "avETH",
-        "avETHx",
-        "avUSD",
-        "avUSDx",
         "BETS",
         "BOLD",
         "BONE",
@@ -6261,25 +6296,31 @@
         "LBTC",
         "LEASH",
         "LEND",
-        "Memento",
         "MYST",
-        "oXAUT",
-        "savBTC",
-        "savETH",
-        "savUSD",
+        "Memento",
         "SDY",
         "SHIB",
         "SILO",
         "SolvBTC",
-        "tETH",
         "TREE",
         "USDC",
         "USDM",
+        "YBTC.B",
+        "avBTC",
+        "avBTCx",
+        "avETH",
+        "avETHx",
+        "avUSD",
+        "avUSDx",
+        "oXAUT",
+        "savBTC",
+        "savETH",
+        "savUSD",
+        "tETH",
         "wstLINK",
         "wstPOL",
         "xSILO",
-        "xSolvBTC",
-        "YBTC.B"
+        "xSolvBTC"
       ]
     },
     "berachain-mainnet": {
@@ -6295,14 +6336,14 @@
       "supportedTokens": [
         "BOLD",
         "BR",
-        "brBTC",
         "DOLO",
         "LBTC",
-        "pufETH",
-        "savUSD",
-        "sDOLA",
         "SolvBTC",
         "SolvBTC.BERA",
+        "brBTC",
+        "pufETH",
+        "sDOLA",
+        "savUSD",
         "uniBTC",
         "xSolvBTC"
       ]
@@ -6329,7 +6370,7 @@
         "enforceOutOfOrder": false,
         "version": "1.5.0"
       },
-      "supportedTokens": ["BTR", "uniBTC", "USDC", "USDT", "WETH", "wstETH", "YBTC.B"]
+      "supportedTokens": ["BTR", "USDC", "USDT", "WETH", "YBTC.B", "uniBTC", "wstETH"]
     },
     "bitcoin-mainnet-bob-1": {
       "offRamp": {
@@ -6341,7 +6382,7 @@
         "enforceOutOfOrder": false,
         "version": "1.5.0"
       },
-      "supportedTokens": ["BOB", "SolvBTC", "SolvBTC.BERA", "uniBTC", "USDC", "USDT", "xSolvBTC"]
+      "supportedTokens": ["BOB", "SolvBTC", "SolvBTC.BERA", "USDC", "USDT", "uniBTC", "xSolvBTC"]
     },
     "bitcoin-mainnet-botanix": {
       "offRamp": {
@@ -6412,7 +6453,6 @@
         "BOB",
         "BONE",
         "BR",
-        "brBTC",
         "BTR",
         "CHEX",
         "DOBO",
@@ -6425,33 +6465,26 @@
         "LBTC",
         "LEASH",
         "LEND",
-        "mBTC",
-        "mwBETH",
         "POWER",
         "RAIN",
         "RIZE",
         "SAS",
-        "savBTC",
-        "savUSD",
         "SDT",
         "SHIB",
         "SKYA",
+        "STABLE",
         "SolvBTC",
         "SolvBTC.BERA",
-        "STABLE",
-        "sUSD1+",
-        "syrupUSDT",
         "TRADE",
         "TREE",
         "TURBO",
         "TURTLE",
-        "uniBTC",
         "UNIO",
         "USD0",
         "USD1",
-        "USDf",
         "USDFI",
         "USDO",
+        "USDf",
         "USUAL",
         "VOOI",
         "VSN",
@@ -6461,10 +6494,18 @@
         "WLFI",
         "WMTX",
         "WSDM",
+        "ZYPTO",
+        "brBTC",
+        "mBTC",
+        "mwBETH",
+        "sUSD1+",
+        "savBTC",
+        "savUSD",
+        "syrupUSDT",
+        "uniBTC",
         "wUSDx",
         "xGold",
-        "xSolvBTC",
-        "ZYPTO"
+        "xSolvBTC"
       ]
     },
     "celo-mainnet": {
@@ -6539,6 +6580,18 @@
       },
       "supportedTokens": ["LINK"]
     },
+    "edge-mainnet": {
+      "offRamp": {
+        "address": "0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
+        "version": "1.6.0"
+      },
+      "onRamp": {
+        "address": "0x913814782144864e523C3FdB78E3ca25D2c2aeCa",
+        "enforceOutOfOrder": false,
+        "version": "1.6.0"
+      },
+      "supportedTokens": ["LINK"]
+    },
     "ethereum-mainnet-andromeda-1": {
       "offRamp": {
         "address": "0x330349112e13232131Da51f9f3b153d825f65e61",
@@ -6566,52 +6619,32 @@
         "BETS",
         "BOLD",
         "BONE",
-        "clBTC",
         "DFX",
         "DOBO",
         "DOLO",
         "DPI",
-        "dsETH",
         "EARNM",
         "ECOP",
-        "egETH",
         "ETHx",
         "FLUID",
         "GHO",
-        "hyETH",
         "IBTC",
         "IXT",
         "LDY",
         "LEASH",
         "LEND",
-        "mBTC",
-        "mDLP",
-        "mmETH",
-        "mstETH",
-        "mswETH",
         "MVI",
         "NPC",
         "NUON",
         "OVER",
-        "pufETH",
-        "savUSD",
         "SD",
         "SDL",
-        "sDOLA",
         "SDT",
         "SDY",
         "SHIB",
         "SILO",
-        "sINV",
-        "SolvBTC",
         "STABLE",
-        "stTAO",
-        "suBTC",
-        "suETH",
-        "suUSD",
-        "syrupUSDC",
-        "tETH",
-        "uniBTC",
+        "SolvBTC",
         "USD+",
         "USDC",
         "USDFI",
@@ -6622,16 +6655,36 @@
         "WETH",
         "WFRAGSOL",
         "WMTX",
-        "wOETH",
         "WOLF",
         "WSDM",
-        "wstLINK",
+        "ZUN",
+        "clBTC",
+        "dsETH",
+        "egETH",
+        "hyETH",
+        "mBTC",
+        "mDLP",
+        "mmETH",
+        "mstETH",
+        "mswETH",
+        "pufETH",
+        "sDOLA",
+        "sINV",
+        "savUSD",
+        "stTAO",
+        "suBTC",
+        "suETH",
+        "suUSD",
+        "syrupUSDC",
+        "tETH",
+        "uniBTC",
+        "wOETH",
         "wUSDx",
-        "xrETH",
+        "wstLINK",
         "xRPL",
         "xSILO",
         "xSolvBTC",
-        "ZUN",
+        "xrETH",
         "zunETH",
         "zunUSD"
       ]
@@ -6655,20 +6708,16 @@
         "BOLD",
         "BONE",
         "BR",
-        "brBTC",
         "BYTES",
         "CHEX",
-        "clBTC",
         "DIP",
         "DOBO",
         "DPI",
-        "dsETH",
         "EARNM",
         "ECOP",
         "FLUID",
         "GEN",
         "GHO",
-        "hyETH",
         "IBTC",
         "IXT",
         "JASMY",
@@ -6679,59 +6728,63 @@
         "LINK",
         "LsETH",
         "MEEM",
-        "Memento",
         "MVI",
         "MYST",
+        "Memento",
         "NEIRO",
         "NUON",
         "OVER",
-        "oXAUT",
         "RAIN",
         "RIZE",
         "SAS",
         "SDL",
-        "sDOLA",
         "SHIB",
-        "sINV",
         "SKYA",
-        "SolvBTC",
         "STABUL",
-        "stTAO",
-        "suBTC",
-        "suETH",
-        "suUSD",
         "SXT",
-        "syrupUSDC",
-        "tETH",
+        "SolvBTC",
         "TRADE",
-        "uniBTC",
         "UNIO",
         "USD+",
         "USD0",
         "USDC",
-        "USDf",
-        "USDi",
         "USDM",
         "USDO",
         "USDT",
+        "USDf",
+        "USDi",
         "USUAL",
         "W0G",
         "WETH",
         "WMTX",
-        "wOETH",
         "WOLF",
         "WPROS",
-        "wstLINK",
+        "XSWAP",
+        "ZUN",
+        "ZYPTO",
+        "ZeUSD",
+        "brBTC",
+        "clBTC",
+        "dsETH",
+        "hyETH",
+        "oXAUT",
+        "sDOLA",
+        "sINV",
+        "stTAO",
+        "suBTC",
+        "suETH",
+        "suUSD",
+        "syrupUSDC",
+        "tETH",
+        "uniBTC",
+        "wOETH",
         "wUSDx",
+        "wstLINK",
         "xGold",
         "xSolvBTC",
-        "XSWAP",
         "zBTC",
-        "ZeUSD",
-        "ZUN",
         "zunETH",
-        "zunUSD",
-        "ZYPTO"
+        "zunUSD"
       ]
     },
     "ethereum-mainnet-blast-1": {
@@ -6768,7 +6821,7 @@
         "enforceOutOfOrder": false,
         "version": "1.5.0"
       },
-      "supportedTokens": ["brBTC", "GHO", "SolvBTC", "syrupUSDC", "syrupUSDT", "uniBTC", "wstETH", "xSolvBTC", "YBTC.B"]
+      "supportedTokens": ["GHO", "SolvBTC", "YBTC.B", "brBTC", "syrupUSDC", "syrupUSDT", "uniBTC", "wstETH", "xSolvBTC"]
     },
     "ethereum-mainnet-linea-1": {
       "offRamp": {
@@ -6782,26 +6835,26 @@
       },
       "supportedTokens": [
         "AISTR",
+        "BONE",
+        "LEASH",
+        "LsETH",
+        "SHIB",
+        "SolvBTC",
+        "TURTLE",
+        "WETH",
         "avBTC",
         "avBTCx",
         "avETH",
         "avETHx",
         "avUSD",
         "avUSDx",
-        "BONE",
-        "LEASH",
-        "LsETH",
         "rsETH",
         "savBTC",
         "savETH",
         "savUSD",
-        "SHIB",
-        "SolvBTC",
-        "TURTLE",
-        "WETH",
-        "xrETH",
         "xRPL",
-        "xSolvBTC"
+        "xSolvBTC",
+        "xrETH"
       ]
     },
     "ethereum-mainnet-mantle-1": {
@@ -6814,7 +6867,7 @@
         "enforceOutOfOrder": false,
         "version": "1.6.0"
       },
-      "supportedTokens": ["BONE", "GHO", "LEASH", "SHIB", "syrupUSDT", "uniBTC", "USD1", "VOOI"]
+      "supportedTokens": ["BONE", "GHO", "LEASH", "SHIB", "USD1", "VOOI", "syrupUSDT", "uniBTC"]
     },
     "ethereum-mainnet-mode-1": {
       "offRamp": {
@@ -6826,7 +6879,7 @@
         "enforceOutOfOrder": false,
         "version": "1.5.0"
       },
-      "supportedTokens": ["BONE", "LEASH", "LINK", "sDAI", "SHIB", "uniBTC", "wUSDx"]
+      "supportedTokens": ["BONE", "LEASH", "LINK", "SHIB", "sDAI", "uniBTC", "wUSDx"]
     },
     "ethereum-mainnet-optimism-1": {
       "offRamp": {
@@ -6842,24 +6895,24 @@
         "BETS",
         "BOLD",
         "BONE",
-        "clBTC",
         "ETHx",
         "IBTC",
         "LEASH",
         "OVER",
-        "rsETH",
         "SD",
-        "sDOLA",
         "SHIB",
-        "sINV",
-        "stTAO",
-        "uniBTC",
         "USDC",
         "USDM",
         "USDT",
         "WETH",
-        "wUSDx",
         "ZUN",
+        "clBTC",
+        "rsETH",
+        "sDOLA",
+        "sINV",
+        "stTAO",
+        "uniBTC",
+        "wUSDx",
         "zunETH",
         "zunUSD"
       ]
@@ -6910,7 +6963,7 @@
         "enforceOutOfOrder": false,
         "version": "1.5.0"
       },
-      "supportedTokens": ["BETS", "ECOP", "uniBTC", "USDC"]
+      "supportedTokens": ["BETS", "ECOP", "USDC", "uniBTC"]
     },
     "ethereum-mainnet-worldchain-1": {
       "offRamp": {
@@ -6922,7 +6975,7 @@
         "enforceOutOfOrder": false,
         "version": "1.5.0"
       },
-      "supportedTokens": ["oXAUT", "WLD"]
+      "supportedTokens": ["WLD", "oXAUT"]
     },
     "ethereum-mainnet-xlayer-1": {
       "offRamp": {
@@ -6934,7 +6987,7 @@
         "enforceOutOfOrder": false,
         "version": "1.6.0"
       },
-      "supportedTokens": ["brBTC", "GHO", "uniBTC", "USD1"]
+      "supportedTokens": ["GHO", "USD1", "brBTC", "uniBTC"]
     },
     "ethereum-mainnet-zircuit-1": {
       "offRamp": {
@@ -6946,7 +6999,7 @@
         "enforceOutOfOrder": true,
         "version": "1.5.0"
       },
-      "supportedTokens": ["BONE", "LEASH", "mBTC", "rsETH", "SHIB"]
+      "supportedTokens": ["BONE", "LEASH", "SHIB", "mBTC", "rsETH"]
     },
     "ethereum-mainnet-zksync-1": {
       "offRamp": {
@@ -7030,7 +7083,7 @@
         "enforceOutOfOrder": true,
         "version": "1.6.0"
       },
-      "supportedTokens": ["BOLD", "brBTC", "kHYPE", "SolvBTC", "uniBTC", "VSN", "xGold", "xSolvBTC"]
+      "supportedTokens": ["BOLD", "SolvBTC", "VSN", "brBTC", "kHYPE", "uniBTC", "xGold", "xSolvBTC"]
     },
     "jovay-mainnet": {
       "offRamp": {
@@ -7106,8 +7159,8 @@
         "RIZE",
         "SHIB",
         "SOIL",
-        "SolvBTC",
         "STABUL",
+        "SolvBTC",
         "TRADE",
         "USDC",
         "USDM",
@@ -7189,7 +7242,7 @@
         "enforceOutOfOrder": false,
         "version": "1.6.0"
       },
-      "supportedTokens": ["aprMON", "BTC.b", "LBTC", "RETH", "SolvBTC", "USD1", "W0G", "wstETH", "xSolvBTC"]
+      "supportedTokens": ["BANK", "BTC.b", "LBTC", "RETH", "SolvBTC", "USD1", "W0G", "aprMON", "wstETH", "xSolvBTC"]
     },
     "morph-mainnet": {
       "offRamp": {
@@ -7227,6 +7280,18 @@
       },
       "supportedTokens": ["LINK", "USDC", "WETH", "WPROS"]
     },
+    "pharos-mainnet": {
+      "offRamp": {
+        "address": "0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
+        "version": "1.6.0"
+      },
+      "onRamp": {
+        "address": "0x913814782144864e523C3FdB78E3ca25D2c2aeCa",
+        "enforceOutOfOrder": false,
+        "version": "1.6.0"
+      },
+      "supportedTokens": ["LINK", "USDC", "WETH", "WPROS"]
+    },
     "plasma-mainnet": {
       "offRamp": {
         "address": "0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
@@ -7237,7 +7302,7 @@
         "enforceOutOfOrder": false,
         "version": "1.6.0"
       },
-      "supportedTokens": ["BOLD", "FLUID", "GHO", "LINK", "RETH", "savUSD", "syrupUSDT", "wstETH", "YBTC.B"]
+      "supportedTokens": ["BOLD", "FLUID", "GHO", "LINK", "RETH", "YBTC.B", "savUSD", "syrupUSDT", "wstETH"]
     },
     "plume-mainnet": {
       "offRamp": {
@@ -7249,7 +7314,7 @@
         "enforceOutOfOrder": false,
         "version": "1.6.0"
       },
-      "supportedTokens": ["sUSD1+", "USD1"]
+      "supportedTokens": ["USD1", "sUSD1+"]
     },
     "polkadot-mainnet-astar": {
       "offRamp": {
@@ -7353,8 +7418,6 @@
       },
       "supportedTokens": [
         "$PAAL",
-        "brBTC",
-        "elizaOS",
         "FHE",
         "FLUID",
         "LINK",
@@ -7362,17 +7425,19 @@
         "OHM",
         "PEPE",
         "PTjrUSDe",
-        "PTsrUSDe",
         "PTsUSDE",
+        "PTsrUSDe",
         "SolvBTC",
-        "syrupUSDC",
-        "uniBTC",
         "USD1",
         "USDC",
         "W0G",
         "WFRAGSOL",
         "WLFI",
         "WMTX",
+        "brBTC",
+        "elizaOS",
+        "syrupUSDC",
+        "uniBTC",
         "xSolvBTC",
         "zBTC"
       ]
@@ -7387,7 +7452,7 @@
         "enforceOutOfOrder": false,
         "version": "1.5.0"
       },
-      "supportedTokens": ["DEGEN", "LINK", "pufETH", "SKYA", "SolvBTC", "WASTR", "xSolvBTC"]
+      "supportedTokens": ["DEGEN", "LINK", "SKYA", "SolvBTC", "WASTR", "pufETH", "xSolvBTC"]
     },
     "sonic-mainnet": {
       "offRamp": {
@@ -7401,16 +7466,16 @@
       },
       "supportedTokens": [
         "BOLD",
-        "egETH",
         "FUSD",
         "LBTC",
         "LINK",
-        "mBTC",
-        "mstETH",
         "SILO",
         "SolvBTC",
-        "uniBTC",
         "USDT",
+        "egETH",
+        "mBTC",
+        "mstETH",
+        "uniBTC",
         "wUSDx",
         "xSILO",
         "xSolvBTC",
@@ -7463,7 +7528,7 @@
         "enforceOutOfOrder": false,
         "version": "1.5.0"
       },
-      "supportedTokens": ["BONE", "LEASH", "LINK", "SHIB", "una.USDC", "una.WEMIX", "USDC"]
+      "supportedTokens": ["BONE", "LEASH", "LINK", "SHIB", "USDC", "una.USDC", "una.WEMIX"]
     },
     "xdai-mainnet": {
       "offRamp": {
@@ -7570,8 +7635,8 @@
         "METO",
         "RAIN",
         "RIZE",
-        "SolvBTC",
         "SWCH",
+        "SolvBTC",
         "THE",
         "TRADE",
         "WECO",
@@ -7653,16 +7718,16 @@
         "QUICK",
         "RAIN",
         "RIZE",
-        "SolvBTC",
         "STABUL",
+        "SolvBTC",
         "TRADE",
         "USDC",
         "USDM",
+        "XTFBRICK1",
+        "XTFCLOBOND",
         "wstLINK",
         "xGold",
-        "xSolvBTC",
-        "XTFBRICK1",
-        "XTFCLOBOND"
+        "xSolvBTC"
       ]
     },
     "ethereum-mainnet-ink-1": {
@@ -7763,8 +7828,8 @@
         "RIZE",
         "SHIB",
         "SOIL",
-        "SolvBTC",
         "STABUL",
+        "SolvBTC",
         "TRADE",
         "USDC",
         "USDM",
@@ -7797,8 +7862,7 @@
         "address": "0x530Ae314EC3fA038bd9A215095E37295ec76162a",
         "enforceOutOfOrder": false,
         "version": "1.6.0"
-      },
-      "supportedTokens": []
+      }
     },
     "plume-mainnet": {
       "offRamp": {
@@ -7809,8 +7873,7 @@
         "address": "0x530Ae314EC3fA038bd9A215095E37295ec76162a",
         "enforceOutOfOrder": false,
         "version": "1.6.0"
-      },
-      "supportedTokens": []
+      }
     },
     "sei-mainnet": {
       "offRamp": {
@@ -7907,8 +7970,7 @@
         "address": "0x59d32e5Fa8EeD1Fd1510f7E583a2b6e6142DD49F",
         "enforceOutOfOrder": false,
         "version": "1.6.0"
-      },
-      "supportedTokens": []
+      }
     },
     "bsc-mainnet": {
       "offRamp": {
@@ -7931,8 +7993,7 @@
         "address": "0x59d32e5Fa8EeD1Fd1510f7E583a2b6e6142DD49F",
         "enforceOutOfOrder": false,
         "version": "1.6.0"
-      },
-      "supportedTokens": []
+      }
     },
     "ethereum-mainnet-base-1": {
       "offRamp": {
@@ -7955,8 +8016,7 @@
         "address": "0x59d32e5Fa8EeD1Fd1510f7E583a2b6e6142DD49F",
         "enforceOutOfOrder": false,
         "version": "1.6.0"
-      },
-      "supportedTokens": []
+      }
     },
     "mainnet": {
       "offRamp": {
@@ -7979,8 +8039,7 @@
         "address": "0x59d32e5Fa8EeD1Fd1510f7E583a2b6e6142DD49F",
         "enforceOutOfOrder": false,
         "version": "1.6.0"
-      },
-      "supportedTokens": []
+      }
     },
     "polygon-mainnet-katana": {
       "offRamp": {
@@ -8015,8 +8074,7 @@
         "address": "0x59d32e5Fa8EeD1Fd1510f7E583a2b6e6142DD49F",
         "enforceOutOfOrder": false,
         "version": "1.6.0"
-      },
-      "supportedTokens": []
+      }
     },
     "tac-mainnet": {
       "offRamp": {
@@ -8027,8 +8085,7 @@
         "address": "0x59d32e5Fa8EeD1Fd1510f7E583a2b6e6142DD49F",
         "enforceOutOfOrder": false,
         "version": "1.6.0"
-      },
-      "supportedTokens": []
+      }
     }
   },
   "memento-mainnet": {
@@ -8194,7 +8251,7 @@
         "enforceOutOfOrder": false,
         "version": "1.6.0"
       },
-      "supportedTokens": ["LBTC", "NXPC", "W0G"]
+      "supportedTokens": ["BANK", "LBTC", "NXPC", "W0G"]
     },
     "corn-mainnet": {
       "offRamp": {
@@ -8205,8 +8262,7 @@
         "address": "0xcDca5D374e46A6DDDab50bD2D9acB8c796eC35C3",
         "enforceOutOfOrder": false,
         "version": "1.6.0"
-      },
-      "supportedTokens": []
+      }
     },
     "ethereum-mainnet-arbitrum-1": {
       "offRamp": {
@@ -8230,7 +8286,7 @@
         "enforceOutOfOrder": false,
         "version": "1.6.0"
       },
-      "supportedTokens": ["cbBTC", "LBTC", "W0G"]
+      "supportedTokens": ["LBTC", "W0G", "cbBTC"]
     },
     "ethereum-mainnet-ink-1": {
       "offRamp": {
@@ -8278,7 +8334,7 @@
         "enforceOutOfOrder": false,
         "version": "1.6.0"
       },
-      "supportedTokens": ["aprMON", "BTC.b", "LBTC", "RETH", "SolvBTC", "USD1", "W0G", "wstETH", "xSolvBTC"]
+      "supportedTokens": ["BANK", "BTC.b", "LBTC", "RETH", "SolvBTC", "USD1", "W0G", "aprMON", "wstETH", "xSolvBTC"]
     },
     "megaeth-mainnet": {
       "offRamp": {
@@ -8289,8 +8345,7 @@
         "address": "0xcDca5D374e46A6DDDab50bD2D9acB8c796eC35C3",
         "enforceOutOfOrder": false,
         "version": "1.6.0"
-      },
-      "supportedTokens": []
+      }
     },
     "plasma-mainnet": {
       "offRamp": {
@@ -8455,6 +8510,54 @@
       "supportedTokens": []
     }
   },
+  "pharos-mainnet": {
+    "ethereum-mainnet-base-1": {
+      "offRamp": {
+        "address": "0x40858070814a57FdF33a613ae84fE0a8b4a874f7",
+        "version": "1.6.0"
+      },
+      "onRamp": {
+        "address": "0x193Beb1E11731B8B740b9fbbB62655553c3b4A25",
+        "enforceOutOfOrder": false,
+        "version": "1.6.0"
+      },
+      "supportedTokens": ["WPROS"]
+    },
+    "jovay-mainnet": {
+      "offRamp": {
+        "address": "0x40858070814a57FdF33a613ae84fE0a8b4a874f7",
+        "version": "1.6.0"
+      },
+      "onRamp": {
+        "address": "0x193Beb1E11731B8B740b9fbbB62655553c3b4A25",
+        "enforceOutOfOrder": false,
+        "version": "1.6.0"
+      }
+    },
+    "mainnet": {
+      "offRamp": {
+        "address": "0x40858070814a57FdF33a613ae84fE0a8b4a874f7",
+        "version": "1.6.0"
+      },
+      "onRamp": {
+        "address": "0x193Beb1E11731B8B740b9fbbB62655553c3b4A25",
+        "enforceOutOfOrder": false,
+        "version": "1.6.0"
+      },
+      "supportedTokens": ["LINK", "USDC", "WETH", "WPROS"]
+    },
+    "matic-mainnet": {
+      "offRamp": {
+        "address": "0x40858070814a57FdF33a613ae84fE0a8b4a874f7",
+        "version": "1.6.0"
+      },
+      "onRamp": {
+        "address": "0x193Beb1E11731B8B740b9fbbB62655553c3b4A25",
+        "enforceOutOfOrder": false,
+        "version": "1.6.0"
+      }
+    }
+  },
   "plasma-mainnet": {
     "aptos-mainnet": {
       "offRamp": {
@@ -8586,7 +8689,7 @@
         "enforceOutOfOrder": false,
         "version": "1.6.0"
       },
-      "supportedTokens": ["BOLD", "FLUID", "GHO", "LINK", "RETH", "savUSD", "syrupUSDT", "wstETH", "YBTC.B"]
+      "supportedTokens": ["BOLD", "FLUID", "GHO", "LINK", "RETH", "YBTC.B", "savUSD", "syrupUSDT", "wstETH"]
     },
     "monad-mainnet": {
       "offRamp": {
@@ -8610,7 +8713,7 @@
         "enforceOutOfOrder": true,
         "version": "1.6.0"
       },
-      "supportedTokens": ["eUSX", "FLUID", "USX"]
+      "supportedTokens": ["FLUID", "USX", "eUSX"]
     },
     "xdai-mainnet": {
       "offRamp": {
@@ -8660,7 +8763,7 @@
         "enforceOutOfOrder": false,
         "version": "1.6.0"
       },
-      "supportedTokens": ["sUSD1+", "USD1"]
+      "supportedTokens": ["USD1", "sUSD1+"]
     },
     "matic-mainnet": {
       "offRamp": {
@@ -8671,8 +8774,7 @@
         "address": "0xc23071a8AE83671f37bdA1DaDBC745a9780f632A",
         "enforceOutOfOrder": false,
         "version": "1.6.0"
-      },
-      "supportedTokens": []
+      }
     }
   },
   "polkadot-mainnet-astar": {
@@ -9187,7 +9289,6 @@
       "supportedTokens": [
         "$PAAL",
         "BR",
-        "elizaOS",
         "FHE",
         "ILMT",
         "KNET",
@@ -9200,6 +9301,7 @@
         "WLFI",
         "WMTX",
         "XLAB",
+        "elizaOS",
         "xSolvBTC"
       ]
     },
@@ -9227,16 +9329,16 @@
       },
       "supportedTokens": [
         "$PAAL",
-        "elizaOS",
         "FLUID",
         "LINK",
         "MEW",
         "MICHI",
-        "pippin",
         "USDC",
         "W0G",
         "WMTX",
         "YNE",
+        "elizaOS",
+        "pippin",
         "zBTC"
       ]
     },
@@ -9312,8 +9414,6 @@
       },
       "supportedTokens": [
         "$PAAL",
-        "brBTC",
-        "elizaOS",
         "FHE",
         "FLUID",
         "LINK",
@@ -9321,17 +9421,19 @@
         "OHM",
         "PEPE",
         "PTjrUSDe",
-        "PTsrUSDe",
         "PTsUSDE",
+        "PTsrUSDe",
         "SolvBTC",
-        "syrupUSDC",
-        "uniBTC",
         "USD1",
         "USDC",
         "W0G",
         "WFRAGSOL",
         "WLFI",
         "WMTX",
+        "brBTC",
+        "elizaOS",
+        "syrupUSDC",
+        "uniBTC",
         "xSolvBTC",
         "zBTC"
       ]
@@ -9382,7 +9484,7 @@
         "enforceOutOfOrder": true,
         "version": "1.6.0"
       },
-      "supportedTokens": ["eUSX", "FLUID", "USX"]
+      "supportedTokens": ["FLUID", "USX", "eUSX"]
     },
     "polygon-mainnet-katana": {
       "offRamp": {
@@ -9528,7 +9630,7 @@
         "enforceOutOfOrder": false,
         "version": "1.5.0"
       },
-      "supportedTokens": ["DEGEN", "LINK", "pufETH", "SKYA", "SolvBTC", "WASTR", "xSolvBTC"]
+      "supportedTokens": ["DEGEN", "LINK", "SKYA", "SolvBTC", "WASTR", "pufETH", "xSolvBTC"]
     },
     "matic-mainnet": {
       "offRamp": {
@@ -9650,7 +9752,7 @@
         "enforceOutOfOrder": false,
         "version": "1.5.0"
       },
-      "supportedTokens": ["BOLD", "mBTC", "SILO", "VRTX", "wUSDx", "xSILO"]
+      "supportedTokens": ["BOLD", "SILO", "VRTX", "mBTC", "wUSDx", "xSILO"]
     },
     "ethereum-mainnet-base-1": {
       "offRamp": {
@@ -9748,16 +9850,16 @@
       },
       "supportedTokens": [
         "BOLD",
-        "egETH",
         "FUSD",
         "LBTC",
         "LINK",
-        "mBTC",
-        "mstETH",
         "SILO",
         "SolvBTC",
-        "uniBTC",
         "USDT",
+        "egETH",
+        "mBTC",
+        "mstETH",
+        "uniBTC",
         "wUSDx",
         "xSILO",
         "xSolvBTC",
@@ -9907,8 +10009,7 @@
         "address": "0xD21D5a4e3fA0eBACC3DaBB5258d9C1F4d24dc894",
         "enforceOutOfOrder": false,
         "version": "1.6.0"
-      },
-      "supportedTokens": []
+      }
     },
     "ethereum-mainnet-arbitrum-1": {
       "offRamp": {
@@ -9967,8 +10068,7 @@
         "address": "0xD21D5a4e3fA0eBACC3DaBB5258d9C1F4d24dc894",
         "enforceOutOfOrder": false,
         "version": "1.6.0"
-      },
-      "supportedTokens": []
+      }
     },
     "monad-mainnet": {
       "offRamp": {
@@ -10082,6 +10182,17 @@
       },
       "supportedTokens": []
     },
+    "corn-mainnet": {
+      "offRamp": {
+        "address": "0x3201a20D2a33820C0DaC8Bc93C4819755C2a8c7F",
+        "version": "1.6.0"
+      },
+      "onRamp": {
+        "address": "0x51e2A24742Db77604B881d6781Ee16B5b8fcBE29",
+        "enforceOutOfOrder": false,
+        "version": "1.6.0"
+      }
+    },
     "ethereum-mainnet-base-1": {
       "offRamp": {
         "address": "0x3201a20D2a33820C0DaC8Bc93C4819755C2a8c7F",
@@ -10139,8 +10250,7 @@
         "address": "0x51e2A24742Db77604B881d6781Ee16B5b8fcBE29",
         "enforceOutOfOrder": false,
         "version": "1.6.0"
-      },
-      "supportedTokens": []
+      }
     },
     "monad-mainnet": {
       "offRamp": {
@@ -10262,7 +10372,7 @@
         "enforceOutOfOrder": false,
         "version": "1.5.0"
       },
-      "supportedTokens": ["BONE", "LEASH", "LINK", "SHIB", "una.USDC", "una.WEMIX", "USDC"]
+      "supportedTokens": ["BONE", "LEASH", "LINK", "SHIB", "USDC", "una.USDC", "una.WEMIX"]
     },
     "matic-mainnet": {
       "offRamp": {

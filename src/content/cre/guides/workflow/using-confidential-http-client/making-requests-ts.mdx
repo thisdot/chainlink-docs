@@ -17,7 +17,7 @@ The `ConfidentialHTTPClient` is the SDK's interface for the underlying [Confiden
 Unlike the regular [`HTTPClient`](/cre/reference/sdk/http-client), the Confidential HTTP client:
 
 - Executes the request in a secure **enclave** (not on each node individually)
-- Injects secrets from the **Vault DON** using template syntax
+- Resolves **`vaultDonSecrets`** into the request via **Vault DON** template syntax
 - Optionally **encrypts the response** before returning it to your workflow
 
 ## Prerequisites
@@ -126,31 +126,16 @@ const onCronTrigger = (runtime: Runtime<Config>): TransactionResult => {
   secrets in a canonical order to ensure consistent behavior across nodes during execution.
 </Aside>
 
-In your trigger handler, call `confHTTPClient.sendRequest()` with your fetch function and a consensus method:
+With **multiple** secrets, list **`vaultDonSecrets`** keys in **alphabetical order** (Vault DON canonical ordering).
 
-```typescript
-import {
-  CronCapability,
-  ConfidentialHTTPClient,
-  handler,
-  consensusIdenticalAggregation,
-  type Runtime,
-  Runner,
-} from "@chainlink/cre-sdk"
+</Aside>
 
 const onCronTrigger = (runtime: Runtime<Config>): string => {
-  const confHTTPClient = new ConfidentialHTTPClient()
+const confHTTPClient = new ConfidentialHTTPClient()
 
-  const result = confHTTPClient
-    .sendRequest(runtime, fetchTransaction, consensusIdenticalAggregation<TransactionResult>())(runtime.config)
-    .result()
-
-=======
-  const result = json(response) as TransactionResult
-  runtime.log(`Transaction result: ${result.transactionId} — ${result.status}`)
-  return result
-}
-```
+const result = confHTTPClient
+.sendRequest(runtime, fetchTransaction, consensusIdenticalAggregation<TransactionResult>())(runtime.config)
+.result()
 
 ### Step 5: Simulate
 
@@ -178,7 +163,7 @@ multiHeaders: {
 }
 ```
 
-The template placeholders are resolved inside the enclave. The actual secret values never appear in your workflow code or in node memory.
+The template placeholders are resolved inside the enclave. The actual secret values never appear in your workflow code or in node memory. Credentials must be wired through **`vaultDonSecrets`** as in Step 4—not interpolated from **`runtime.getSecret()`**.
 
 ## Response encryption
 

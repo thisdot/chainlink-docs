@@ -863,18 +863,6 @@ export const getVerifierLogoUrl = (verifierId: string): string => {
 }
 
 /**
- * Get logo URL for a network by ID
- * Uses CloudFront CDN, same infrastructure as token icons
- */
-export const getNetworkIconUrl = (networkName: string | undefined): string | undefined => {
-  if (!networkName) {
-    return
-  }
-  const normalizedName = normalizeTechnologyName(networkName)
-  return `${NETWORK_ICON_PATH}/${normalizedName}.svg`
-}
-
-/**
  * Map verifier type to display-friendly name
  */
 export const getVerifierTypeDisplay = (type: VerifierType): string => {
@@ -1073,4 +1061,16 @@ export const getAllUniqueVerifiers = ({
       }
     })
     .sort((a, b) => a.name.localeCompare(b.name))
+}
+
+/**
+ * Get logo URL for a network by ID
+ * Uses CloudFront CDN, same infrastructure as token icons
+ */
+export const getNetworkIconUrl = (networkName: string | undefined): string | undefined => {
+  if (!networkName) {
+    return
+  }
+  const normalizedName = normalizeTechnologyName(networkName)
+  return `${NETWORK_ICON_PATH}/${normalizedName}.svg`
 }

@@ -272,7 +272,7 @@
         "enforceOutOfOrder": true,
         "version": "1.6.0"
       },
-      "supportedTokens": []
+      "supportedTokens": ["USDC"]
     },
     "wemix-testnet": {
       "offRamp": {
@@ -493,8 +493,7 @@
         "address": "0xb136F962AF3590702F8fE1db5aB1410DA7DeFCF7",
         "enforceOutOfOrder": false,
         "version": "1.5.0"
-      },
-      "supportedTokens": []
+      }
     },
     "ethereum-testnet-sepolia": {
       "offRamp": {
@@ -591,6 +590,17 @@
         "version": "1.6.0"
       },
       "supportedTokens": []
+    },
+    "plume-testnet-sepolia": {
+      "offRamp": {
+        "address": "0xF4EbCC2c077d3939434C7Ab0572660c5A45e4df5",
+        "version": "1.6.0"
+      },
+      "onRamp": {
+        "address": "0x28A025d34c830BF212f5D2357C8DcAB32dD92A20",
+        "enforceOutOfOrder": false,
+        "version": "1.6.0"
+      }
     },
     "polygon-testnet-amoy": {
       "offRamp": {
@@ -1102,7 +1112,7 @@
         "enforceOutOfOrder": false,
         "version": "1.5.0"
       },
-      "supportedTokens": ["CCIP-BnM", "CCIP-LnM", "syrupUSDC", "USDC"]
+      "supportedTokens": ["CCIP-BnM", "CCIP-LnM", "USDC", "syrupUSDC"]
     },
     "ethereum-testnet-sepolia-base-1": {
       "offRamp": {
@@ -1114,7 +1124,7 @@
         "enforceOutOfOrder": false,
         "version": "1.6.0"
       },
-      "supportedTokens": ["CCIP-BnM", "CCIP-LnM", "LBTC", "syrupUSDC", "USDC"]
+      "supportedTokens": ["CCIP-BnM", "CCIP-LnM", "LBTC", "USDC", "syrupUSDC"]
     },
     "ethereum-testnet-sepolia-blast-1": {
       "offRamp": {
@@ -1330,7 +1340,7 @@
         "enforceOutOfOrder": false,
         "version": "1.5.0"
       },
-      "supportedTokens": ["CCIP-BnM", "syrupUSDC", "syrupUSDT", "USDC"]
+      "supportedTokens": ["CCIP-BnM", "USDC", "syrupUSDC", "syrupUSDT"]
     },
     "janction-testnet-sepolia": {
       "offRamp": {
@@ -1570,7 +1580,7 @@
         "enforceOutOfOrder": true,
         "version": "1.6.0"
       },
-      "supportedTokens": ["CCIP-BnM", "syrupUSDC", "USDC"]
+      "supportedTokens": ["CCIP-BnM", "USDC", "syrupUSDC"]
     },
     "sonic-testnet": {
       "offRamp": {
@@ -1629,8 +1639,7 @@
         "address": "0x23a5084Fa78104F3DF11C63Ae59fcac4f6AD9DeE",
         "enforceOutOfOrder": true,
         "version": "1.6.0"
-      },
-      "supportedTokens": []
+      }
     },
     "treasure-testnet-topaz": {
       "offRamp": {
@@ -1778,7 +1787,7 @@
         "enforceOutOfOrder": false,
         "version": "1.5.0"
       },
-      "supportedTokens": ["CCIP-BnM", "CCIP-LnM", "syrupUSDC", "USDC"]
+      "supportedTokens": ["CCIP-BnM", "CCIP-LnM", "USDC", "syrupUSDC"]
     },
     "ethereum-testnet-sepolia-andromeda-1": {
       "offRamp": {
@@ -1852,6 +1861,17 @@
       },
       "supportedTokens": []
     },
+    "plasma-testnet": {
+      "offRamp": {
+        "address": "0xF4EbCC2c077d3939434C7Ab0572660c5A45e4df5",
+        "version": "1.6.0"
+      },
+      "onRamp": {
+        "address": "0x28A025d34c830BF212f5D2357C8DcAB32dD92A20",
+        "enforceOutOfOrder": false,
+        "version": "1.6.0"
+      }
+    },
     "polygon-testnet-amoy": {
       "offRamp": {
         "address": "0xB6C02E529D90B55fe64fbC27df6ad7890339A13f",
@@ -1897,8 +1917,7 @@
         "address": "0x28A025d34c830BF212f5D2357C8DcAB32dD92A20",
         "enforceOutOfOrder": true,
         "version": "1.6.0"
-      },
-      "supportedTokens": []
+      }
     },
     "treasure-testnet-topaz": {
       "offRamp": {
@@ -1996,7 +2015,7 @@
         "enforceOutOfOrder": false,
         "version": "1.6.0"
       },
-      "supportedTokens": ["CCIP-BnM", "CCIP-LnM", "LBTC", "syrupUSDC", "USDC"]
+      "supportedTokens": ["CCIP-BnM", "CCIP-LnM", "LBTC", "USDC", "syrupUSDC"]
     },
     "ethereum-testnet-sepolia-arbitrum-1": {
       "offRamp": {
@@ -2055,8 +2074,7 @@
         "address": "0x28A025d34c830BF212f5D2357C8DcAB32dD92A20",
         "enforceOutOfOrder": false,
         "version": "1.6.0"
-      },
-      "supportedTokens": []
+      }
     },
     "memento-testnet": {
       "offRamp": {
@@ -2094,6 +2112,28 @@
       },
       "supportedTokens": []
     },
+    "pharos-atlantic-testnet": {
+      "offRamp": {
+        "address": "0xF4EbCC2c077d3939434C7Ab0572660c5A45e4df5",
+        "version": "1.6.0"
+      },
+      "onRamp": {
+        "address": "0x28A025d34c830BF212f5D2357C8DcAB32dD92A20",
+        "enforceOutOfOrder": false,
+        "version": "1.6.0"
+      }
+    },
+    "plasma-testnet": {
+      "offRamp": {
+        "address": "0xF4EbCC2c077d3939434C7Ab0572660c5A45e4df5",
+        "version": "1.6.0"
+      },
+      "onRamp": {
+        "address": "0x28A025d34c830BF212f5D2357C8DcAB32dD92A20",
+        "enforceOutOfOrder": false,
+        "version": "1.6.0"
+      }
+    },
     "polygon-testnet-amoy": {
       "offRamp": {
         "address": "0x9D20eF141F921048d7A4202A55711c65d316B85b",
@@ -2115,8 +2155,7 @@
         "address": "0x828Bfd2eBD847C59D8f5bcbBB5e7D2b24111F99e",
         "enforceOutOfOrder": false,
         "version": "1.5.0"
-      },
-      "supportedTokens": []
+      }
     },
     "shibarium-testnet-puppynet": {
       "offRamp": {
@@ -2140,7 +2179,7 @@
         "enforceOutOfOrder": true,
         "version": "1.6.0"
       },
-      "supportedTokens": ["CCIP-BnM"]
+      "supportedTokens": ["CCIP-BnM", "USDC"]
     },
     "wemix-testnet": {
       "offRamp": {
@@ -2151,8 +2190,7 @@
         "address": "0x28A025d34c830BF212f5D2357C8DcAB32dD92A20",
         "enforceOutOfOrder": false,
         "version": "1.6.0"
-      },
-      "supportedTokens": []
+      }
     },
     "xdai-testnet-chiado": {
       "offRamp": {
@@ -2637,8 +2675,7 @@
         "address": "0x056A1FAb28562750a54063E37DDc66d506e320d2",
         "enforceOutOfOrder": true,
         "version": "1.6.0"
-      },
-      "supportedTokens": []
+      }
     }
   },
   "ethereum-testnet-sepolia-zksync-1": {
@@ -2705,8 +2742,7 @@
         "address": "0xD57356C663951CDde47225FDE6f3091237bdf1a5",
         "enforceOutOfOrder": false,
         "version": "1.5.0"
-      },
-      "supportedTokens": []
+      }
     },
     "ethereum-testnet-sepolia": {
       "offRamp": {
@@ -2718,7 +2754,7 @@
         "enforceOutOfOrder": false,
         "version": "1.5.0"
       },
-      "supportedTokens": ["CCIP-BnM", "syrupUSDC", "syrupUSDT", "USDC"]
+      "supportedTokens": ["CCIP-BnM", "USDC", "syrupUSDC", "syrupUSDT"]
     },
     "ethereum-testnet-sepolia-base-1": {
       "offRamp": {
@@ -2729,8 +2765,7 @@
         "address": "0x289639CB51704043213d2E8806d19979eD8533e4",
         "enforceOutOfOrder": false,
         "version": "1.6.0"
-      },
-      "supportedTokens": []
+      }
     },
     "plasma-testnet": {
       "offRamp": {
@@ -2942,6 +2977,17 @@
       },
       "supportedTokens": []
     },
+    "bsc-testnet": {
+      "offRamp": {
+        "address": "0x5Dc49Ec54B92F7D493bC8126c0730DA74605cc00",
+        "version": "1.6.0"
+      },
+      "onRamp": {
+        "address": "0x65B023D3D4Ea880B835BF2CDE48B296Ee7157EcE",
+        "enforceOutOfOrder": false,
+        "version": "1.6.0"
+      }
+    },
     "ethereum-testnet-sepolia": {
       "offRamp": {
         "address": "0x5Dc49Ec54B92F7D493bC8126c0730DA74605cc00",
@@ -2994,6 +3040,17 @@
       },
       "supportedTokens": []
     },
+    "ethereum-testnet-sepolia-base-1": {
+      "offRamp": {
+        "address": "0x4D8785d2D1Fa810C0B39A688AEB46146e79a4569",
+        "version": "1.6.0"
+      },
+      "onRamp": {
+        "address": "0x22af2fDb6Ec9E5AF82585Ee0efb65b5E46086841",
+        "enforceOutOfOrder": false,
+        "version": "1.6.0"
+      }
+    },
     "jovay-testnet": {
       "offRamp": {
         "address": "0x4D8785d2D1Fa810C0B39A688AEB46146e79a4569",
@@ -3029,8 +3086,7 @@
         "address": "0x1f5EF38782b6B7C6DE489406b8EE504e46F05a18",
         "enforceOutOfOrder": false,
         "version": "1.6.0"
-      },
-      "supportedTokens": []
+      }
     },
     "ethereum-testnet-sepolia-base-1": {
       "offRamp": {
@@ -3041,8 +3097,7 @@
         "address": "0x1f5EF38782b6B7C6DE489406b8EE504e46F05a18",
         "enforceOutOfOrder": false,
         "version": "1.6.0"
-      },
-      "supportedTokens": []
+      }
     },
     "ink-testnet-sepolia": {
       "offRamp": {
@@ -3091,8 +3146,7 @@
         "address": "0x28A025d34c830BF212f5D2357C8DcAB32dD92A20",
         "enforceOutOfOrder": false,
         "version": "1.6.0"
-      },
-      "supportedTokens": []
+      }
     },
     "ethereum-testnet-sepolia": {
       "offRamp": {
@@ -3304,6 +3358,18 @@
         "enforceOutOfOrder": false,
         "version": "1.5.0"
       },
+      "supportedTokens": ["CCIP-BnM", "CCIP-LnM"]
+    },
+    "ethereum-testnet-sepolia-base-1": {
+      "offRamp": {
+        "address": "0x7b9b74FB8fB21144c6b49DE796098E3a0dc9C1d0",
+        "version": "1.5.0"
+      },
+      "onRamp": {
+        "address": "0xdd5803a6Ab5678213c54D8a976d16d185e9D1CA0",
+        "enforceOutOfOrder": false,
+        "version": "1.5.0"
+      },
       "supportedTokens": []
     }
   },
@@ -3442,7 +3508,7 @@
         "enforceOutOfOrder": true,
         "version": "1.6.0"
       },
-      "supportedTokens": []
+      "supportedTokens": ["USDC"]
     },
     "bitcoin-testnet-bitlayer-1": {
       "offRamp": {
@@ -3478,7 +3544,7 @@
         "enforceOutOfOrder": true,
         "version": "1.6.0"
       },
-      "supportedTokens": ["CCIP-BnM", "syrupUSDC", "USDC"]
+      "supportedTokens": ["CCIP-BnM", "USDC", "syrupUSDC"]
     },
     "ethereum-testnet-sepolia-arbitrum-1": {
       "offRamp": {
@@ -3502,7 +3568,7 @@
         "enforceOutOfOrder": true,
         "version": "1.6.0"
       },
-      "supportedTokens": ["CCIP-BnM"]
+      "supportedTokens": ["CCIP-BnM", "USDC"]
     },
     "ethereum-testnet-sepolia-optimism-1": {
       "offRamp": {
@@ -3679,8 +3745,7 @@
         "address": "EQDioi9PI32Wo1oBwkUp0pj1AhwvAHiKiZCfgrr0iDqu3lTA",
         "enforceOutOfOrder": true,
         "version": "1.6.0"
-      },
-      "supportedTokens": []
+      }
     },
     "ethereum-testnet-sepolia-arbitrum-1": {
       "offRamp": {
@@ -3691,8 +3756,7 @@
         "address": "EQDioi9PI32Wo1oBwkUp0pj1AhwvAHiKiZCfgrr0iDqu3lTA",
         "enforceOutOfOrder": true,
         "version": "1.6.0"
-      },
-      "supportedTokens": []
+      }
     }
   },
   "treasure-testnet-topaz": {
@@ -3779,8 +3843,7 @@
         "address": "0x6D5035E99D19b436814BFBA65065EfFE2DF34726",
         "enforceOutOfOrder": false,
         "version": "1.6.0"
-      },
-      "supportedTokens": []
+      }
     },
     "ethereum-testnet-sepolia-kroma-1": {
       "offRamp": {

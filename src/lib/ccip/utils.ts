@@ -16,7 +16,7 @@ import type {
   RateLimitsDirection,
   RateLimitsType,
 } from "./types/index.ts"
-import { jsonHeaders, commonHeaders as sharedCommonHeaders } from "@lib/api/cacheHeaders.js"
+import { commonHeaders, jsonHeaders, commonHeaders as sharedCommonHeaders } from "@lib/api/cacheHeaders.js"
 import { logger } from "@lib/logging/index.js"
 
 export const prerender = false
@@ -199,90 +199,6 @@ export const createTokenMetadata = (environment: Environment): TokenMetadata => 
 }
 
 /**
- * Creates rate-limits-specific metadata object
- * @param environment - Current network environment
- * @param sourceChain - Source chain internal ID
- * @param destinationChain - Destination chain internal ID
- * @param tokenCount - Number of tokens in the response
- * @returns Metadata object for rate limits API response
- */
-export const createRateLimitsMetadata = (
-  environment: Environment,
-  sourceChain: string,
-  destinationChain: string,
-  tokenCount: number
-): RateLimitsMetadata => {
-  return {
-    environment,
-    timestamp: new Date().toISOString(),
-    requestId: crypto.randomUUID(),
-    sourceChain,
-    destinationChain,
-    tokenCount,
-  }
-}
-
-/**
- * Validates rate limits filter parameters
- * @param filters - Filter parameters to validate
- * @throws CCIPError if required parameters are missing or invalid
- */
-export const validateRateLimitsFilters = (filters: {
-  sourceInternalId?: string
-  destinationInternalId?: string
-  tokens?: string
-  direction?: string
-  rateType?: string
-}): RateLimitsFilterType => {
-  // Validate required parameters
-  if (!filters.sourceInternalId) {
-    throw new CCIPError(400, "source_internal_id parameter is required")
-  }
-  if (!filters.destinationInternalId) {
-    throw new CCIPError(400, "destination_internal_id parameter is required")
-  }
-
-  // Validate direction if provided
-  let direction: RateLimitsDirection | undefined
-  if (filters.direction) {
-    const normalizedDirection = filters.direction.toLowerCase()
-    if (!["in", "out"].includes(normalizedDirection)) {
-      throw new CCIPError(400, 'direction parameter must be "in" or "out"')
-    }
-    direction = normalizedDirection as RateLimitsDirection
-  }
-
-  // Validate rate_type if provided
-  let rateType: RateLimitsType | undefined
-  if (filters.rateType) {
-    const normalizedRateType = filters.rateType.toLowerCase()
-    if (!["standard", "custom"].includes(normalizedRateType)) {
-      throw new CCIPError(400, 'rate_type parameter must be "standard" or "custom"')
-    }
-    rateType = normalizedRateType as RateLimitsType
-  }
-
-  // Validate tokens if provided (must not be empty after parsing)
-  if (filters.tokens !== undefined && filters.tokens !== null) {
-    const tokenList = filters.tokens
-      .split(",")
-      .map((t) => t.trim())
-      .filter((t) => t.length > 0)
-    if (filters.tokens.length > 0 && tokenList.length === 0) {
-      throw new CCIPError(400, "tokens parameter cannot be empty when provided")
-    }
-  }
-
-  return {
-    sourceInternalId: filters.sourceInternalId,
-    destinationInternalId: filters.destinationInternalId,
-    tokens: filters.tokens,
-    direction,
-    rateType,
-  }
-}
-
-/**
  * Validates the environment parameter
  * @param environment - Environment string to validate
  * @returns Validated Environment enum value
@@ -314,8 +230,15 @@ export const validateFilters = (filters: FilterType): void => {
  * @returns Validated output key
  * @throws CCIPError if output key is invalid
  */
-export const validateOutputKey = (outputKey?: string): "chainId" | "selector" | "internalId" => {
-  if (!outputKey) return "chainId"
+export const validateOutputKey = (
+  outputKey?: string,
+  internalIdFormat?: string
+): "chainId" | "selector" | "internalId" => {
+  if (!outputKey) {
+    // When internalIdFormat is explicitly set but outputKey is not,
+    // default to "internalId" so the response keys match the requested format
+    return internalIdFormat ? "internalId" : "chainId"
+  }
   if (!["chainId", "selector", "internalId"].includes(outputKey)) {
     throw new CCIPError(400, "outputKey must be one of: chainId, selector, or internalId.")
   }
@@ -518,7 +441,7 @@ export function createErrorResponse(
 
   return new Response(JSON.stringify(errorResponse), {
     status,
-    headers: sharedCommonHeaders,
+    headers: commonHeaders,
   })
 }
 
@@ -600,5 +523,90 @@ export const loadChainConfiguration = async (
       error: error instanceof Error ? error.message : "Unknown error",
     })
     throw new CCIPError(500, "Failed to load chain configuration")
+  }
+}
+
+/**
+ * Creates metadata object for rate limits API responses
+ * @param environment - Current environment (mainnet/testnet)
+ * @param sourceChain - Source chain identifier
+ * @param destinationChain - Destination chain identifier
+ * @param tokenCount - Number of tokens in the response
+ * @returns Metadata object with timestamp and request tracking
+ */
+export const createRateLimitsMetadata = (
+  environment: Environment,
+  sourceChain: string,
+  destinationChain: string,
+  tokenCount: number
+): RateLimitsMetadata => {
+  return {
+    environment,
+    timestamp: new Date().toISOString(),
+    requestId: crypto.randomUUID(),
+    sourceChain,
+    destinationChain,
+    tokenCount,
+  }
+}
+
+/**
+ * Validates rate limits filter parameters
+ * @param filters - Filter parameters to validate
+ * @returns Validated filter object
+ * @throws CCIPError if required parameters are missing or invalid
+ */
+export const validateRateLimitsFilters = (filters: {
+  sourceInternalId?: string
+  destinationInternalId?: string
+  tokens?: string
+  direction?: string
+  rateType?: string
+}): RateLimitsFilterType => {
+  // Validate required parameters
+  if (!filters.sourceInternalId) {
+    throw new CCIPError(400, "sourceInternalId parameter is required")
+  }
+  if (!filters.destinationInternalId) {
+    throw new CCIPError(400, "destinationInternalId parameter is required")
+  }
+
+  // Validate direction if provided
+  let direction: RateLimitsDirection | undefined
+  if (filters.direction) {
+    const normalizedDirection = filters.direction.toLowerCase()
+    if (!["in", "out"].includes(normalizedDirection)) {
+      throw new CCIPError(400, 'direction parameter must be "in" or "out"')
+    }
+    direction = normalizedDirection as RateLimitsDirection
+  }
+
+  // Validate rateType if provided
+  let rateType: RateLimitsType | undefined
+  if (filters.rateType) {
+    const normalizedRateType = filters.rateType.toLowerCase()
+    if (!["standard", "custom"].includes(normalizedRateType)) {
+      throw new CCIPError(400, 'rateType parameter must be "standard" or "custom"')
+    }
+    rateType = normalizedRateType as RateLimitsType
+  }
+
+  // Validate tokens if provided (must not be empty after parsing)
+  if (filters.tokens !== undefined && filters.tokens !== null) {
+    const tokenList = filters.tokens
+      .split(",")
+      .map((t) => t.trim())
+      .filter((t) => t.length > 0)
+    if (filters.tokens.length > 0 && tokenList.length === 0) {
+      throw new CCIPError(400, "tokens parameter cannot be empty when provided")
+    }
+  }
+
+  return {
+    sourceInternalId: filters.sourceInternalId,
+    destinationInternalId: filters.destinationInternalId,
+    tokens: filters.tokens,
+    direction,
+    rateType,
   }
 }

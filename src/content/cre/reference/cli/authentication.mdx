@@ -33,13 +33,15 @@ cre login
 1. Enter your account email address
 1. Enter your account password
 1. Enter your one-time password (OTP) from your authenticator app
-1. The CLI automatically captures and saves your credentials locally
+1. The CLI automatically captures and saves your credentials locally, then fetches and caches tenant context (you may see **“Fetching user context…”** in the terminal)
 
 For a detailed walkthrough with screenshots, see [Logging in with the CLI](/cre/account/cli-login).
 
 ### `cre logout`
 
-Revokes authentication tokens and removes local credentials. This invalidates the current authentication tokens and deletes stored credentials from your machine.
+### `cre logout`
+
+Revokes authentication tokens and removes **local credentials** (`~/.cre/cre.yaml`) **and the cached tenant context file** (`~/.cre/context.yaml`). This invalidates the current session tokens and clears the CLI-side copy of your tenant registry manifest.
 
 **Usage:**
 

@@ -30,10 +30,6 @@ import { getSelectorEntry } from "@config/data/ccip/selectors.ts"
 import pLimit from "p-limit"
 import { fetchLaneRateLimits } from "~/lib/ccip/graphql/services/enrichment-data-service.ts"
 
-// Import rate limits mock data
-import rateLimitsMainnet from "~/__mocks__/rate-limits-mainnet.json" with { type: "json" }
-import rateLimitsTestnet from "~/__mocks__/rate-limits-testnet.json" with { type: "json" }
-
 const GRAPHQL_CONCURRENCY = 10
 
 export const prerender = false
@@ -298,10 +294,11 @@ export class LaneDataService {
     filterType: "chainId" | "selector" | "internalId"
   ): boolean {
     const filterValues = filterValue.split(",").map((v) => v.trim())
+    // Map snake_case filter types to camelCase property names
     const propertyMap: Record<string, keyof ChainInfoInternal> = {
-      chainId: "chainId",
+      chain_id: "chainId",
       selector: "selector",
-      internalId: "internalId",
+      internal_id: "internalId",
     }
     const propertyName = propertyMap[filterType]
     const chainValue = chain[propertyName].toString()
@@ -323,10 +320,11 @@ export class LaneDataService {
     destChain: ChainInfoInternal,
     outputKey: OutputKeyType
   ): string {
+    // Map snake_case output keys to camelCase property names
     const propertyMap: Record<string, keyof ChainInfoInternal> = {
-      chainId: "chainId",
+      chain_id: "chainId",
       selector: "selector",
-      internalId: "internalId",
+      internal_id: "internalId",
     }
     const propertyName = propertyMap[outputKey]
 
@@ -634,6 +632,10 @@ export class LaneDataService {
 
     return null
   }
+
+  /**
+   * Loads rate limits data for the specified environment
+   */
 
   /**
    * Builds lane details with rate limits included in supportedTokens

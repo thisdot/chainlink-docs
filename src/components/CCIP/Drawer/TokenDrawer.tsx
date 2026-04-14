@@ -86,7 +86,7 @@ function TokenDrawer({
     }
     laneData: LaneConfig
     destinationChain: string
-    destinationPoolType: PoolType
+    destinationPoolType: PoolType | undefined
   }
 
   // Build lane configurations for fetching rate limits
@@ -117,10 +117,6 @@ function TokenDrawer({
         return null
       }
       const destinationPoolType = poolTypesByChain?.[destinationChain] ?? destinationTokenData.pool?.type
-      if (!destinationPoolType) {
-        console.error(`No pool type found for ${token.id} on ${network.key} -> ${destinationChain}`)
-        return null
-      }
       const laneData = getLane({
         sourceChain: network.key as SupportedChain,
         destinationChain: destinationChain as SupportedChain,

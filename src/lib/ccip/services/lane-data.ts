@@ -34,6 +34,7 @@ import { fetchLaneRateLimits } from "~/lib/ccip/graphql/services/enrichment-data
 import rateLimitsMainnet from "~/__mocks__/rate-limits-mainnet.json" with { type: "json" }
 import rateLimitsTestnet from "~/__mocks__/rate-limits-testnet.json" with { type: "json" }
 
+
 const GRAPHQL_CONCURRENCY = 10
 
 export const prerender = false
@@ -306,7 +307,7 @@ export class LaneDataService {
     const propertyName = propertyMap[filterType]
     const chainValue = chain[propertyName].toString()
 
-    // For chain_id, also check generated chain key format
+    // For chainId, also check generated chain key format
     if (filterType === "chainId") {
       const generatedKey = generateChainKey(chain.chainId, chain.chainType, "chainId")
       return filterValues.includes(chainValue) || filterValues.includes(generatedKey)

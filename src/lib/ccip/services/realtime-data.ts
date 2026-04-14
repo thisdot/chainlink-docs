@@ -86,7 +86,7 @@ export class RealtimeDataService {
   ): Promise<LaneSupportedTokensResponse | null> {
     try {
       const baseUrl = getApiBaseUrl()
-      const url = `${baseUrl}/api/ccip/v1/lanes/by-internal-id/${sourceInternalId}/${destinationInternalId}/supported-tokens?environment=${environment}`
+      const url = `${baseUrl}/api/ccip/v1/lanes/by-internal-id/${sourceInternalId}/${destinationInternalId}/supported-tokens?environment=${environment}&internalIdFormat=directory`
 
       const response = await fetch(url)
 
@@ -117,10 +117,10 @@ export class RealtimeDataService {
   ): Promise<TokenFinalityResponse | null> {
     try {
       const baseUrl = getApiBaseUrl()
-      let url = `${baseUrl}/api/ccip/v1/tokens/${tokenCanonicalSymbol}/finality?environment=${environment}`
+      let url = `${baseUrl}/api/ccip/v1/tokens/${tokenCanonicalSymbol}/finality?environment=${environment}&internalIdFormat=directory`
 
       if (outputKey) {
-        url += `&output_key=${outputKey}`
+        url += `&outputKey=${outputKey}`
       }
 
       const response = await fetch(url)

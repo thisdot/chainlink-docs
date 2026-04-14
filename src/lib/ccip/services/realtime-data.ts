@@ -103,7 +103,9 @@ export class RealtimeDataService {
   }
 
   /**
-   * Fetches token finality details across all chains
+   * Fetches token finality details across all chains.
+   * Uses /tokens/{symbol} which already returns customFinality per chain,
+   * then extracts only the finality fields to match TokenFinalityResponse shape.
    *
    * @param tokenCanonicalSymbol - Token canonical symbol (e.g., "BETS", "LINK")
    * @param environment - Network environment (mainnet/testnet)
@@ -117,7 +119,7 @@ export class RealtimeDataService {
   ): Promise<TokenFinalityResponse | null> {
     try {
       const baseUrl = getApiBaseUrl()
-      let url = `${baseUrl}/api/ccip/v1/tokens/${tokenCanonicalSymbol}/finality?environment=${environment}&internalIdFormat=directory`
+      let url = `${baseUrl}/api/ccip/v1/tokens/${tokenCanonicalSymbol}?environment=${environment}&internalIdFormat=directory`
 
       if (outputKey) {
         url += `&outputKey=${outputKey}`
@@ -126,12 +128,29 @@ export class RealtimeDataService {
       const response = await fetch(url)
 
       if (!response.ok) {
-        console.error("Failed to fetch token finality:", response.status)
+        console.error("Failed to fetch token data for finality:", response.status)
         return null
       }
 
-      const data = await response.json()
-      return data
+      const tokenDetail = await response.json()
+
+      // Extract customFinality per chain from the full token detail response
+      const finalityData: Record<string, CustomFinalityConfig> = {}
+      for (const [chainKey, chainData] of Object.entries(tokenDetail.data ?? {})) {
+        const cd = chainData as { customFinality?: CustomFinalityConfig | null }
+        if (cd.customFinality !== undefined) {
+          finalityData[chainKey] = cd.customFinality ?? { hasCustomFinality: null, minBlockConfirmation: null }
+        }
+      }
+
+      return {
+        metadata: {
+          ...tokenDetail.metadata,
+          tokenSymbol: tokenCanonicalSymbol,
+          chainCount: Object.keys(finalityData).length,
+        },
+        data: finalityData,
+      }
     } catch (error) {
       console.error("Error fetching token finality:", error)
       return null

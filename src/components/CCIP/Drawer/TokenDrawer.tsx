@@ -3,7 +3,6 @@ import TokenDetailsHero from "../ChainHero/TokenDetailsHero.tsx"
 import {
   Environment,
   getNetwork,
-  SupportedTokenConfig,
   determineTokenMechanism,
   PoolType,
 } from "~/config/data/ccip/index.ts"
@@ -29,7 +28,6 @@ enum TokenTab {
 function TokenDrawer({
   token,
   network,
-  destinationLanes,
   environment,
   poolTypesByChain,
 }: {
@@ -54,9 +52,6 @@ function TokenDrawer({
     tokenPoolRawType: string
     tokenPoolAddress: string
     explorer: ExplorerInfo
-  }
-  destinationLanes: {
-    [sourceChain: string]: SupportedTokenConfig
   }
   environment: Environment
   poolTypesByChain?: Record<string, PoolType>

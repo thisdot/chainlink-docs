@@ -98,7 +98,6 @@ function TokenChainsTable({ networks, token, lanes, environment }: TableProps) {
                             <TokenDrawer
                               token={token}
                               network={network}
-                              destinationLanes={lanes[network.key]}
                               environment={environment}
                               poolTypesByChain={poolTypesByChain}
                             />

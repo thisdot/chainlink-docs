@@ -48,9 +48,8 @@ function LaneDrawer({
   const { rateLimits, isLoading: isLoadingRateLimits } = useTokenRateLimits(source, destination, environment)
 
   // After hydration, use API response keys as the token list; fall back to JSON while loading
-  const apiTokens = !isLoadingRateLimits && Object.keys(rateLimits).length > 0
-    ? Object.keys(rateLimits)
-    : lane.supportedTokens
+  const apiTokens =
+    !isLoadingRateLimits && Object.keys(rateLimits).length > 0 ? Object.keys(rateLimits) : lane.supportedTokens
 
   // Process tokens with hook
   const { tokens: processedTokens, count: tokenCount } = useLaneTokens({

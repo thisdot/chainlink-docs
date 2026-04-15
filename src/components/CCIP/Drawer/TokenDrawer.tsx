@@ -1,11 +1,6 @@
 import "../Tables/Table.css"
 import TokenDetailsHero from "../ChainHero/TokenDetailsHero.tsx"
-import {
-  Environment,
-  getNetwork,
-  determineTokenMechanism,
-  PoolType,
-} from "~/config/data/ccip/index.ts"
+import { Environment, getNetwork, determineTokenMechanism, PoolType } from "~/config/data/ccip/index.ts"
 import { useState } from "react"
 import { ChainType, ExplorerInfo } from "~/config/index.ts"
 import TableSearchInput from "../Tables/TableSearchInput.tsx"
@@ -71,16 +66,11 @@ function TokenDrawer({
   }
 
   // Single API call — returns outboundLanes + inboundLanes with rate limits and verifiers
-  const { data: tokenDirectory, isLoading: isLoadingRateLimits } = useTokenDirectory(
-    token.id,
-    network.key,
-    environment
-  )
+  const { data: tokenDirectory, isLoading: isLoadingRateLimits } = useTokenDirectory(token.id, network.key, environment)
 
   // Select the appropriate lane map and direction based on the active tab
-  const activeLanes = activeTab === TokenTab.Outbound
-    ? (tokenDirectory?.outboundLanes ?? {})
-    : (tokenDirectory?.inboundLanes ?? {})
+  const activeLanes =
+    activeTab === TokenTab.Outbound ? (tokenDirectory?.outboundLanes ?? {}) : (tokenDirectory?.inboundLanes ?? {})
 
   const direction = activeTab === TokenTab.Outbound ? "out" : "in"
 
@@ -258,12 +248,13 @@ function TokenDrawer({
         </div>
 
         <div className="ccip-table__notFound">
-          {isLoadingRateLimits
-            ? <>Loading...</>
-            : laneRows.filter(
-                ({ networkDetails }) =>
-                  networkDetails && networkDetails.name.toLowerCase().includes(search.toLowerCase())
-              ).length === 0 && <>No lanes found</>}
+          {isLoadingRateLimits ? (
+            <>Loading...</>
+          ) : (
+            laneRows.filter(
+              ({ networkDetails }) => networkDetails && networkDetails.name.toLowerCase().includes(search.toLowerCase())
+            ).length === 0 && <>No lanes found</>
+          )}
         </div>
       </div>
     </div>

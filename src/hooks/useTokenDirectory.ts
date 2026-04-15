@@ -34,11 +34,7 @@ export function useTokenDirectory(
       setError(null)
 
       try {
-        const response = await realtimeDataService.getTokenDirectoryData(
-          tokenCanonicalSymbol,
-          chain,
-          environment
-        )
+        const response = await realtimeDataService.getTokenDirectoryData(tokenCanonicalSymbol, chain, environment)
 
         if (isMounted) {
           setData(response?.data ?? null)

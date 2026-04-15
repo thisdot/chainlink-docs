@@ -6,6 +6,7 @@ import type {
   RateLimiterConfig,
   CustomFinalityConfig,
   OutputKeyType,
+  TokenDirectoryApiResponse,
 } from "~/lib/ccip/types/index.ts"
 
 export const prerender = false
@@ -98,6 +99,39 @@ export class RealtimeDataService {
       return data
     } catch (error) {
       console.error("Error fetching lane supported tokens:", error)
+      return null
+    }
+  }
+
+  /**
+   * Fetches full token directory data for a specific token and chain.
+   * Returns outboundLanes + inboundLanes with rate limits, verifiers, pool info,
+   * and custom finality in a single call — covers both drawer tabs at once.
+   *
+   * @param tokenCanonicalSymbol - Token canonical symbol (e.g., "LINK")
+   * @param chain - Source chain directory key (e.g., "mainnet", "bsc-mainnet")
+   * @param environment - Network environment (mainnet/testnet)
+   * @returns Full token directory data or null on error
+   */
+  async getTokenDirectoryData(
+    tokenCanonicalSymbol: string,
+    chain: string,
+    environment: Environment
+  ): Promise<TokenDirectoryApiResponse | null> {
+    try {
+      const baseUrl = getApiBaseUrl()
+      const url = `${baseUrl}/api/ccip/v1/tokens/${encodeURIComponent(tokenCanonicalSymbol)}/chains/${encodeURIComponent(chain)}?environment=${environment}&internalIdFormat=directory`
+
+      const response = await fetch(url)
+
+      if (!response.ok) {
+        console.error("Failed to fetch token directory data:", response.status)
+        return null
+      }
+
+      return await response.json()
+    } catch (error) {
+      console.error("Error fetching token directory data:", error)
       return null
     }
   }

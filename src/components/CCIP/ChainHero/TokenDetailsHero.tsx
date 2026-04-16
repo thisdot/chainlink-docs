@@ -68,7 +68,9 @@ function TokenDetailsHero({ network, token, inDrawer = false }: TokenDetailsHero
           </div>
           <div className="ccip-chain-hero__details__item">
             <div className="ccip-chain-hero__details__label">Token pool type</div>
-            <div className="ccip-chain-hero__details__value">{token.poolRawType ? formatPoolTypeForDisplay(token.poolRawType) : "—"}</div>
+            <div className="ccip-chain-hero__details__value">
+              {token.poolRawType ? formatPoolTypeForDisplay(token.poolRawType) : "—"}
+            </div>
           </div>
           <div className="ccip-chain-hero__details__item">
             <div className="ccip-chain-hero__details__label">Token pool address</div>

@@ -10,6 +10,7 @@ import { getExplorerAddressUrl, fallbackTokenIconUrl } from "~/features/utils/in
 import TokenDrawer from "../Drawer/TokenDrawer.tsx"
 import { Tooltip } from "~/features/common/Tooltip/Tooltip.tsx"
 import { useTokenFinality } from "~/hooks/useTokenFinality.ts"
+import { formatPoolTypeForDisplay } from "~/lib/ccip/graphql/utils/type-version-parser.ts"
 
 interface TableProps {
   networks: {
@@ -146,7 +147,7 @@ function TokenChainsTable({ networks, token, lanes, environment }: TableProps) {
                         endLength={4}
                       />
                     </td>
-                    <td>{network.tokenPoolRawType ?? "—"}</td>
+                    <td>{network.tokenPoolRawType ? formatPoolTypeForDisplay(network.tokenPoolRawType) : "—"}</td>
                     <td data-clipboard-type="token-pool">
                       <Address
                         contractUrl={getExplorerAddressUrl(

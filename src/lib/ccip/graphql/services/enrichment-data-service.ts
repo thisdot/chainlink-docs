@@ -442,7 +442,7 @@ export async function fetchAllTokensForLane(
           tokenDecimals: node.tokenDecimals ?? 18,
           sourcePoolType: normalizePoolType(rawType),
           destPoolType: destPoolTypeBySymbol.get(node.tokenSymbol) ?? "",
-            rateLimits: {
+          rateLimits: {
             standard: toRateLimiterDirections(
               node.inboundCapacity,
               node.inboundRate,

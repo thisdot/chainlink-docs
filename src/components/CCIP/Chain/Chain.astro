@@ -153,7 +153,13 @@ const chainStructuredData = generateChainStructuredData(
           )
         }
       </div>
-      <ChainTokenGrid tokens={allTokens} network={network} client:only="react" environment={environment} poolDataByToken={poolDataByToken} />
+      <ChainTokenGrid
+        tokens={allTokens}
+        network={network}
+        client:only="react"
+        environment={environment}
+        poolDataByToken={poolDataByToken}
+      />
     </div>
   </section>
 </CcipDirectoryLayout>

@@ -163,14 +163,7 @@ function TokenChainsTable({ networks, token, lanes, environment }: TableProps) {
                       {loading ? (
                         "-"
                       ) : finalityData[network.key] ? (
-                        finalityData[network.key].hasCustomFinality === null ? (
-                          <Tooltip
-                            label="N/A"
-                            tip="Custom finality data is currently unavailable. You can find the custom finality settings by reading the Token Pool contract directly on the relevant blockchain."
-                            labelStyle={{ marginRight: "5px" }}
-                            style={{ display: "inline-block", verticalAlign: "middle" }}
-                          />
-                        ) : finalityData[network.key].hasCustomFinality ? (
+                        finalityData[network.key].finalitySafe ? (
                           "Yes"
                         ) : (
                           "No"
@@ -184,15 +177,7 @@ function TokenChainsTable({ networks, token, lanes, environment }: TableProps) {
                         />
                       )}
                     </td>
-                    <td>
-                      {loading
-                        ? "-"
-                        : finalityData[network.key]
-                          ? finalityData[network.key].minBlockConfirmation === null
-                            ? "-"
-                            : finalityData[network.key].minBlockConfirmation
-                          : "-"}
-                    </td>
+                    <td>{loading ? "-" : finalityData[network.key] ? finalityData[network.key].finalityDepth : "-"}</td>
                   </tr>
                 )
               })}

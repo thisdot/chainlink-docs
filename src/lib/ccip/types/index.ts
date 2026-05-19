@@ -192,6 +192,17 @@ export interface PoolFinalityConfig {
 }
 
 /**
+ * Per-chain pool details extracted from /tokens/{symbol} for UI display.
+ * Lightweight subset of the full TokenDetailChainData pool fields.
+ */
+export interface ChainPoolDetails {
+  finality: PoolFinalityConfig | null
+  ccv: CCVConfig | null
+  hook: string | null
+  supportsV2Features: boolean
+}
+
+/**
  * Extended token chain data with pool capabilities, finality, and CCV information
  */
 export interface TokenDetailChainData extends Omit<TokenChainData, "pool"> {

@@ -53,8 +53,8 @@ function TokenChainsTable({ networks, token, lanes, environment }: TableProps) {
     return acc
   }, {})
 
-  // Fetch finality data using custom hook
-  const { finalityData, isLoading: loading } = useTokenFinality(token.id, environment, "internalId")
+  // Fetch finality and pool details using custom hook
+  const { finalityData, poolDetails, isLoading: loading } = useTokenFinality(token.id, environment, "internalId")
 
   return (
     <>
@@ -77,7 +77,8 @@ function TokenChainsTable({ networks, token, lanes, environment }: TableProps) {
               <th>Token pool address</th>
               <th>Pool version</th>
               <th>Custom finality</th>
-              <th>Min Blocks required</th>
+              <th>Finality depth</th>
+              <th>CCV threshold</th>
             </tr>
           </thead>
           <tbody>
@@ -178,6 +179,13 @@ function TokenChainsTable({ networks, token, lanes, environment }: TableProps) {
                       )}
                     </td>
                     <td>{loading ? "-" : finalityData[network.key] ? finalityData[network.key].finalityDepth : "-"}</td>
+                    <td>
+                      {(() => {
+                        if (loading) return "-"
+                        const threshold = poolDetails[network.key]?.ccv?.thresholdAmount
+                        return threshold && threshold !== "0" ? threshold : "-"
+                      })()}
+                    </td>
                   </tr>
                 )
               })}

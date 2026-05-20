@@ -89,23 +89,33 @@ function TokenChainsTable({ networks, token, lanes, environment }: TableProps) {
                 const allLanesPaused = areAllLanesPaused(network.tokenDecimals, lanes[network.key] || {})
 
                 return (
-                  <tr key={index} className={allLanesPaused ? "ccip-table__row--paused" : ""}>
+                  <tr
+                    key={index}
+                    className={`ccip-table__row--clickable ${allLanesPaused ? "ccip-table__row--paused" : ""}`}
+                    onClick={() => {
+                      drawerWidthStore.set(DrawerWidth.Wide)
+                      drawerContentStore.set(() => (
+                        <TokenDrawer
+                          token={token}
+                          network={network}
+                          environment={environment}
+                          poolTypesByChain={poolTypesByChain}
+                        />
+                      ))
+                    }}
+                    role="button"
+                    tabIndex={0}
+                    aria-label={`View ${network.name} token details`}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") {
+                        e.preventDefault()
+                        e.currentTarget.click()
+                      }
+                    }}
+                  >
                     <td>
-                      <button
-                        type="button"
+                      <span
                         className={`ccip-table__network-name ${allLanesPaused ? "ccip-table__network-name--paused" : ""}`}
-                        onClick={() => {
-                          drawerWidthStore.set(DrawerWidth.Wide)
-                          drawerContentStore.set(() => (
-                            <TokenDrawer
-                              token={token}
-                              network={network}
-                              environment={environment}
-                              poolTypesByChain={poolTypesByChain}
-                            />
-                          ))
-                        }}
-                        aria-label={`View ${network.name} token details`}
                       >
                         <span className="ccip-table__logoContainer">
                           <img
@@ -136,7 +146,7 @@ function TokenChainsTable({ networks, token, lanes, environment }: TableProps) {
                             ⏸️
                           </span>
                         )}
-                      </button>
+                      </span>
                     </td>
                     <td>{network.tokenName}</td>
                     <td>{network.tokenSymbol}</td>

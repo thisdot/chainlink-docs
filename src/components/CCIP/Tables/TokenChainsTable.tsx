@@ -155,7 +155,7 @@ function TokenChainsTable({ networks, token, lanes, environment }: TableProps) {
                       <Address
                         contractUrl={getExplorerAddressUrl(network.explorer, network.chainType)(network.tokenAddress)}
                         address={network.tokenAddress}
-                        endLength={4}
+                        endLength={3}
                       />
                     </td>
                     <td>{network.tokenPoolRawType ? formatPoolTypeForDisplay(network.tokenPoolRawType) : "—"}</td>

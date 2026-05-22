@@ -50,7 +50,7 @@ These interfaces provide access to capabilities and manage the execution context
 
 - **`cre.Runtime` ("Easy Mode")**: Passed to your main trigger callback, this represents the **DON's (Decentralized Oracle Network) execution context**. It is used for operations that are already guaranteed to be Byzantine Fault Tolerant (BFT). When you use the `Runtime`, you ask the network to execute something, and CRE handles the underlying complexity to ensure you get back one final, secure, and trustworthy result. A common use case is writing a transaction to a blockchain with the EVM client.
 
-- **`cre.NodeRuntime` ("Manual Mode")**: Represents an **individual node's execution context**. This is used when a BFT guarantee cannot be provided automatically (e.g., calling a third-party API). You tell each node to perform a task on its own, and each node returns its own individual answer. You are then responsible for telling the SDK how to combine them into a single, trusted result by providing a consensus and aggregation algorithm. It is used exclusively inside a [`RunInNodeMode`](#sdkruninnodemode) block and is provided by that function—you do not get this type directly in your handler's callback.
+- **`cre.NodeRuntime` ("Manual Mode")**: Represents an **individual node's execution context**. This is used when a BFT guarantee cannot be provided automatically (e.g., calling a third-party API). You tell each node to perform a task on its own, and each node returns its own individual answer. You are then responsible for telling the SDK how to combine them into a single, trusted result by providing a consensus and aggregation algorithm. It is used exclusively inside a [`RunInNodeMode`](#creruninnodemode) block and is provided by that function—you do not get this type directly in your handler's callback.
 
 To learn more about how to aggregate results from `NodeRuntime`, see the [Consensus & Aggregation](/cre/reference/sdk/consensus) reference.
 
@@ -253,3 +253,70 @@ func onTrigger(config *Config, runtime cre.Runtime, ...) (string, error) {
     //...
 }
 ```
+
+## `runtime.GetSecret()`
+
+Retrieves a secret from the Vault DON. Secrets are key-value pairs stored securely and made available to your workflow at runtime. The `GetSecret` method is available on the `Runtime` interface through the embedded `SecretsProvider`.
+
+**Signature:**
+
+```go
+runtime.GetSecret(req *SecretRequest) Promise[*Secret]
+```
+
+### `SecretRequest`
+
+| Field       | Type     | Required | Description                                                           |
+| ----------- | -------- | -------- | --------------------------------------------------------------------- |
+| `Id`        | `string` | Yes      | The identifier of the secret to retrieve.                             |
+| `Namespace` | `string` | No       | The namespace the secret belongs to. Defaults to `"main"` if omitted. |
+
+### `Secret`
+
+The value returned when the promise resolves.
+
+| Field       | Type     | Description                      |
+| ----------- | -------- | -------------------------------- |
+| `Id`        | `string` | The secret identifier.           |
+| `Namespace` | `string` | The secret namespace.            |
+| `Owner`     | `string` | The address of the secret owner. |
+| `Value`     | `string` | The secret value.                |
+
+### `SecretsProvider` interface
+
+The `SecretsProvider` interface is embedded in `Runtime`, which means `GetSecret` is available directly on the runtime object. It is also passed as a parameter to [`InitWorkflow`](#initworkflow), allowing you to access secrets during workflow initialization.
+
+```go
+type SecretsProvider interface {
+    GetSecret(req *SecretRequest) Promise[*Secret]
+}
+```
+
+### Example
+
+```go
+import "github.com/smartcontractkit/cre-sdk-go/cre"
+
+func onTrigger(config *Config, runtime cre.Runtime, ...) (string, error) {
+    secretPromise := runtime.GetSecret(&cre.SecretRequest{
+        Id:        "my-api-key",
+        Namespace: "default",
+    })
+
+    secret, err := secretPromise.Await()
+    if err != nil {
+        return "", fmt.Errorf("failed to get secret: %w", err)
+    }
+
+    logger := runtime.Logger()
+    logger.Info("Secret retrieved", "owner", secret.Owner)
+
+    // Use secret.Value in your workflow logic
+    return "done", nil
+}
+```
+
+<Aside type="note" title="Secrets guide">
+  For a complete walkthrough on creating, storing, and using secrets, see the [Secrets
+  guide](/cre/guides/workflow/secrets).
+</Aside>

@@ -2,7 +2,7 @@ import { SupportedChain } from "~/config/types.ts"
 import { chainToTechnology } from "~/config/chains.ts"
 import { NetworkFeeStructure, PoolType, TokenMechanism, LaneSpecificFeeKey, RateLimiterConfig } from "./types.ts"
 import { networkFees } from "./data.ts"
-import { commify } from "~/utils/index.js"
+import { commify } from "~/utils/number.ts"
 import { formatUnits } from "ethers"
 
 // Define valid pool type combinations and their corresponding mechanisms
@@ -29,17 +29,6 @@ export const determineTokenMechanism = (
   // Look up the mechanism based on pool type combination
   const key = `${sourcePoolType}:${destinationPoolType}`
   return POOL_MECHANISM_MAP[key] ?? TokenMechanism.Unsupported
-}
-
-export const tokenPoolDisplay = (poolType?: PoolType) => {
-  const poolTypeMapping: Record<PoolType, string> = {
-    lockRelease: "Lock/Release",
-    burnMint: "Burn/Mint",
-    usdc: "Burn/Mint",
-    feeTokenOnly: "Fee Token Only",
-  }
-
-  return poolType ? (poolTypeMapping[poolType] ?? "Unsupported") : "Unsupported"
 }
 
 export const calculateNetworkFeesForTokenMechanismDirect = (
@@ -74,16 +63,19 @@ export const calculateNetworkFeesForTokenMechanism = (
 
   const isSourceEthereum = sourceTechno === "ETHEREUM"
   const isDestinationEthereum = destinationTechno === "ETHEREUM"
+  const isDestinationSolana = (destinationTechno as string) === "SOLANA"
 
   let laneSpecificFeeKey: LaneSpecificFeeKey
-  if ((isSourceEthereum || isDestinationEthereum) && feesForMechanism.fromToEthereum) {
-    laneSpecificFeeKey = "fromToEthereum"
-  } else if (isSourceEthereum && feesForMechanism.fromEthereum) {
-    laneSpecificFeeKey = "fromEthereum"
-  } else if (isDestinationEthereum && feesForMechanism.toEthereum) {
-    laneSpecificFeeKey = "toEthereum"
+  if (isSourceEthereum && isDestinationSolana && feesForMechanism.fromEthereumToSolana) {
+    laneSpecificFeeKey = "fromEthereumToSolana"
+  } else if (isSourceEthereum && feesForMechanism.fromEthereumToNonEthereum) {
+    laneSpecificFeeKey = "fromEthereumToNonEthereum"
+  } else if (isDestinationEthereum && feesForMechanism.fromNonEthereumToEthereum) {
+    laneSpecificFeeKey = "fromNonEthereumToEthereum"
+  } else if (isDestinationSolana && feesForMechanism.fromNonEthereumToSolana) {
+    laneSpecificFeeKey = "fromNonEthereumToSolana"
   } else {
-    laneSpecificFeeKey = "nonEthereum"
+    laneSpecificFeeKey = "fromNonEthereumToNonEthereum"
   }
 
   return calculateNetworkFeesForTokenMechanismDirect(mechanism, laneSpecificFeeKey)
@@ -99,18 +91,21 @@ export const calculateMessagingNetworkFeesDirect = (laneSpecificFeeKey: LaneSpec
   }
 }
 
-export const calculateMessaingNetworkFees = (sourceChain: SupportedChain, destinationChain: SupportedChain) => {
+export const calculateMessagingNetworkFees = (sourceChain: SupportedChain, destinationChain: SupportedChain) => {
   const sourceTechno = chainToTechnology[sourceChain]
   const destinationTechno = chainToTechnology[destinationChain]
 
   const isSourceEthereum = sourceTechno === "ETHEREUM"
   const isDestinationEthereum = destinationTechno === "ETHEREUM"
+  const isDestinationSolana = (destinationTechno as string) === "SOLANA"
 
   let laneSpecificFeeKey: LaneSpecificFeeKey
   if (isSourceEthereum || isDestinationEthereum) {
     laneSpecificFeeKey = "fromToEthereum"
+  } else if (isDestinationSolana && networkFees.messaging.fromNonEthereumToSolana) {
+    laneSpecificFeeKey = "fromNonEthereumToSolana"
   } else {
-    laneSpecificFeeKey = "nonEthereum"
+    laneSpecificFeeKey = "fromNonEthereumToNonEthereum"
   }
 
   return calculateMessagingNetworkFeesDirect(laneSpecificFeeKey)

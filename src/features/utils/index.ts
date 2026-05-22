@@ -9,8 +9,9 @@ import {
   ChainFamily,
 } from "@config/index.ts"
 import { CCIP_TOKEN_ICON_MAPPINGS } from "@config/data/ccip/tokenIconMappings.ts"
+import { TOKEN_ICONS_PATH } from "@config/cdn.ts"
 import { toQuantity } from "ethers"
-import referenceChains from "src/scripts/reference/chains.json" with { type: "json" }
+import referenceChains from "~/scripts/reference/chains.json" with { type: "json" }
 
 interface AddEthereumChainParameter {
   chainId: string
@@ -117,10 +118,28 @@ export const getChainTypeAndFamily = (supportedChain: SupportedChain): ChainType
       chainFamily = "evm"
       break
     case "aptos":
-      chainFamily = "mvm"
+      chainFamily = "aptos"
+      break
+    case "sui":
+      chainFamily = "sui"
       break
     case "solana":
-      chainFamily = "svm"
+      chainFamily = "solana"
+      break
+    case "tron":
+      chainFamily = "tron"
+      break
+    case "canton":
+      chainFamily = "canton"
+      break
+    case "ton":
+      chainFamily = "ton"
+      break
+    case "stellar":
+      chainFamily = "stellar"
+      break
+    case "starknet":
+      chainFamily = "starknet"
       break
     default:
       throw new Error(`Unknown chain type: ${chainType}`)
@@ -156,10 +175,11 @@ export const getTokenIconUrl = (token: string, size = 40) => {
 
   // Request appropriately sized images from CloudFront
   // For 40x40 display, request 80x80 for retina displays (2x)
-  return `https://d2f70xi62kby8n.cloudfront.net/tokens/${transformTokenName(iconIdentifier)}.webp?auto=compress%2Cformat&q=60&w=${size}&h=${size}&fit=cover`
+  return `${TOKEN_ICONS_PATH}/${transformTokenName(iconIdentifier)}.webp?auto=compress%2Cformat&q=60&w=${size}&h=${size}&fit=cover`
 }
 
 export const fallbackTokenIconUrl = "/assets/icons/generic-token.svg"
+export const fallbackVerifierIconUrl = "/assets/icons/generic-verifier.svg"
 
 export const getChainId = (supportedChain: SupportedChain) => {
   const technology = chainToTechnology[supportedChain]
@@ -276,6 +296,8 @@ export const directoryToSupportedChain = (chainInRdd: string): SupportedChain =>
       return "SONEIUM_MINATO"
     case "ethereum-testnet-holesky":
       return "ETHEREUM_HOLESKY"
+    case "ethereum-testnet-hoodi":
+      return "ETHEREUM_HOODI"
     case "polkadot-mainnet-astar":
       return "ASTAR_MAINNET"
     case "polkadot-testnet-astar-shibuya":
@@ -302,8 +324,10 @@ export const directoryToSupportedChain = (chainInRdd: string): SupportedChain =>
       return "SHIBARIUM_PUPPYNET"
     case "sonic-mainnet":
       return "SONIC_MAINNET"
+    case "sonic-testnet":
+      return "SONIC_TESTNET"
     case "sonic-testnet-blaze":
-      return "SONIC_BLAZE"
+      return "SONIC_TESTNET_BLAZE"
     case "bitcoin-mainnet-bob-1":
       return "BOB_MAINNET"
     case "bitcoin-testnet-sepolia-bob-1":
@@ -402,6 +426,8 @@ export const directoryToSupportedChain = (chainInRdd: string): SupportedChain =>
       return "0G_MAINNET"
     case "megaeth-testnet":
       return "MEGAETH_TESTNET"
+    case "megaeth-mainnet":
+      return "MEGAETH_MAINNET"
     case "mind-testnet":
       return "MIND_NETWORK_TESTNET"
     case "mind-mainnet":
@@ -514,6 +540,39 @@ export const directoryToSupportedChain = (chainInRdd: string): SupportedChain =>
       return "NEXON_HENESYS_MAINNET"
     case "pharos-atlantic-testnet":
       return "PHAROS_ATLANTIC_TESTNET"
+    case "pharos-mainnet":
+      return "PHAROS_MAINNET"
+    case "morph-mainnet":
+      return "MORPH_MAINNET"
+    case "ethereum-testnet-hoodi-morph":
+      return "MORPH_HOODI_TESTNET"
+    case "jovay-mainnet":
+      return "JOVAY_MAINNET"
+    case "jovay-testnet":
+      return "JOVAY_TESTNET"
+    case "stable-mainnet":
+      return "STABLE_MAINNET"
+    case "tempo-testnet":
+      return "TEMPO_TESTNET"
+    case "tempo-testnet-moderato":
+      return "TEMPO_TESTNET_MODERATO"
+    case "arc-testnet":
+      return "ARC_NETWORK_TESTNET"
+    case "doge-os-chikyu-testnet":
+    case "dogeos-testnet-chikyu":
+      return "DOGE_OS_CHIKYU_TESTNET"
+    case "adi-testnet":
+      return "ADI_NETWORK_AB_TESTNET"
+    case "adi-mainnet":
+      return "ADI_NETWORK_MAINNET"
+    case "edge-testnet":
+      return "EDGE_TESTNET"
+    case "edge-mainnet":
+      return "EDGE_MAINNET"
+    case "robinhood-testnet":
+      return "ROBINHOOD_TESTNET"
+    case "ton-testnet":
+      return "TON_TESTNET"
     default:
       throw Error(`Chain not found ${chainInRdd}`)
   }
@@ -595,6 +654,8 @@ export const supportedChainToChainInRdd = (supportedChain: SupportedChain): stri
       return "ethereum-testnet-sepolia-soneium-1"
     case "ETHEREUM_HOLESKY":
       return "ethereum-testnet-holesky"
+    case "ETHEREUM_HOODI":
+      return "ethereum-testnet-hoodi"
     case "ASTAR_MAINNET":
       return "polkadot-mainnet-astar"
     case "ASTAR_SHIBUYA":
@@ -621,7 +682,9 @@ export const supportedChainToChainInRdd = (supportedChain: SupportedChain): stri
       return "shibarium-testnet-puppynet"
     case "SONIC_MAINNET":
       return "sonic-mainnet"
-    case "SONIC_BLAZE":
+    case "SONIC_TESTNET":
+      return "sonic-testnet"
+    case "SONIC_TESTNET_BLAZE":
       return "sonic-testnet-blaze"
     case "BOB_MAINNET":
       return "bitcoin-mainnet-bob-1"
@@ -717,6 +780,8 @@ export const supportedChainToChainInRdd = (supportedChain: SupportedChain): stri
       return "0g-mainnet"
     case "MEGAETH_TESTNET":
       return "megaeth-testnet"
+    case "MEGAETH_MAINNET":
+      return "megaeth-mainnet"
     case "MIND_NETWORK_TESTNET":
       return "mind-testnet"
     case "MIND_NETWORK_MAINNET":
@@ -827,6 +892,38 @@ export const supportedChainToChainInRdd = (supportedChain: SupportedChain): stri
       return "nexon-mainnet-henesys"
     case "PHAROS_ATLANTIC_TESTNET":
       return "pharos-atlantic-testnet"
+    case "PHAROS_MAINNET":
+      return "pharos-mainnet"
+    case "MORPH_MAINNET":
+      return "morph-mainnet"
+    case "MORPH_HOODI_TESTNET":
+      return "ethereum-testnet-hoodi-morph"
+    case "JOVAY_MAINNET":
+      return "jovay-mainnet"
+    case "JOVAY_TESTNET":
+      return "jovay-testnet"
+    case "STABLE_MAINNET":
+      return "stable-mainnet"
+    case "TEMPO_TESTNET":
+      return "tempo-testnet"
+    case "TEMPO_TESTNET_MODERATO":
+      return "tempo-testnet-moderato"
+    case "ARC_NETWORK_TESTNET":
+      return "arc-testnet"
+    case "DOGE_OS_CHIKYU_TESTNET":
+      return "dogeos-testnet-chikyu"
+    case "ADI_NETWORK_AB_TESTNET":
+      return "adi-testnet"
+    case "ADI_NETWORK_MAINNET":
+      return "adi-mainnet"
+    case "EDGE_TESTNET":
+      return "edge-testnet"
+    case "EDGE_MAINNET":
+      return "edge-mainnet"
+    case "ROBINHOOD_TESTNET":
+      return "robinhood-testnet"
+    case "TON_TESTNET":
+      return "ton-testnet"
     default:
       throw Error(`Chain not found ${supportedChain}`)
   }

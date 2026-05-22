@@ -279,6 +279,47 @@ exports[`CCIP Sidebar Configuration Snapshot should match the expected sidebar s
         "url": "ccip/concepts/manual-execution",
       },
       {
+        "children": [
+          {
+            "title": "Overview",
+            "url": "ccip/concepts/rate-limit-management/overview",
+          },
+          {
+            "title": "How Rate Limits Work",
+            "url": "ccip/concepts/rate-limit-management/how-rate-limits-work",
+          },
+          {
+            "title": "Prerequisites and Permissions",
+            "url": "ccip/concepts/rate-limit-management/prerequisites-and-permissions",
+          },
+          {
+            "title": "Inspect Current Rate Limits",
+            "url": "ccip/concepts/rate-limit-management/inspect-current-rate-limits",
+          },
+          {
+            "title": "Token Units and Decimals",
+            "url": "ccip/concepts/rate-limit-management/token-units-and-decimals",
+          },
+          {
+            "title": "Update Rate Limits",
+            "url": "ccip/concepts/rate-limit-management/update-rate-limits",
+          },
+          {
+            "title": "Emergency Actions",
+            "url": "ccip/concepts/rate-limit-management/emergency-actions",
+          },
+          {
+            "title": "Common Scenarios",
+            "url": "ccip/concepts/rate-limit-management/common-scenarios",
+          },
+          {
+            "title": "Executing with a Multisig",
+            "url": "ccip/concepts/rate-limit-management/executing-with-a-multisig",
+          },
+        ],
+        "title": "Rate Limit Management",
+      },
+      {
         "chainTypes": [
           "evm",
         ],
@@ -309,6 +350,10 @@ exports[`CCIP Sidebar Configuration Snapshot should match the expected sidebar s
         "url": "ccip/test-tokens",
       },
       {
+        "title": "CCIP API, SDK & CLI",
+        "url": "ccip/tutorials/offchain",
+      },
+      {
         "chainTypes": [
           "evm",
         ],
@@ -335,66 +380,6 @@ exports[`CCIP Sidebar Configuration Snapshot should match the expected sidebar s
         ],
         "title": "Using the Token Manager",
         "url": "ccip/tutorials/evm/token-manager",
-      },
-      {
-        "chainTypes": [
-          "evm",
-        ],
-        "title": "Using the CCIP JavaScript SDK",
-        "url": "ccip/ccip-javascript-sdk",
-      },
-      {
-        "chainTypes": [
-          "evm",
-        ],
-        "children": [
-          {
-            "chainTypes": [
-              "evm",
-            ],
-            "title": "Transfer Tokens between EOAs",
-            "url": "ccip/tutorials/evm/offchain/transfer-tokens-from-eoa",
-          },
-          {
-            "chainTypes": [
-              "evm",
-            ],
-            "title": "Checking CCIP Message Status",
-            "url": "ccip/tutorials/evm/offchain/get-status-offchain",
-          },
-          {
-            "chainTypes": [
-              "evm",
-            ],
-            "children": [
-              {
-                "chainTypes": [
-                  "evm",
-                ],
-                "title": "Transfer Tokens between EOAs",
-                "url": "ccip/tutorials/evm/offchain/ccip-tools/transfer-tokens-from-eoa",
-              },
-              {
-                "chainTypes": [
-                  "evm",
-                ],
-                "title": "Checking CCIP Message Status",
-                "url": "ccip/tutorials/evm/offchain/ccip-tools/get-status-offchain",
-              },
-              {
-                "chainTypes": [
-                  "evm",
-                ],
-                "title": "Get Supported Tokens",
-                "url": "ccip/tutorials/evm/offchain/ccip-tools/get-supported-tokens",
-              },
-            ],
-            "title": "Using CCIP CLI",
-            "url": "ccip/tutorials/evm/offchain/ccip-tools",
-          },
-        ],
-        "title": "Offchain",
-        "url": "ccip/tutorials/evm/offchain",
       },
       {
         "chainTypes": [
@@ -1101,7 +1086,7 @@ exports[`CCIP Sidebar Configuration Snapshot should match the expected sidebar s
             "url": "ccip/api-reference/evm/v1.5.0",
           },
         ],
-        "title": "API Reference",
+        "title": "Solidity Interfaces & Contracts",
         "url": "ccip/api-reference/evm",
       },
       {
@@ -1152,7 +1137,7 @@ exports[`CCIP Sidebar Configuration Snapshot should match the expected sidebar s
             "url": "ccip/api-reference/svm/v1.6.0",
           },
         ],
-        "title": "API Reference",
+        "title": "SVM Program Interfaces",
         "url": "ccip/api-reference/svm",
       },
       {
@@ -1195,19 +1180,12 @@ exports[`CCIP Sidebar Configuration Snapshot should match the expected sidebar s
             "url": "ccip/api-reference/aptos/v1.6.0",
           },
         ],
-        "title": "API Reference",
+        "title": "Move Modules Interface",
         "url": "ccip/api-reference/aptos",
       },
       {
-        "chainTypes": [
-          "evm",
-        ],
-        "title": "SDK",
-        "url": "ccip/tools-resources/sdk",
-      },
-      {
-        "title": "CLI",
-        "url": "ccip/tools-resources/cli",
+        "title": "CCIP API, SDK & CLI",
+        "url": "https://docs.chain.link/ccip/tools",
       },
       {
         "title": "Cross-chain Examples",

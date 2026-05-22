@@ -2,15 +2,18 @@ import EleventyFetch from "@11ty/eleventy-fetch"
 import { ChainMetadata, mergeWithMVRFeeds } from "./index.ts"
 import { Chain, POR_MVR_FEEDS_URL } from "../chains.ts"
 
-export const getServerSideChainMetadata = async (chains: Chain[]): Promise<Record<string, ChainMetadata>> => {
+export const getServerSideChainMetadata = async (
+  chains: Chain[],
+  skipCache = false
+): Promise<Record<string, ChainMetadata>> => {
   const cache = {}
 
   for (const chain of chains) {
     const requests = chain.networks.map((nw) =>
       nw?.rddUrl
         ? EleventyFetch(nw?.rddUrl, {
-            duration: "1d", // save for 1 day
-            type: "json", // we'll parse JSON for you
+            duration: skipCache ? "0s" : "1d",
+            type: "json",
           }).then((metadata) => ({
             ...nw,
             metadata: metadata.filter(
@@ -26,7 +29,7 @@ export const getServerSideChainMetadata = async (chains: Chain[]): Promise<Recor
 
   try {
     const mvrFeeds = await EleventyFetch(POR_MVR_FEEDS_URL, {
-      duration: "1d",
+      duration: skipCache ? "0s" : "1d",
       type: "json",
     })
 

@@ -123,10 +123,7 @@ function relatedNetworksHtml(entry: RawChangelogEntry, networks: Record<string, 
 
   if (icons.length === 0) return ""
 
-  const moreNetworks =
-    seen.length > 4
-      ? `<div class="log-item__more-chains"><div>+${seen.length - 4}</div></div>`
-      : ""
+  const moreNetworks = seen.length > 4 ? `<div class="log-item__more-chains"><div>+${seen.length - 4}</div></div>` : ""
 
   return `<div class="log-item__list-chains">${icons.join("")}${moreNetworks}</div>`
 }

@@ -3,59 +3,17 @@ import BaseLayout from "~/layouts/BaseLayout.astro"
 import * as CONFIG from "../config"
 import { Typography } from "@chainlink/blocks"
 import { ChangelogFilters } from "~/components/ChangelogFilters/ChangelogFilters.tsx"
-import { getSecret } from "astro:env/server"
-import { searchClient, SearchClient } from "@algolia/client-search"
-import { ChangelogItem } from "~/components/ChangelogSnippet/types"
 import ChangelogCard from "~/components/ChangelogSnippet/ChangelogCard.astro"
 import { getUniqueNetworks, getUniqueTopics, getUniqueTypes } from "~/utils/changelogFilters"
+import { getChangelogItems } from "~/utils/changelog"
 const formattedContentTitle = `${CONFIG.PAGE.titleFallback} | ${CONFIG.SITE.title}`
 
-const appId = getSecret("ALGOLIA_APP_ID")
-const apiKey = getSecret("PUBLIC_ALGOLIA_SEARCH_PUBLIC_API_KEY")
-
-let client: SearchClient
-let logs: ChangelogItem[] | undefined = undefined
-
-if (appId && apiKey) {
-  client = searchClient(appId, apiKey)
-
-  const firstReq = await client.search({
-    requests: [
-      {
-        indexName: "Changelog",
-        page: 0,
-        hitsPerPage: 1000,
-      },
-    ],
-  })
-
-  const firstResult = firstReq.results[0]
-  let allHits = "hits" in firstResult ? (firstResult.hits as ChangelogItem[]) : []
-  const nbPages = "nbPages" in firstResult ? firstResult.nbPages : 1
-
-  if (nbPages && nbPages > 1) {
-    const remainingRequests = Array.from({ length: nbPages - 1 }, (_, i) => ({
-      indexName: "Changelog",
-      page: i + 1,
-      hitsPerPage: 1000,
-    }))
-
-    const remainingResults = await client.search({ requests: remainingRequests })
-
-    remainingResults.results.forEach((result) => {
-      if ("hits" in result) {
-        allHits = [...allHits, ...(result.hits as ChangelogItem[])]
-      }
-    })
-  }
-
-  logs = allHits
-}
+const logs = getChangelogItems()
 
 // Extract unique filter values
-const products = logs ? getUniqueTopics(logs) : []
-const networks = logs ? getUniqueNetworks(logs) : []
-const types = logs ? getUniqueTypes(logs) : []
+const products = getUniqueTopics(logs)
+const networks = getUniqueNetworks(logs)
+const types = getUniqueTypes(logs)
 ---
 
 <BaseLayout title={formattedContentTitle}>
@@ -67,7 +25,7 @@ const types = logs ? getUniqueTypes(logs) : []
 
     <section class="changelog-list">
       {
-        logs?.map((log, index) => (
+        logs.map((log, index) => (
           <div class="changelog-item" data-index={index} style={index >= 25 ? "display: none;" : ""}>
             <ChangelogCard showNetworksAndTopic showBorder={false} item={log} />
           </div>
@@ -84,7 +42,7 @@ const types = logs ? getUniqueTypes(logs) : []
     </section>
 
     {
-      logs && logs.length > 25 && (
+      logs.length > 25 && (
         <div class="load-more-section">
           <button id="load-more-btn" class="load-more-button">
             Load more
@@ -96,7 +54,7 @@ const types = logs ? getUniqueTypes(logs) : []
       )
     }
 
-    <ChangelogFilters client:load products={products} networks={networks} types={types} items={logs || []} />
+    <ChangelogFilters client:load products={products} networks={networks} types={types} items={logs} />
   </main>
 </BaseLayout>
 

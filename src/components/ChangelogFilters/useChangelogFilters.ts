@@ -69,8 +69,10 @@ export const useChangelogFilters = ({ items }: UseChangelogFiltersProps) => {
     const changelogList = document.querySelector(".changelog-list") as HTMLElement
 
     if (filters.searchTerm) {
-      // Search takes priority - filter by search term
+      // Combine search with any active filters: a row must match both.
       const searchLower = filters.searchTerm.toLowerCase()
+      const hasFilters =
+        filters.selectedProducts.length > 0 || filters.selectedNetworks.length > 0 || filters.selectedTypes.length > 0
       let visibleCount = 0
 
       changelogItems.forEach((item) => {
@@ -81,7 +83,12 @@ export const useChangelogFilters = ({ items }: UseChangelogFiltersProps) => {
           changelogItem?.name.toLowerCase().includes(searchLower) ||
           changelogItem?.["text-description"]?.toLowerCase().includes(searchLower)
 
-        if (matchesSearch) {
+        const passesFilters =
+          !hasFilters ||
+          (changelogItem &&
+            matchesFilters(changelogItem, filters.selectedProducts, filters.selectedNetworks, filters.selectedTypes))
+
+        if (matchesSearch && passesFilters) {
           ;(item as HTMLElement).style.display = ""
           visibleCount++
         } else {
